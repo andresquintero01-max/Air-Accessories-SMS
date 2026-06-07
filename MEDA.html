@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maintenance Error Decision Aid (MEDA)</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --navy:#003b66;
+  --blue:#00aeef;
+  --dark:#021730;
+  --soft:#f8fbff;
+  --gray:#56657d;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#ff9800;
+}
+
+body{
+  font-family:'Segoe UI', Arial, sans-serif;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+    linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+    url('https://images.unsplash.com/photo-1517976487492-5750f3195933?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:35px;
+}
+
+.container{
+  width:100%;
+  max-width:1120px;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);
+  padding:55px;
+  border-radius:40px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+  position:relative;
+  overflow:hidden;
+  animation:fadeIn .8s ease;
+}
+
+.container::before{
+  content:"";
+  position:absolute;
+  width:470px;
+  height:470px;
+  background:radial-gradient(circle,rgba(0,174,239,.18),transparent 70%);
+  top:-190px;
+  right:-150px;
+}
+
+.container::after{
+  content:"";
+  position:absolute;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,rgba(0,59,102,.16),transparent 70%);
+  bottom:-150px;
+  left:-120px;
+}
+
+.content{
+  position:relative;
+  z-index:2;
+}
+
+.logo{
+  width:112px;
+  height:112px;
+  margin:auto;
+  border-radius:32px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:50px;
+  box-shadow:0 18px 40px rgba(0,59,102,.35);
+  margin-bottom:22px;
+}
+
+.badge{
+  display:block;
+  width:max-content;
+  margin:0 auto 16px auto;
+  background:#e8f8ff;
+  color:var(--navy);
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+
+.company{
+  text-align:center;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:12px;
+}
+
+h1{
+  text-align:center;
+  color:var(--navy);
+  font-size:58px;
+  margin-bottom:12px;
+  font-weight:900;
+  line-height:1.15;
+}
+
+.description{
+  text-align:center;
+  color:var(--gray);
+  font-size:21px;
+  margin-bottom:22px;
+  line-height:1.6;
+  font-weight:500;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:0 auto 45px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:28px;
+}
+
+.card{
+  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  border-radius:32px;
+  padding:32px;
+  box-shadow:0 16px 35px rgba(0,0,0,.12);
+  position:relative;
+  overflow:hidden;
+  transition:.35s;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:325px;
+  border:1px solid #eef2f7;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  box-shadow:0 24px 48px rgba(0,0,0,.18);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:10px;
+  height:100%;
+}
+
+.card:nth-child(1)::before{
+  background:var(--blue);
+}
+
+.card:nth-child(2)::before{
+  background:var(--navy);
+}
+
+.icon{
+  width:88px;
+  height:88px;
+  border-radius:28px;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+  box-shadow:0 14px 28px rgba(0,0,0,.24);
+  margin-bottom:22px;
+}
+
+.card:nth-child(1) .icon{
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+}
+
+.card:nth-child(2) .icon{
+  background:linear-gradient(135deg,#003b66,#005288);
+}
+
+.card h2{
+  color:var(--navy);
+  font-size:32px;
+  margin-bottom:14px;
+  font-weight:900;
+}
+
+.card p{
+  color:var(--gray);
+  font-size:17px;
+  line-height:1.55;
+  margin-bottom:25px;
+}
+
+.card button{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 12px 26px rgba(0,59,102,.25);
+}
+
+.card button:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
+
+.bottom-buttons{
+  margin-top:45px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.home-btn,
+.investigation-btn{
+  min-height:64px;
+  border:none;
+  border-radius:18px;
+  color:white;
+  text-decoration:none;
+  font-size:21px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,.26);
+}
+
+.home-btn{
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+}
+
+.investigation-btn{
+  background:linear-gradient(135deg,#111827,#374151);
+}
+
+.home-btn:hover,
+.investigation-btn:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
+
+.footer{
+  margin-top:35px;
+  text-align:center;
+  color:var(--gray);
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@media(max-width:850px){
+  body{
+    padding:20px;
+  }
+
+  .container{
+    padding:35px 22px;
+    border-radius:30px;
+  }
+
+  h1{
+    font-size:40px;
+  }
+
+  .description{
+    font-size:18px;
+  }
+
+  .grid,
+  .bottom-buttons{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="content">
+
+  <div class="logo">🛠️</div>
+
+  <div class="company">AIR ACCESSORIES & AVIONICS</div>
+
+  <div class="badge">INVESTIGATION MODULE</div>
+
+  <h1>Maintenance Error Decision Aid</h1>
+
+  <div class="description">
+    Aviation maintenance event investigation and human factors analysis system
+  </div>
+
+  <div class="title-line"></div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div>
+        <div class="icon">📋</div>
+
+        <h2>MEDA Report</h2>
+
+        <p>
+          Create, investigate and document maintenance events using the
+          Maintenance Error Decision Aid methodology, including contributing
+          factors, human factors and corrective actions.
+        </p>
+      </div>
+
+      <button onclick="location.href='MEDA-Report.html'">
+        Open MEDA Report ›
+      </button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">📊</div>
+
+        <h2>MEDA Database</h2>
+
+        <p>
+          Review, monitor and track completed MEDA investigations,
+          maintenance events, contributing factors, corrective actions
+          and effectiveness reviews.
+        </p>
+      </div>
+
+      <button onclick="location.href='MEDA-Database.html'">
+        Open MEDA Database ›
+      </button>
+    </div>
+
+  </div>
+
+  <div class="bottom-buttons">
+
+    <a class="home-btn" href="index.html">
+      🏠 Home
+    </a>
+
+    <a class="investigation-btn" href="Risk-Management-Tools.html">
+      🔬 Risk Management Tools
+    </a>
+
+  </div>
+
+  <div class="footer">
+    AIR ACCESSORIES SMS • POWERED BY 371Q
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>
