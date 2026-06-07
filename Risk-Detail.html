@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Risk Detail</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --navy:#003b66;
+  --blue:#00aeef;
+  --dark:#021730;
+  --soft:#f8fbff;
+  --gray:#56657d;
+  --orange:#ff9800;
+  --red:#dc2626;
+  --green:#16a34a;
+}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:35px;
+  background:
+  radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.container{
+  max-width:1180px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  padding:45px;
+  border-radius:38px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.top-logo{
+  width:92px;
+  height:92px;
+  margin:0 auto 18px;
+  border-radius:26px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:42px;
+  box-shadow:0 14px 32px rgba(0,59,102,.35);
+}
+
+.company{
+  text-align:center;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:8px;
+}
+
+h1{
+  text-align:center;
+  color:var(--navy);
+  font-size:54px;
+  margin-bottom:8px;
+  font-weight:900;
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--gray);
+  font-size:18px;
+  margin-bottom:30px;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:22px auto 34px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
+}
+
+.box,
+.investigation-box,
+.cpa-box,
+.attachment-box{
+  margin-top:25px;
+  padding:28px;
+  border-radius:26px;
+  background:white;
+  box-shadow:0 14px 34px rgba(0,0,0,.12);
+  border-left:8px solid var(--blue);
+}
+
+.box:hover,
+.investigation-box:hover,
+.cpa-box:hover,
+.attachment-box:hover{
+  box-shadow:0 20px 45px rgba(0,0,0,.16);
+}
+
+h3{
+  color:var(--navy);
+  font-size:26px;
+  margin-bottom:14px;
+}
+
+p{
+  color:var(--gray);
+  line-height:1.6;
+  margin-bottom:12px;
+}
+
+button{
+  padding:14px 20px;
+  margin:6px;
+  border:none;
+  color:white;
+  border-radius:16px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:15px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  box-shadow:0 10px 22px rgba(0,59,102,.25);
+  transition:.25s;
+}
+
+button:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+button.closed,
+.module-btn.completed{
+  background:linear-gradient(135deg,#15803d,#22c55e)!important;
+}
+
+.back-btn{
+  background:linear-gradient(135deg,#b91c1c,#ef4444)!important;
+}
+
+.home-btn{
+  background:linear-gradient(135deg,#003b66,#00aeef)!important;
+}
+
+.print-file-btn{
+  background:linear-gradient(135deg,#111827,#374151)!important;
+  width:100%;
+  font-size:20px;
+  padding:18px;
+  border-radius:18px;
+  margin:0;
+}
+
+.footer-actions{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:1fr 180px 180px;
+  gap:14px;
+}
+
+.footer-actions button{
+  margin:0;
+  font-size:18px;
+  padding:18px;
+  border-radius:18px;
+}
+
+.module-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+}
+
+.module-grid button{
+  width:100%;
+  margin:0;
+  padding:18px;
+}
+
+.result{
+  margin-top:18px;
+  padding:18px;
+  background:#e8f8ff;
+  border-radius:16px;
+  font-weight:900;
+  color:var(--navy);
+  border-left:6px solid var(--blue);
+}
+
+.definition-box{
+  margin-top:25px;
+  padding:22px;
+  border-left:8px solid var(--navy);
+  background:var(--soft);
+  border-radius:18px;
+  line-height:1.6;
+}
+
+.mandatory-box{
+  margin-top:22px;
+  padding:22px;
+  border-radius:18px;
+  background:#fff1f2;
+  border-left:8px solid var(--red);
+  color:#7f1d1d;
+  line-height:1.6;
+}
+
+.mandatory-box h3{
+  color:#991b1b;
+}
+
+.mandatory-box ul{
+  margin-top:8px;
+  padding-left:22px;
+}
+
+.matrix{
+  margin-top:25px;
+  display:flex;
+  justify-content:center;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
+.matrix-grid{
+  display:grid;
+  grid-template-columns:55px repeat(5,95px);
+  gap:9px;
+}
+
+.header-cell,
+.side-cell{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:900;
+  color:var(--navy);
+  font-size:20px;
+}
+
+.cell{
+  width:95px;
+  height:72px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:900;
+  color:white;
+  border-radius:18px;
+  cursor:pointer;
+  font-size:22px;
+  box-shadow:0 8px 18px rgba(0,0,0,.22);
+  transition:.25s;
+}
+
+.cell:hover{
+  transform:scale(1.08);
+}
+
+.cell.selected{
+  outline:5px solid var(--navy);
+  transform:scale(1.08);
+}
+
+.low{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+}
+
+.medium{
+  background:linear-gradient(135deg,#facc15,#f59e0b);
+  color:#111827;
+}
+
+.high{
+  background:linear-gradient(135deg,#f97316,#ea580c);
+}
+
+.extreme{
+  background:linear-gradient(135deg,#dc2626,#ef4444);
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 2fr 1fr 1fr auto;
+  gap:12px;
+  align-items:center;
+}
+
+input,
+select{
+  width:100%;
+  padding:15px;
+  border:1px solid #cbd5e1;
+  border-radius:15px;
+  font-size:15px;
+  outline:none;
+  background:white;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px rgba(0,174,239,.15);
+}
+
+.cpa-item,
+.attachment-item{
+  background:#f8fafc;
+  padding:18px;
+  margin-top:14px;
+  border-radius:18px;
+  border:1px solid #dbe3ef;
+  position:relative;
+}
+
+.delete-btn{
+  position:absolute;
+  right:12px;
+  top:12px;
+  background:linear-gradient(135deg,#dc2626,#ef4444)!important;
+  border-radius:12px;
+  padding:8px 11px;
+  font-size:13px;
+}
+
+.send-btn{
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  padding:9px 13px;
+  font-size:13px;
+}
+
+.bottom{
+  margin-top:20px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+#reportBox{
+  line-height:1.8;
+  font-size:16px;
+  background:#f8fbff;
+  border-left:8px solid var(--blue);
+}
+
+#printInvestigationData{
+  display:none;
+}
+
+.print-record{
+  margin-bottom:14px;
+  padding:14px;
+  border:1px solid #dbe3ef;
+  border-radius:14px;
+  background:#f8fafc;
+  line-height:1.6;
+}
+
+@media print{
+  body{
+    background:white!important;
+    padding:10px;
+  }
+
+  button,
+  .bottom,
+  .investigation-box,
+  .attachment-box,
+  .footer-actions{
+    display:none!important;
+  }
+
+  .container{
+    box-shadow:none;
+    padding:15px;
+  }
+
+  #printInvestigationData{
+    display:block!important;
+  }
+
+  .box,
+  .cpa-box{
+    box-shadow:none;
+    break-inside:avoid;
+  }
+}
+
+@media(max-width:850px){
+  body{
+    padding:20px;
+  }
+
+  .container{
+    padding:24px;
+    border-radius:28px;
+  }
+
+  h1{
+    font-size:40px;
+  }
+
+  .matrix-grid{
+    grid-template-columns:45px repeat(5,78px);
+  }
+
+  .cell{
+    width:78px;
+    height:62px;
+    font-size:18px;
+  }
+
+  .footer-actions,
+  .form-row{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top-logo">⚠️</div>
+<div class="company">AIR ACCESSORIES & AVIONICS</div>
+<h1>Risk Detail</h1>
+<div class="subtitle">Professional Safety Risk Assessment File</div>
+<div class="title-line"></div>
+
+<div class="box" id="reportBox">Loading report...</div>
+
+<div class="box">
+<h3>Initial Risk Assessment</h3>
+<p>Select the applicable cell directly in the risk matrix.</p>
+
+<div class="result" id="result">No risk selected yet.</div>
+<p><b>Risk Saved:</b> <span id="savedRisk">N/A</span></p>
+
+<div class="matrix" id="matrix"></div>
+
+<div class="definition-box" id="definitionBox">
+<h3>Risk Definition</h3>
+Press any cell in the matrix to see the severity and probability definitions.
+</div>
+
+<div class="bottom">
+<button id="saveRiskBtn" onclick="saveRisk()">💾 Save Risk</button>
+<button class="back-btn" onclick="goBack()">⬅️ Back</button>
+</div>
+</div>
+
+<div class="investigation-box">
+<h3>Investigation Modules</h3>
+
+<div class="module-grid">
+<button id="fiveWhysBtn" class="module-btn" onclick="openFiveWhys()">5 Whys</button>
+<button id="shellBtn" class="module-btn" onclick="openSHELL()">SHELL</button>
+<button id="bowTieBtn" class="module-btn" onclick="openBowTie()">Bow-Tie</button>
+<button id="dirtydozenBtn" class="module-btn" onclick="openDirtyDozen()">Dirty Dozen</button>
+</div>
+</div>
+
+<div class="cpa-box">
+<h3>CPA Module</h3>
+
+<div class="form-row">
+<select id="controlType">
+<option>Elimination</option>
+<option>Substitution</option>
+<option>Engineering</option>
+<option>Administration</option>
+<option>PPE</option>
+</select>
+
+<input id="actionPlan" placeholder="Action Plan">
+
+<input type="date" id="actionDate">
+
+<select id="emailTo">
+<option>andresquintero01@gmail.com</option>
+<option>Geraldinmurilli85@gmail.com</option>
+</select>
+
+<button onclick="saveCPA()">Save CPA</button>
+</div>
+
+<div id="cpaContainer"></div>
+</div>
+
+<div class="attachment-box">
+<h3>CPA Attachments</h3>
+<div id="attachmentContainer"></div>
+</div>
+
+<div class="box">
+<h3>Residual Risk Assessment</h3>
+<p>After CPA implementation, select the applicable cell directly in the residual risk matrix.</p>
+
+<div class="result" id="residualResult">No residual risk selected yet.</div>
+<p><b>Residual Risk Saved:</b> <span id="savedResidualRisk">N/A</span></p>
+
+<div class="matrix" id="residualMatrix"></div>
+
+<div class="definition-box" id="residualDefinitionBox">
+<h3>Residual Risk Definition</h3>
+Press any cell in the residual matrix to see the severity and probability definitions.
+</div>
+
+<div class="bottom">
+<button id="saveResidualRiskBtn" onclick="saveResidualRisk()">💾 Save Residual Risk</button>
+<button class="back-btn" onclick="goBack()">⬅️ Back</button>
+</div>
+</div>
+
+<div class="box" id="printInvestigationData">
+<h3>Investigation Information</h3>
+<div id="fiveWhysPrint"><b>5 Whys:</b> N/A</div><br>
+<div id="shellPrint"><b>SHELL:</b> N/A</div><br>
+<div id="bowTiePrint"><b>Bow-Tie:</b> N/A</div><br>
+<div id="dirtyDozenPrint"><b>Dirty Dozen:</b> N/A</div><br>
+</div>
+
+<div class="footer-actions">
+<button class="print-file-btn" onclick="printFullFile()">🖨️ Print File</button>
+<button class="home-btn" onclick="goHome()">🏠 Home</button>
+<button class="back-btn" onclick="goBack()">⬅️ Back</button>
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { getDatabase, ref, get, update, push, remove }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+import { getStorage, ref as storageRef, deleteObject }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const storage = getStorage(app);
+
+const params = new URLSearchParams(window.location.search);
+
+let key =
+params.get("key") ||
+params.get("id") ||
+params.get("reportId") ||
+localStorage.getItem("currentRiskKey") ||
+"";
+
+if(key && key !== "general"){
+  localStorage.setItem("currentRiskKey",key);
+}
+
+let p="",s="",risk="",cpaCounter=0;
+let rp="",rs="",residualRisk="";
+
+const mandatoryInvestigationRisks = ["A5","B5","C5","A4","B4","A3"];
+
+const severityDefinitions = {
+  A:{name:"Catastrophic",es:"Catastrófica",desc:"Destruction of equipment or multiple fatalities."},
+  B:{name:"Hazardous",es:"Peligrosa",desc:"Large reduction in safety margins, serious injuries, or major aircraft damage."},
+  C:{name:"Major",es:"Mayor",desc:"Significant reduction in safety, minor injuries, or considerable increase in workload."},
+  D:{name:"Minor",es:"Menor",desc:"Operational limitations, minor inconvenience, or small safety impact."},
+  E:{name:"Negligible",es:"Insignificante",desc:"Minimal consequences or no appreciable impact on safety."}
+};
+
+const probabilityDefinitions = {
+  5:{name:"Frequent",es:"Frecuente",desc:"Likely to occur many times."},
+  4:{name:"Occasional",es:"Ocasional",desc:"Likely to occur sometimes."},
+  3:{name:"Remote",es:"Remota",desc:"Unlikely, but may occur."},
+  2:{name:"Improbable",es:"Improbable",desc:"Very unlikely to occur."},
+  1:{name:"Extremely Improbable",es:"Extremadamente Improbable",desc:"Almost inconceivable, but still possible."}
+};
+
+function safeText(value){
+  if(value === undefined || value === null || value === "") return "N/A";
+  return String(value)
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;");
+}
+
+function safeAttr(value){
+  if(value === undefined || value === null) return "";
+  return String(value)
+  .replaceAll("&","&amp;")
+  .replaceAll("'","&#39;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;");
+}
+
+function getRiskClass(severity, probability){
+  const code = severity + probability;
+  const extreme = ["A5","A4","A3","B5","B4","C5"];
+  const high = ["A2","B3","C4","D5"];
+  const medium = ["A1","B2","C3","D4","E5","B1","C2","D3","E4"];
+  const low = ["C1","D2","E3","D1","E2","E1"];
+
+  if(extreme.includes(code)) return "extreme";
+  if(high.includes(code)) return "high";
+  if(medium.includes(code)) return "medium";
+  if(low.includes(code)) return "low";
+  return "low";
+}
+
+function getRiskLevel(severity, probability){
+  const riskClass = getRiskClass(severity, probability);
+  if(riskClass==="extreme") return "HIGH / EXTREME 🔴";
+  if(riskClass==="high") return "HIGH 🟠";
+  if(riskClass==="medium") return "MEDIUM 🟡";
+  return "LOW 🟢";
+}
+
+function getMandatoryInvestigationMessage(code){
+  if(!mandatoryInvestigationRisks.includes(code)){
+    return "";
+  }
+
+  return `
+  <div class="mandatory-box">
+    <h3>Mandatory Safety Action Required</h3>
+    <p>Based on the initial risk assessment selected <b>${code}</b>, this event requires:</p>
+    <ul>
+      <li><b>SAG Review:</b> The case must be reviewed by the Safety Action Group.</li>
+      <li><b>In-depth Investigation:</b> A formal investigation must be performed.</li>
+      <li><b>Recommended Methodologies:</b> MEDA, REDA, HFACS or FRAT.</li>
+    </ul>
+    <p>These tools for a deeper investigation are located in the <b>Risk Management Tools</b> tab.</p>
+  </div>
+  `;
+}
+
+function showDefinition(boxId, severity, probability, code, isInitialRisk){
+  const sev = severityDefinitions[severity];
+  const prob = probabilityDefinitions[probability];
+
+  let mandatoryMessage = "";
+
+  if(isInitialRisk === true){
+    mandatoryMessage = getMandatoryInvestigationMessage(code);
+  }
+
+  document.getElementById(boxId).innerHTML = `
+  <h3>Risk Selected: ${code}</h3>
+  <p><b>Severity ${severity} - ${sev.name} (${sev.es}):</b><br>${sev.desc}</p>
+  <p><b>Probability ${probability} - ${prob.name} (${prob.es}):</b><br>${prob.desc}</p>
+  <p><b>Risk Level:</b> ${getRiskLevel(severity, probability)}</p>
+  ${mandatoryMessage}
+  `;
+}
+
+function restoreSavedRisk(code){
+  if(!code || code === "N/A") return;
+
+  const severity = code.charAt(0);
+  const probability = code.charAt(1);
+
+  if(!severityDefinitions[severity] || !probabilityDefinitions[probability]) return;
+
+  s = severity;
+  p = probability;
+  risk = code;
+
+  document.getElementById("result").innerText = "Risk: " + risk + " → " + getRiskLevel(s,p);
+  showDefinition("definitionBox",s,p,risk,true);
+
+  document.querySelectorAll("#matrix .cell").forEach(cell=>{
+    if(cell.innerText === code){
+      cell.classList.add("selected");
+    }
+  });
+}
+
+function restoreSavedResidualRisk(code){
+  if(!code || code === "N/A") return;
+
+  const severity = code.charAt(0);
+  const probability = code.charAt(1);
+
+  if(!severityDefinitions[severity] || !probabilityDefinitions[probability]) return;
+
+  rs = severity;
+  rp = probability;
+  residualRisk = code;
+
+  document.getElementById("residualResult").innerText = "Risk: " + residualRisk + " → " + getRiskLevel(rs,rp);
+  showDefinition("residualDefinitionBox",rs,rp,residualRisk,false);
+
+  document.querySelectorAll("#residualMatrix .cell").forEach(cell=>{
+    if(cell.innerText === code){
+      cell.classList.add("selected");
+    }
+  });
+}
+
+function markCompleted(id){
+  const el = document.getElementById(id);
+  if(el){
+    el.classList.add("completed");
+  }
+}
+
+function loadInvestigationModules(data){
+  if(data){
+    if(data.fiveWhys===true) markCompleted("fiveWhysBtn");
+    if(data.shell===true) markCompleted("shellBtn");
+    if(data.bowTie===true || data.contributingFactors===true) markCompleted("bowTieBtn");
+    if(data.dirtyDozen===true) markCompleted("dirtydozenBtn");
+  }
+
+  if(key && key !== "general"){
+    get(ref(db,"smsReports/"+key+"/investigation5Why")).then(snap=>{
+      if(snap.exists()) markCompleted("fiveWhysBtn");
+    });
+
+    get(ref(db,"smsReports/"+key+"/investigationSHELL")).then(snap=>{
+      if(snap.exists()) markCompleted("shellBtn");
+    });
+
+    get(ref(db,"smsReports/"+key+"/investigationBowTie")).then(snap=>{
+      if(snap.exists()) markCompleted("bowTieBtn");
+    });
+
+    get(ref(db,"smsReports/"+key+"/investigationDirtyDozen")).then(snap=>{
+      if(snap.exists()) markCompleted("dirtydozenBtn");
+    });
+  }
+}
+
+function loadMainReport(){
+  if(!key || key === "general"){
+    document.getElementById("reportBox").innerHTML =
+    "<b style='color:red;'>ERROR:</b> No valid report key. Open this report from SMS Database.";
+    renderMatrix();
+    renderResidualMatrix();
+    return;
+  }
+
+  get(ref(db,"smsReports/"+key)).then(snap=>{
+    if(snap.exists()){
+      const d=snap.val();
+
+      document.getElementById("reportBox").innerHTML=`
+      <b>ID:</b> ${safeText(d.reportId || key || "")}<br>
+      <b>Title:</b> ${safeText(d.title)}<br>
+      <b>Name:</b> ${safeText(d.reporterName)}<br>
+      <b>Date:</b> ${safeText(d.date)}<br>
+      <b>Flight Number:</b> ${safeText(d.flightNumber)}<br>
+      <b>Aircraft Registration:</b> ${safeText(d.aircraftRegistration)}<br>
+      <b>Airport:</b> ${safeText(d.airport)}<br>
+      <b>Destination:</b> ${safeText(d.destination)}<br>
+      <b>Type Report:</b> ${safeText(d.reportType)}<br>
+      <b>What Happened:</b> ${safeText(d.whatHappened)}<br>
+      <b>Recommendation:</b> ${safeText(d.recommendation)}<br>
+      <b>Risk:</b> ${safeText(d.risk)}
+      `;
+
+      document.getElementById("savedRisk").innerText=d.risk||"N/A";
+      document.getElementById("savedResidualRisk").innerText=d.residualRisk||"N/A";
+
+      renderMatrix();
+      renderResidualMatrix();
+
+      restoreSavedRisk(d.risk);
+      restoreSavedResidualRisk(d.residualRisk);
+
+      if(d.riskClosed===true){
+        document.getElementById("saveRiskBtn").classList.add("closed");
+      }
+
+      if(d.residualRiskClosed===true){
+        document.getElementById("saveResidualRiskBtn").classList.add("closed");
+      }
+
+      loadInvestigationModules(d.investigationModules);
+      loadCPA(d.CPA);
+      loadPrintInvestigationData();
+
+    }else{
+      document.getElementById("reportBox").innerHTML =
+      "<b style='color:red;'>Report not found.</b><br>Key used: "+safeText(key);
+
+      renderMatrix();
+      renderResidualMatrix();
+    }
+  });
+}
+
+window.openFiveWhys=function(){
+  if(!key || key === "general"){
+    alert("No valid report key. Open Risk Detail from SMS Database.");
+    return;
+  }
+
+  update(ref(db,"smsReports/"+key+"/investigationModules"),{
+    fiveWhys:true
+  }).then(()=>{
+    markCompleted("fiveWhysBtn");
+    location.href="Investigation-5Why.html?key="+key;
+  });
+};
+
+window.openSHELL=function(){
+  if(!key || key === "general"){
+    alert("No valid report key. Open Risk Detail from SMS Database.");
+    return;
+  }
+
+  update(ref(db,"smsReports/"+key+"/investigationModules"),{
+    shell:true
+  }).then(()=>{
+    markCompleted("shellBtn");
+    location.href="Investigation-SHELL.html?key="+key;
+  });
+};
+
+window.openBowTie=function(){
+  if(!key || key === "general"){
+    alert("No valid report key. Open Risk Detail from SMS Database.");
+    return;
+  }
+
+  update(ref(db,"smsReports/"+key+"/investigationModules"),{
+    bowTie:true,
+    contributingFactors:false
+  }).then(()=>{
+    markCompleted("bowTieBtn");
+    location.href="Investigation-Bow-Tie.html?key="+key;
+  });
+};
+
+window.openDirtyDozen=function(){
+  if(!key || key === "general"){
+    alert("No valid report key. Open Risk Detail from SMS Database.");
+    return;
+  }
+
+  update(ref(db,"smsReports/"+key+"/investigationModules"),{
+    dirtyDozen:true
+  }).then(()=>{
+    markCompleted("dirtydozenBtn");
+    location.href="Investigation-DirtyDozen.html?key="+key;
+  });
+};
+
+window.saveRisk=function(){
+  if(!risk){
+    alert("Please select a risk cell first.");
+    return;
+  }
+
+  let requiredInvestigation = mandatoryInvestigationRisks.includes(risk);
+
+  update(ref(db,"smsReports/"+key),{
+    risk:risk,
+    riskClosed:true,
+    status:"IN PROGRESS",
+    sagRequired:requiredInvestigation,
+    inDepthInvestigationRequired:requiredInvestigation,
+    recommendedInvestigationMethods: requiredInvestigation ? "MEDA / REDA / HFACS / FRAT" : "As required based on safety assessment"
+  }).then(()=>{
+    document.getElementById("savedRisk").innerText=risk;
+    document.getElementById("saveRiskBtn").classList.add("closed");
+    alert("Risk saved successfully.");
+  });
+};
+
+window.saveResidualRisk=function(){
+  if(!residualRisk){
+    alert("Please select a residual risk cell first.");
+    return;
+  }
+
+  update(ref(db,"smsReports/"+key),{
+    residualRisk:residualRisk,
+    residualRiskClosed:true,
+    status:"CLOSED"
+  }).then(()=>{
+    document.getElementById("savedResidualRisk").innerText=residualRisk;
+    document.getElementById("saveResidualRiskBtn").classList.add("closed");
+    alert("Residual risk saved successfully.");
+  });
+};
+
+function renderMatrix(){
+  const m=document.getElementById("matrix");
+  m.innerHTML="";
+
+  const grid=document.createElement("div");
+  grid.className="matrix-grid";
+  grid.appendChild(document.createElement("div"));
+
+  [5,4,3,2,1].forEach(pValue=>{
+    let x=document.createElement("div");
+    x.className="header-cell";
+    x.innerText=pValue;
+    grid.appendChild(x);
+  });
+
+  ["A","B","C","D","E"].forEach(sValue=>{
+    let y=document.createElement("div");
+    y.className="side-cell";
+    y.innerText=sValue;
+    grid.appendChild(y);
+
+    [5,4,3,2,1].forEach(pValue=>{
+      let code=sValue+pValue;
+      let cell=document.createElement("div");
+      cell.className="cell "+getRiskClass(sValue,pValue);
+      cell.innerText=code;
+
+      cell.onclick=()=>{
+        p=pValue;
+        s=sValue;
+        risk=code;
+
+        document.getElementById("result").innerText="Risk: "+risk+" → "+getRiskLevel(s,p);
+        showDefinition("definitionBox",s,p,risk,true);
+
+        document.querySelectorAll("#matrix .cell").forEach(c=>c.classList.remove("selected"));
+        cell.classList.add("selected");
+      };
+
+      grid.appendChild(cell);
+    });
+  });
+
+  m.appendChild(grid);
+}
+
+function renderResidualMatrix(){
+  const m=document.getElementById("residualMatrix");
+  m.innerHTML="";
+
+  const grid=document.createElement("div");
+  grid.className="matrix-grid";
+  grid.appendChild(document.createElement("div"));
+
+  [5,4,3,2,1].forEach(pValue=>{
+    let x=document.createElement("div");
+    x.className="header-cell";
+    x.innerText=pValue;
+    grid.appendChild(x);
+  });
+
+  ["A","B","C","D","E"].forEach(sValue=>{
+    let y=document.createElement("div");
+    y.className="side-cell";
+    y.innerText=sValue;
+    grid.appendChild(y);
+
+    [5,4,3,2,1].forEach(pValue=>{
+      let code=sValue+pValue;
+      let cell=document.createElement("div");
+      cell.className="cell "+getRiskClass(sValue,pValue);
+      cell.innerText=code;
+
+      cell.onclick=()=>{
+        rp=pValue;
+        rs=sValue;
+        residualRisk=code;
+
+        document.getElementById("residualResult").innerText="Risk: "+residualRisk+" → "+getRiskLevel(rs,rp);
+        showDefinition("residualDefinitionBox",rs,rp,residualRisk,false);
+
+        document.querySelectorAll("#residualMatrix .cell").forEach(c=>c.classList.remove("selected"));
+        cell.classList.add("selected");
+      };
+
+      grid.appendChild(cell);
+    });
+  });
+
+  m.appendChild(grid);
+}
+
+window.saveCPA=function(){
+  const actionPlan = document.getElementById("actionPlan").value.trim();
+  const actionDate = document.getElementById("actionDate").value;
+
+  if(!actionPlan){
+    alert("Please enter an action plan.");
+    return;
+  }
+
+  if(!actionDate){
+    alert("Please select an action date.");
+    return;
+  }
+
+  cpaCounter++;
+
+  push(ref(db,"smsReports/"+key+"/CPA"),{
+    cpaNumber:cpaCounter,
+    controlType:document.getElementById("controlType").value,
+    actionPlan:actionPlan,
+    actionDate:actionDate,
+    emailTo:document.getElementById("emailTo").value,
+    attachments:{}
+  }).then(()=>{
+    document.getElementById("actionPlan").value="";
+    document.getElementById("actionDate").value="";
+
+    get(ref(db,"smsReports/"+key+"/CPA")).then(s=>{
+      if(s.exists()){
+        loadCPA(s.val());
+      }else{
+        loadCPA(null);
+      }
+    });
+  });
+};
+
+window.addDriveLink=async function(id,cpaNumber){
+  const driveLink = prompt("Paste Google Drive document link");
+
+  if(!driveLink){
+    alert("No Drive link added.");
+    return;
+  }
+
+  const attachmentId = Date.now();
+
+  await update(
+    ref(db,"smsReports/"+key+"/CPA/"+id+"/attachments/"+attachmentId),
+    {
+      url:driveLink,
+      name:"Google Drive Document"
+    }
+  );
+
+  get(ref(db,"smsReports/"+key+"/CPA")).then(s=>{
+    if(s.exists()) loadCPA(s.val());
+  });
+};
+
+window.sendCPAEmail=function(email,type,action,date,cpaNumber,pdfUrl){
+  const reportBox = document.getElementById("reportBox");
+
+  const reportId =
+  reportBox.innerHTML.match(/<b>ID:<\/b>\s*([^<]+)/)?.[1]?.trim() || "N/A";
+
+  const title =
+  reportBox.innerHTML.match(/<b>Title:<\/b>\s*([^<]+)/)?.[1]?.trim() || "N/A";
+
+  const subject = encodeURIComponent(
+    "CPA "+cpaNumber+" - "+title
+  );
+
+  const body = encodeURIComponent(
+    "Report ID: "+reportId+"\n"+
+    "Title: "+title+"\n\n"+
+    "CPA "+cpaNumber+"\n\n"+
+    "Control Type: "+type+"\n"+
+    "Action Plan: "+action+"\n"+
+    "Action Date: "+date+"\n\n"+
+    (pdfUrl ? "Document Link: "+pdfUrl+"\n\n" : "")+
+    "Please review and follow up accordingly."
+  );
+
+  window.location.href =
+  "mailto:"+email+
+  "?subject="+subject+
+  "&body="+body;
+};
+
+window.deleteCPA=async function(id,pdfPath){
+  if(!confirm("Delete this CPA?")) return;
+
+  if(pdfPath){
+    try{
+      await deleteObject(storageRef(storage,pdfPath));
+    }catch(e){}
+  }
+
+  remove(ref(db,"smsReports/"+key+"/CPA/"+id)).then(()=>{
+    get(ref(db,"smsReports/"+key+"/CPA")).then(s=>{
+      if(s.exists()){
+        loadCPA(s.val());
+      }else{
+        loadCPA(null);
+      }
+    });
+  });
+};
+
+function loadCPA(data){
+  const c=document.getElementById("cpaContainer");
+  const a=document.getElementById("attachmentContainer");
+
+  c.innerHTML="";
+  a.innerHTML="";
+
+  if(!data){
+    cpaCounter=0;
+    return;
+  }
+
+  cpaCounter=Object.keys(data).length;
+
+  Object.entries(data).forEach(([id,x],i)=>{
+    let div=document.createElement("div");
+    div.className="cpa-item";
+
+    div.innerHTML=`
+    <button class="delete-btn" onclick="deleteCPA('${safeAttr(id)}','${safeAttr(x.pdfPath||"")}')">🗑️</button>
+    <b>CPA ${i+1}</b><br>
+    Type: ${safeText(x.controlType)}<br>
+    Action: ${safeText(x.actionPlan)}<br>
+    Date: ${safeText(x.actionDate)}<br>
+    Email: ${safeText(x.emailTo)}<br><br>
+    <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
+    ${x.pdfUrl ? `<button class="send-btn" onclick="window.open('${safeAttr(x.pdfUrl)}','_blank')">Open Document</button>` : ""}
+    `;
+
+    c.appendChild(div);
+
+    let att=document.createElement("div");
+    att.className="attachment-item";
+
+    let attachmentHtml = `
+    <b>CPA Attachment ${i+1}</b><br>
+    <button onclick="addDriveLink('${safeAttr(id)}','${i+1}')">+ Add Attachment</button><br><br>
+    `;
+
+    if(x.attachments){
+      Object.values(x.attachments).forEach(attDoc=>{
+        attachmentHtml += `
+        <div style="margin-top:8px;">
+          <button onclick="window.open('${safeAttr(attDoc.url)}','_blank')">
+            Open Document
+          </button>
+        </div>
+        `;
+      });
+    }else{
+      attachmentHtml += "No document link added";
+    }
+
+    att.innerHTML = attachmentHtml;
+    a.appendChild(att);
+  });
+}
+
+function cleanLabel(text){
+  const labels = {
+    fiveWhy1:"Why 1",
+    fiveWhy2:"Why 2",
+    fiveWhy3:"Why 3",
+    fiveWhy4:"Why 4",
+    fiveWhy5:"Why 5",
+    rootCause:"Root Cause / Contributing Factors",
+    correctiveActions:"Corrective Actions",
+    finalComments:"Final Comments",
+
+    communication:"Lack of Communication",
+    communicationNotes:"Communication Notes",
+    complacency:"Complacency",
+    complacencyNotes:"Complacency Notes",
+    knowledge:"Lack of Knowledge",
+    knowledgeNotes:"Knowledge Notes",
+    distraction:"Distraction",
+    distractionNotes:"Distraction Notes",
+    teamwork:"Lack of Teamwork",
+    teamworkNotes:"Teamwork Notes",
+    fatigue:"Fatigue",
+    fatigueNotes:"Fatigue Notes",
+    resources:"Lack of Resources",
+    resourcesNotes:"Resources Notes",
+    pressure:"Pressure",
+    pressureNotes:"Pressure Notes",
+    assertiveness:"Lack of Assertiveness",
+    assertivenessNotes:"Assertiveness Notes",
+    stress:"Stress",
+    stressNotes:"Stress Notes",
+    awareness:"Lack of Awareness",
+    awarenessNotes:"Awareness Notes",
+    norms:"Norms",
+    normsNotes:"Norms Notes"
+  };
+
+  return labels[text] || String(text)
+  .replace(/([A-Z])/g," $1")
+  .replace(/_/g," ")
+  .replace(/-/g," ")
+  .replace(/^./,str=>str.toUpperCase());
+}
+
+function formatPrintData(data){
+  let html = "";
+
+  if(!data) return "";
+
+  Object.entries(data).forEach(([k,v])=>{
+    if(
+      k === "status" ||
+      k === "savedAt" ||
+      k === "investigationId" ||
+      k === "updatedAt"
+    ){
+      return;
+    }
+
+    if(
+      v === null ||
+      v === undefined ||
+      v === "" ||
+      v === "N/A" ||
+      v === "No"
+    ){
+      return;
+    }
+
+    if(typeof v === "object"){
+      const nested = formatPrintData(v);
+
+      if(nested.trim() !== ""){
+        html += `
+        <div class="print-record">
+          <h4>${cleanLabel(k)}</h4>
+          ${nested}
+        </div>
+        `;
+      }
+
+    }else{
+      html += `
+      <div style="margin-bottom:12px;padding:10px;border-bottom:1px solid #e5e7eb;">
+        <div style="font-weight:900;color:#003b66;">
+          ${cleanLabel(k)}
+        </div>
+        <div style="margin-top:4px;color:#111827;">
+          ${safeText(v)}
+        </div>
+      </div>
+      `;
+    }
+  });
+
+  return html;
+}
+
+async function loadPrintInvestigationData(){
+  document.getElementById("fiveWhysPrint").innerHTML = "";
+  document.getElementById("shellPrint").innerHTML = "";
+  document.getElementById("bowTiePrint").innerHTML = "";
+  document.getElementById("dirtyDozenPrint").innerHTML = "";
+
+  if(!key || key === "general") return;
+
+  const snap = await get(ref(db,"smsReports/"+key));
+
+  if(!snap.exists()) return;
+
+  const d = snap.val();
+
+  if(d.investigation5Why){
+    const content = formatPrintData(d.investigation5Why);
+    if(content.trim() !== ""){
+      document.getElementById("fiveWhysPrint").innerHTML =
+      "<div class='print-record'><h4>5 Whys Investigation</h4>" + content + "</div>";
+    }
+  }
+
+  if(d.investigationSHELL){
+    const content = formatPrintData(d.investigationSHELL);
+    if(content.trim() !== ""){
+      document.getElementById("shellPrint").innerHTML =
+      "<div class='print-record'><h4>SHELL Investigation</h4>" + content + "</div>";
+    }
+  }
+
+  if(d.investigationBowTie){
+    const content = formatPrintData(d.investigationBowTie);
+    if(content.trim() !== ""){
+      document.getElementById("bowTiePrint").innerHTML =
+      "<div class='print-record'><h4>Bow-Tie Investigation</h4>" + content + "</div>";
+    }
+  }
+
+  if(d.investigationDirtyDozen){
+    const content = formatPrintData(d.investigationDirtyDozen);
+    if(content.trim() !== ""){
+      document.getElementById("dirtyDozenPrint").innerHTML =
+      "<div class='print-record'><h4>Dirty Dozen Investigation</h4>" + content + "</div>";
+    }
+  }
+}
+
+window.printFullFile = async function(){
+  try{
+    await loadPrintInvestigationData();
+  }catch(error){
+    console.log("Print data could not be fully loaded:", error);
+  }
+
+  setTimeout(()=>{
+    window.print();
+  },300);
+};
+
+window.goBack=()=>location.href="SMS-Database.html";
+window.goHome=()=>location.href="index.html";
+
+loadMainReport();
+
+</script>
+
+</body>
+</html>
