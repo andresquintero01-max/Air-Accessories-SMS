@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Investigation - SHELL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --navy:#003b66;
+  --blue:#00aeef;
+  --dark:#021730;
+  --soft:#f8fbff;
+  --gray:#56657d;
+  --green:#16a34a;
+  --red:#dc2626;
+}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:35px;
+  background:
+  radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.container{
+  max-width:1250px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  border-radius:38px;
+  padding:45px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.logo{
+  width:92px;
+  height:92px;
+  margin:0 auto 18px;
+  border-radius:26px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:42px;
+}
+
+.company{
+  text-align:center;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:8px;
+}
+
+h1{
+  text-align:center;
+  color:var(--navy);
+  font-size:52px;
+  font-weight:900;
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--gray);
+  font-size:19px;
+  margin:10px 0 30px;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:0 auto 34px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
+}
+
+.report-box{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  background:#f8fbff;
+  border-left:8px solid var(--blue);
+  border-radius:20px;
+  padding:20px 25px;
+  margin-bottom:30px;
+  box-shadow:0 10px 24px rgba(0,0,0,.09);
+  font-weight:900;
+  color:var(--navy);
+}
+
+.shell-diagram{
+  display:grid;
+  grid-template-columns:1fr 270px 1fr;
+  grid-template-rows:auto auto;
+  gap:25px;
+  align-items:center;
+}
+
+.center-shell{
+  grid-column:2;
+  grid-row:1 / 3;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.shell-core{
+  width:270px;
+  height:270px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:25px;
+  box-shadow:0 22px 50px rgba(0,59,102,.35);
+  border:8px solid white;
+}
+
+.shell-core h2{
+  font-size:52px;
+}
+
+.shell-core p{
+  margin-top:10px;
+  font-size:16px;
+  color:#e8f8ff;
+  font-weight:900;
+}
+
+.card{
+  background:white;
+  border-radius:26px;
+  padding:24px;
+  box-shadow:0 14px 34px rgba(0,0,0,.12);
+  border:1px solid #e2e8f0;
+}
+
+.card h3{
+  color:var(--navy);
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--gray);
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+textarea{
+  width:100%;
+  min-height:120px;
+  border:1px solid #cbd5e1;
+  border-radius:16px;
+  padding:14px;
+  font-size:15px;
+  resize:vertical;
+  outline:none;
+  background:#f8fafc;
+}
+
+textarea:focus{
+  background:white;
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px rgba(0,174,239,.15);
+}
+
+.software{
+  grid-column:1;
+  grid-row:1;
+  border-left:8px solid #2563eb;
+}
+
+.hardware{
+  grid-column:3;
+  grid-row:1;
+  border-left:8px solid #dc2626;
+}
+
+.environment{
+  grid-column:1;
+  grid-row:2;
+  border-left:8px solid #16a34a;
+}
+
+.liveware{
+  grid-column:3;
+  grid-row:2;
+  border-left:8px solid #9333ea;
+}
+
+.actions{
+  margin-top:34px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  border-top:1px solid #e2e8f0;
+  padding-top:25px;
+}
+
+button{
+  border:none;
+  color:white;
+  padding:16px 22px;
+  border-radius:17px;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(0,0,0,.22);
+  transition:.25s;
+}
+
+button:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+.save{background:linear-gradient(135deg,#15803d,#22c55e);}
+.delete{background:linear-gradient(135deg,#b91c1c,#ef4444);}
+.print{background:linear-gradient(135deg,#111827,#374151);}
+.back{background:linear-gradient(135deg,var(--navy),var(--blue));}
+.home{background:linear-gradient(135deg,#003b66,#005288);}
+
+@media print{
+  body{background:white;padding:10px;}
+  .container{box-shadow:none;}
+  .actions{display:none;}
+  .card{box-shadow:none;break-inside:avoid;}
+}
+
+@media(max-width:950px){
+  body{padding:20px;}
+  .container{padding:26px;border-radius:28px;}
+  h1{font-size:38px;}
+
+  .shell-diagram{
+    display:block;
+  }
+
+  .card,
+  .shell-core{
+    margin-bottom:18px;
+  }
+
+  .shell-core{
+    width:100%;
+    height:auto;
+    border-radius:26px;
+  }
+
+  .report-box{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">🧩</div>
+<div class="company">AIR ACCESSORIES & AVIONICS</div>
+<h1>Investigation - SHELL</h1>
+<div class="subtitle">Software • Hardware • Environment • Liveware</div>
+<div class="title-line"></div>
+
+<div class="report-box">
+  <div>Report ID: <span id="reportId">Loading...</span></div>
+  <div>Saved at: <span id="savedAt">Not saved yet</span></div>
+</div>
+
+<div class="shell-diagram">
+
+<div class="card software">
+  <h3>📘 S - Software</h3>
+  <p>Procedures, manuals, task cards, forms, instructions, policies, or documentation.</p>
+  <textarea id="software" placeholder="Describe any procedure, manual, form, or documentation issue..."></textarea>
+</div>
+
+<div class="card hardware">
+  <h3>🛠 H - Hardware</h3>
+  <p>Tools, equipment, aircraft parts, GSE, materials, systems, or physical resources.</p>
+  <textarea id="hardware" placeholder="Describe any tool, equipment, aircraft, or material issue..."></textarea>
+</div>
+
+<div class="center-shell">
+  <div class="shell-core">
+    <h2>SHELL</h2>
+    <p>Human Factors Interaction Model</p>
+  </div>
+</div>
+
+<div class="card environment">
+  <h3>🌦 E - Environment</h3>
+  <p>Work area, lighting, weather, noise, time pressure, shift, access, or workplace conditions.</p>
+  <textarea id="environment" placeholder="Describe any environmental or workplace condition..."></textarea>
+</div>
+
+<div class="card liveware">
+  <h3>👥 L - Liveware</h3>
+  <p>People, communication, supervision, training, fatigue, awareness, teamwork, or behavior.</p>
+  <textarea id="liveware" placeholder="Describe any human factor, communication, training, or supervision issue..."></textarea>
+</div>
+
+</div>
+
+<div class="actions">
+<button class="save" onclick="saveInvestigation()">💾 Save</button>
+<button class="delete" onclick="deleteInvestigation()">🗑 Delete</button>
+<button class="print" onclick="window.print()">🖨 Print</button>
+<button class="back" onclick="goBack()">⬅ Risk Detail</button>
+<button class="home" onclick="goHome()">🏠 Home</button>
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { getDatabase, ref, get, update, remove }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const key = new URLSearchParams(window.location.search).get("key");
+
+if(!key){
+  alert("No report key found.");
+}
+
+get(ref(db,"smsReports/"+key)).then(snapshot=>{
+  if(snapshot.exists()){
+    const d = snapshot.val();
+
+    document.getElementById("reportId").innerText = d.reportId || key || "N/A";
+
+    if(d.investigationSHELL){
+      const x = d.investigationSHELL;
+
+      document.getElementById("software").value = x.software || "";
+      document.getElementById("hardware").value = x.hardware || "";
+      document.getElementById("environment").value = x.environment || "";
+      document.getElementById("liveware").value = x.liveware || "";
+      document.getElementById("savedAt").innerText = x.savedAt || "Saved";
+    }
+  }else{
+    document.getElementById("reportId").innerText = "Report not found";
+  }
+});
+
+window.saveInvestigation = function(){
+  if(!key){
+    alert("No valid report key.");
+    return;
+  }
+
+  update(ref(db,"smsReports/"+key+"/investigationSHELL"),{
+    software:document.getElementById("software").value,
+    hardware:document.getElementById("hardware").value,
+    environment:document.getElementById("environment").value,
+    liveware:document.getElementById("liveware").value,
+    status:"Saved",
+    savedAt:new Date().toISOString()
+  }).then(()=>{
+
+    update(ref(db,"smsReports/"+key+"/investigationModules"),{
+      shell:true
+    });
+
+    document.getElementById("savedAt").innerText = new Date().toISOString();
+    alert("SHELL Investigation saved successfully.");
+  });
+};
+
+window.deleteInvestigation = function(){
+  if(!key){
+    alert("No valid report key.");
+    return;
+  }
+
+  if(confirm("Do you want to delete this SHELL investigation?")){
+    remove(ref(db,"smsReports/"+key+"/investigationSHELL")).then(()=>{
+
+      update(ref(db,"smsReports/"+key+"/investigationModules"),{
+        shell:false
+      });
+
+      document.getElementById("software").value = "";
+      document.getElementById("hardware").value = "";
+      document.getElementById("environment").value = "";
+      document.getElementById("liveware").value = "";
+      document.getElementById("savedAt").innerText = "Not saved yet";
+
+      alert("SHELL Investigation deleted.");
+    });
+  }
+};
+
+window.goBack = function(){
+  location.href = "Risk-Detail.html?key=" + key;
+};
+
+window.goHome = function(){
+  location.href = "index.html";
+};
+
+</script>
+
+</body>
+</html>
