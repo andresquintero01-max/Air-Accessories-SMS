@@ -1,1 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Air Accessories SMS</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Segoe UI',Arial,sans-serif;
+    min-height:100vh;
+    background:
+    radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+    linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:35px;
+}
+
+.login-container,.main-container{
+    width:100%;
+    max-width:1150px;
+    background:rgba(255,255,255,.96);
+    border-radius:42px;
+    padding:60px;
+    box-shadow:0 32px 85px rgba(0,0,0,.48);
+}
+
+.login-container{text-align:center;}
+.main-container{display:none;}
+
+.logo-img{
+    width:245px;
+    display:block;
+    margin:0 auto 25px auto;
+}
+
+.brand{
+    text-align:center;
+    color:#003b66;
+    font-size:54px;
+    font-weight:900;
+    margin-bottom:18px;
+}
+
+h1{
+    color:#003b66;
+    font-size:48px;
+    margin-bottom:18px;
+    text-align:center;
+}
+
+p,.subtitle{
+    color:#56657d;
+    font-size:21px;
+    line-height:1.7;
+    margin-bottom:36px;
+    text-align:center;
+}
+
+.highlight{color:#00aeef;font-weight:900;}
+
+.login-box{
+    max-width:430px;
+    margin:auto;
+}
+
+.login-box input{
+    width:100%;
+    padding:17px;
+    margin-bottom:15px;
+    border:1px solid #d5dbe5;
+    border-radius:16px;
+    font-size:17px;
+}
+
+.login-box button{
+    width:100%;
+    padding:18px;
+    background:linear-gradient(135deg,#003b66,#00aeef);
+    color:white;
+    border:none;
+    border-radius:16px;
+    font-size:18px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.logout-area{text-align:right;margin-bottom:20px;}
+
+.logout-btn{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.new-report-banner{
+    display:none;
+    background:linear-gradient(135deg,#003b66,#00aeef);
+    color:white;
+    border-radius:24px;
+    padding:24px;
+    margin-bottom:32px;
+    text-align:center;
+}
+
+.new-report-banner button{
+    padding:15px 32px;
+    border:none;
+    border-radius:16px;
+    background:white;
+    color:#003b66;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+}
+
+.btn{
+    text-decoration:none;
+    background:linear-gradient(135deg,#ffffff,#f8fbff);
+    border-radius:34px;
+    padding:30px 34px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 16px 35px rgba(0,0,0,.12);
+    border:1px solid #eef2f7;
+}
+
+.btn-left{
+    display:flex;
+    align-items:center;
+    gap:26px;
+}
+
+.icon{
+    width:92px;
+    height:92px;
+    border-radius:28px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:42px;
+    background:linear-gradient(135deg,#003b66,#00aeef);
+}
+
+.text h2{
+    color:#003b66;
+    font-size:38px;
+}
+
+.text p{
+    color:#56657d;
+    font-size:19px;
+    margin:0;
+    text-align:left;
+}
+
+.arrow{
+    font-size:62px;
+    color:#00aeef;
+}
+
+.footer{
+    margin-top:48px;
+    text-align:center;
+    color:#4d5d77;
+    font-size:15px;
+    letter-spacing:4px;
+    font-weight:900;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-container" id="loginPage">
+    <img src="images/air-accessories-logo.png" class="logo-img" alt="Air Accessories Logo">
+    <h1>Air Accessories & Avionics SMS</h1>
+    <p>Professional Safety Management System platform for hazard reporting, risk analysis, safety assurance and safety promotion.</p>
+
+    <div class="login-box">
+        <input type="email" id="username" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">ENTER SYSTEM</button>
+    </div>
+</div>
+
+<div class="main-container" id="systemPage">
+    <div class="brand">Air Accessories & Avionics</div>
+
+    <div class="logout-area">
+        <button onclick="logout()" class="logout-btn">LOG OUT</button>
+    </div>
+
+    <h1>Safety Management System</h1>
+
+    <div class="subtitle">
+        Powered by <span class="highlight">371Q</span> Professional Aviation Safety Software.
+    </div>
+
+    <div class="new-report-banner" id="newReportBanner">
+        <h2>🚨 NEW REPORTS: <span id="newReportCount">0</span></h2>
+        <p>You have new SMS reports pending review.</p>
+        <button onclick="openDatabaseAndClear()">OPEN SMS DATABASE</button>
+    </div>
+
+    <div class="menu">
+        <a class="btn dashboard" id="dashboardBtn" href="Dashboard.html">
+            <div class="btn-left"><div class="icon">📊</div><div class="text"><h2>Dashboard</h2><p>General overview of SMS reports, indicators and system status.</p></div></div><div class="arrow">›</div>
+        </a>
+
+        <a class="btn policy" id="policyBtn" href="SMS-Policy.html">
+            <div class="btn-left"><div class="icon">📄</div><div class="text"><h2>SMS Policy</h2><p>Policies, manuals, objectives and emergency plans.</p></div></div><div class="arrow">›</div>
+        </a>
+
+        <a class="btn hazard" id="hazardBtn" href="Hazard-Identification.html">
+            <div class="btn-left"><div class="icon">⚠️</div><div class="text"><h2>Hazard Identification</h2><p>Hazard reporting and risk identification system.</p></div></div><div class="arrow">›</div>
+        </a>
+
+        <a class="btn assurance" id="assuranceBtn" href="Safety-Assurance.html">
+            <div class="btn-left"><div class="icon">✔️</div><div class="text"><h2>Safety Assurance</h2><p>Audits, inspections and safety performance monitoring.</p></div></div><div class="arrow">›</div>
+        </a>
+
+        <a class="btn promotion" id="promotionBtn" href="Safety-Promotion.html">
+            <div class="btn-left"><div class="icon">👥</div><div class="text"><h2>Safety Promotion</h2><p>Training, communication and safety culture.</p></div></div><div class="arrow">›</div>
+        </a>
+    </div>
+
+    <div class="footer">AIR ACCESSORIES SMS • REAL-TIME SAFETY • TOTAL CONTROL</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCgeoQf74WzrTkLx_8CcFJSJfaRtHNL-Y0",
+    authDomain: "air-accessories-sms.firebaseapp.com",
+    databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+    projectId: "air-accessories-sms",
+    storageBucket: "air-accessories-sms.firebasestorage.app",
+    messagingSenderId: "1051190584016",
+    appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth(app);
+
+let reportsListenerStarted = false;
+const SESSION_LIMIT = 2 * 60 * 60 * 1000;
+let sessionTimer = null;
+
+function startSessionControl(){
+    if(sessionTimer) clearInterval(sessionTimer);
+
+    sessionTimer = setInterval(() => {
+        const loginTime = localStorage.getItem("loginTime");
+        if(!loginTime) return;
+
+        if(Date.now() - parseInt(loginTime) >= SESSION_LIMIT){
+            clearInterval(sessionTimer);
+            localStorage.clear();
+            signOut(auth).then(() => {
+                alert("Your session expired. Please log in again.");
+                window.location.href = "index.html";
+            });
+        }
+    }, 60000);
+}
+
+function showSystem(){
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("systemPage").style.display = "block";
+    startNewReportCounter();
+}
+
+function showLogin(){
+    document.getElementById("systemPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "block";
+}
+
+function startNewReportCounter(){
+    if(reportsListenerStarted) return;
+    reportsListenerStarted = true;
+
+    onValue(ref(database, "smsReports"), (snapshot)=>{
+        const data = snapshot.val() || {};
+        const reports = Object.values(data);
+        const lastSeen = localStorage.getItem("lastSeenSMSReportTime") || "2000-01-01T00:00:00.000Z";
+
+        let newReports = 0;
+
+        reports.forEach(report => {
+            const reportTime = report.timestamp || report.createdAt || report.date || "";
+            if(reportTime && reportTime > lastSeen) newReports++;
+        });
+
+        document.getElementById("newReportCount").innerText = newReports;
+        document.getElementById("newReportBanner").style.display = newReports > 0 ? "block" : "none";
+    });
+}
+
+window.openDatabaseAndClear = function(){
+    localStorage.setItem("lastSeenSMSReportTime", new Date().toISOString());
+    window.location.href = "SMS-Database.html";
+};
+
+window.login = function(){
+    const email = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if(!email || !password){
+        alert("Please enter email and password");
+        return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+        localStorage.setItem("loginTime", Date.now());
+    })
+    .catch(() => {
+        alert("Invalid email or password");
+    });
+};
+
+document.addEventListener("keydown", function(e){
+    if(e.key === "Enter") window.login();
+});
+
+window.logout = function(){
+    localStorage.clear();
+    signOut(auth).then(() => {
+        showLogin();
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+    });
+};
+
+function applyRoleAccess(role){
+    const dashboardBtn = document.getElementById("dashboardBtn");
+    const policyBtn = document.getElementById("policyBtn");
+    const hazardBtn = document.getElementById("hazardBtn");
+    const assuranceBtn = document.getElementById("assuranceBtn");
+    const promotionBtn = document.getElementById("promotionBtn");
+    const databaseButton = document.querySelector("#newReportBanner button");
+
+    dashboardBtn.style.display = "flex";
+    policyBtn.style.display = "flex";
+    hazardBtn.style.display = "flex";
+    assuranceBtn.style.display = "flex";
+    promotionBtn.style.display = "flex";
+
+    if(role === "admin") return;
+
+    if(role === "tech" || role === "technician"){
+        dashboardBtn.style.display = "none";
+        assuranceBtn.style.display = "none";
+        if(databaseButton) databaseButton.style.display = "none";
+    }
+}
+
+onAuthStateChanged(auth, async (user) => {
+    if(user){
+        const snapshot = await get(child(ref(database), "users/" + user.uid));
+
+        if(snapshot.exists()){
+            const userData = snapshot.val();
+            const role = (userData.role || "").toLowerCase().trim();
+
+            localStorage.setItem("userRole", role);
+            localStorage.setItem("companyId", userData.companyId || "air-accessories");
+
+            applyRoleAccess(role);
+            showSystem();
+            startSessionControl();
+        }else{
+            alert("User role not found. Contact administrator.");
+            signOut(auth);
+        }
+    }else{
+        showLogin();
+    }
+});
+</script>
+
+</body>
+</html>
