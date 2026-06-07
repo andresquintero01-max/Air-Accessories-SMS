@@ -339,7 +339,7 @@ window.login = function(){
         localStorage.setItem("loginTime", Date.now());
     })
     .catch((error) => {
-    alert(error.code);
+    alert(error.code + "\n\n" + error.message);
     console.log(error);
 });
 };
