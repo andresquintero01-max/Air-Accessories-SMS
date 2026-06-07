@@ -265,7 +265,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth(app);
-    alert(firebaseConfig.apiKey);
+    
 
 let reportsListenerStarted = false;
 const SESSION_LIMIT = 2 * 60 * 60 * 1000;
@@ -339,9 +339,9 @@ window.login = function(){
     .then(() => {
         localStorage.setItem("loginTime", Date.now());
     })
-    .catch((error) => {
-    alert(error.code + "\n\n" + error.message);
-    console.log(error);
+   .catch((error) => {
+    alert("Invalid email or password");
+    console.error(error);
 });
 };
 
