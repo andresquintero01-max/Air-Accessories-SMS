@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Investigation - Dirty Dozen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --navy:#003b66;
+  --blue:#00aeef;
+  --dark:#021730;
+  --soft:#f8fbff;
+  --gray:#56657d;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#ff9800;
+}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:35px;
+  background:
+  radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.container{
+  max-width:1250px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  border-radius:38px;
+  padding:45px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.logo{
+  width:92px;
+  height:92px;
+  margin:0 auto 18px;
+  border-radius:26px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:42px;
+  box-shadow:0 14px 32px rgba(0,59,102,.35);
+}
+
+.company{
+  text-align:center;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:8px;
+}
+
+h1{
+  text-align:center;
+  color:var(--navy);
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--gray);
+  font-size:19px;
+  margin-bottom:26px;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:0 auto 34px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
+}
+
+.report-box{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  background:#f8fbff;
+  border-left:8px solid var(--blue);
+  border-radius:20px;
+  padding:20px 25px;
+  margin-bottom:30px;
+  box-shadow:0 10px 24px rgba(0,0,0,.09);
+  font-weight:900;
+  color:var(--navy);
+}
+
+.top-buttons{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(165px,1fr));
+  gap:14px;
+  margin-bottom:35px;
+}
+
+button{
+  border:none;
+  padding:16px 22px;
+  border-radius:17px;
+  color:white;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(0,0,0,.22);
+  transition:.25s;
+}
+
+button:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+.save{background:linear-gradient(135deg,#15803d,#22c55e);}
+.print{background:linear-gradient(135deg,#111827,#374151);}
+.delete{background:linear-gradient(135deg,#b91c1c,#ef4444);}
+.back{background:linear-gradient(135deg,var(--navy),var(--blue));}
+.home{background:linear-gradient(135deg,#003b66,#005288);}
+
+.section{
+  background:white;
+  border:1px solid #e4eaf3;
+  border-left:8px solid var(--blue);
+  border-radius:26px;
+  padding:28px;
+  margin-bottom:26px;
+  box-shadow:0 14px 34px rgba(0,0,0,.12);
+}
+
+.section h2{
+  color:var(--navy);
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+label{
+  font-weight:900;
+  color:var(--navy);
+  display:block;
+  margin-bottom:8px;
+}
+
+textarea,
+select{
+  width:100%;
+  padding:14px;
+  border:1px solid #cfd8e3;
+  border-radius:14px;
+  font-size:15px;
+  font-family:inherit;
+  outline:none;
+  background:#f8fafc;
+}
+
+textarea{
+  min-height:95px;
+  resize:vertical;
+}
+
+textarea:focus,
+select:focus{
+  background:white;
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px rgba(0,174,239,.15);
+}
+
+.dirty-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card{
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  border-radius:22px;
+  padding:20px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+  border-top:7px solid var(--blue);
+}
+
+.card:nth-child(3n+1){
+  border-top-color:var(--blue);
+}
+
+.card:nth-child(3n+2){
+  border-top-color:var(--navy);
+}
+
+.card:nth-child(3n+3){
+  border-top-color:var(--orange);
+}
+
+.card h3{
+  color:var(--navy);
+  font-size:21px;
+  margin-bottom:12px;
+}
+
+.card select{
+  margin-bottom:12px;
+}
+
+.conclusion-grid{
+  display:grid;
+  gap:18px;
+}
+
+.status{
+  text-align:center;
+  margin-top:20px;
+  font-weight:900;
+  color:#047857;
+  font-size:18px;
+}
+
+@media(max-width:900px){
+  body{
+    padding:20px;
+  }
+
+  .container{
+    padding:26px;
+    border-radius:28px;
+  }
+
+  h1{
+    font-size:38px;
+  }
+
+  .dirty-grid{
+    grid-template-columns:1fr;
+  }
+
+  .report-box{
+    flex-direction:column;
+  }
+}
+
+@media print{
+  body{
+    background:white;
+    padding:10px;
+  }
+
+  .container{
+    box-shadow:none;
+    border-radius:0;
+  }
+
+  .top-buttons{
+    display:none;
+  }
+
+  .section,
+  .card{
+    box-shadow:none;
+    break-inside:avoid;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">🧠</div>
+  <div class="company">AIR ACCESSORIES & AVIONICS</div>
+  <h1>Investigation - Dirty Dozen</h1>
+  <p class="subtitle">Human Factors Investigation Tool</p>
+  <div class="title-line"></div>
+
+  <div class="report-box">
+    <div>Report ID: <span id="reportId">Loading...</span></div>
+    <div>Saved at: <span id="savedAt">Not saved yet</span></div>
+  </div>
+
+  <div class="top-buttons">
+    <button class="save" onclick="saveInvestigation()">💾 Save</button>
+    <button class="print" onclick="window.print()">🖨 Print</button>
+    <button class="delete" onclick="deleteInvestigation()">🗑 Delete</button>
+    <button class="back" onclick="goBack()">⬅ Risk Detail</button>
+    <button class="home" onclick="goHome()">🏠 Home</button>
+  </div>
+
+  <div class="section">
+    <h2>Dirty Dozen Factors</h2>
+
+    <div class="dirty-grid">
+
+      <div class="card">
+        <h3>1. Lack of Communication</h3>
+        <select id="communication"><option>No</option><option>Yes</option></select>
+        <textarea id="communicationNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>2. Complacency</h3>
+        <select id="complacency"><option>No</option><option>Yes</option></select>
+        <textarea id="complacencyNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>3. Lack of Knowledge</h3>
+        <select id="knowledge"><option>No</option><option>Yes</option></select>
+        <textarea id="knowledgeNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>4. Distraction</h3>
+        <select id="distraction"><option>No</option><option>Yes</option></select>
+        <textarea id="distractionNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>5. Lack of Teamwork</h3>
+        <select id="teamwork"><option>No</option><option>Yes</option></select>
+        <textarea id="teamworkNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>6. Fatigue</h3>
+        <select id="fatigue"><option>No</option><option>Yes</option></select>
+        <textarea id="fatigueNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>7. Lack of Resources</h3>
+        <select id="resources"><option>No</option><option>Yes</option></select>
+        <textarea id="resourcesNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>8. Pressure</h3>
+        <select id="pressure"><option>No</option><option>Yes</option></select>
+        <textarea id="pressureNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>9. Lack of Assertiveness</h3>
+        <select id="assertiveness"><option>No</option><option>Yes</option></select>
+        <textarea id="assertivenessNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>10. Stress</h3>
+        <select id="stress"><option>No</option><option>Yes</option></select>
+        <textarea id="stressNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>11. Lack of Awareness</h3>
+        <select id="awareness"><option>No</option><option>Yes</option></select>
+        <textarea id="awarenessNotes" placeholder="Notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>12. Norms</h3>
+        <select id="norms"><option>No</option><option>Yes</option></select>
+        <textarea id="normsNotes" placeholder="Notes..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Conclusion / Corrective Actions</h2>
+
+    <div class="conclusion-grid">
+      <div>
+        <label>Root Cause / Contributing Factors</label>
+        <textarea id="rootCause"></textarea>
+      </div>
+
+      <div>
+        <label>Corrective Actions</label>
+        <textarea id="correctiveActions"></textarea>
+      </div>
+
+      <div>
+        <label>Final Comments</label>
+        <textarea id="finalComments"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="status" id="saveStatus"></div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set, get, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const urlParams = new URLSearchParams(window.location.search);
+
+let key =
+  urlParams.get("key") ||
+  urlParams.get("id") ||
+  urlParams.get("reportId") ||
+  localStorage.getItem("currentRiskKey") ||
+  "";
+
+if(key && key !== "general"){
+  localStorage.setItem("currentRiskKey", key);
+}
+
+const fields = [
+  "communication","communicationNotes",
+  "complacency","complacencyNotes",
+  "knowledge","knowledgeNotes",
+  "distraction","distractionNotes",
+  "teamwork","teamworkNotes",
+  "fatigue","fatigueNotes",
+  "resources","resourcesNotes",
+  "pressure","pressureNotes",
+  "assertiveness","assertivenessNotes",
+  "stress","stressNotes",
+  "awareness","awarenessNotes",
+  "norms","normsNotes",
+  "rootCause",
+  "correctiveActions",
+  "finalComments"
+];
+
+async function loadInvestigation(){
+
+  if(!key || key === "general"){
+    document.getElementById("reportId").innerText = "No valid key";
+    document.getElementById("saveStatus").innerText = "No valid report key. Open this module from Risk Detail.";
+    return;
+  }
+
+  const reportSnapshot = await get(ref(db, "smsReports/" + key));
+
+  if(reportSnapshot.exists()){
+    const report = reportSnapshot.val();
+    document.getElementById("reportId").innerText = report.reportId || key || "N/A";
+  }else{
+    document.getElementById("reportId").innerText = "Report not found";
+  }
+
+  const snapshot = await get(ref(db, "smsReports/" + key + "/investigationDirtyDozen"));
+
+  if(snapshot.exists()){
+    const data = snapshot.val();
+
+    fields.forEach(id=>{
+      const element = document.getElementById(id);
+      if(element){
+        element.value = data[id] || "";
+      }
+    });
+
+    document.getElementById("savedAt").innerText = data.savedAt || "Saved";
+  }
+}
+
+window.saveInvestigation = async function(){
+
+  if(!key || key === "general"){
+    alert("No valid report key. Open this module from Risk Detail.");
+    return;
+  }
+
+  const data = {
+    investigationId: key,
+    status: "Saved",
+    savedAt: new Date().toISOString()
+  };
+
+  fields.forEach(id=>{
+    const element = document.getElementById(id);
+    if(element){
+      data[id] = element.value;
+    }
+  });
+
+  await set(ref(db, "smsReports/" + key + "/investigationDirtyDozen"), data);
+
+  await update(ref(db, "smsReports/" + key + "/investigationModules"), {
+    dirtyDozen: true
+  });
+
+  document.getElementById("savedAt").innerText = data.savedAt;
+  document.getElementById("saveStatus").innerText = "Dirty Dozen investigation saved successfully.";
+
+  setTimeout(()=>{
+    document.getElementById("saveStatus").innerText = "";
+  },2500);
+};
+
+window.deleteInvestigation = async function(){
+
+  if(!key || key === "general"){
+    alert("No valid report key.");
+    return;
+  }
+
+  const confirmDelete = confirm("Are you sure you want to delete this Dirty Dozen investigation?");
+
+  if(!confirmDelete) return;
+
+  await remove(ref(db, "smsReports/" + key + "/investigationDirtyDozen"));
+
+  await update(ref(db, "smsReports/" + key + "/investigationModules"), {
+    dirtyDozen: false
+  });
+
+  fields.forEach(id=>{
+    const element = document.getElementById(id);
+    if(element){
+      if(element.tagName === "SELECT"){
+        element.value = "No";
+      }else{
+        element.value = "";
+      }
+    }
+  });
+
+  document.getElementById("savedAt").innerText = "Not saved yet";
+  document.getElementById("saveStatus").innerText = "Dirty Dozen investigation deleted.";
+
+  setTimeout(()=>{
+    document.getElementById("saveStatus").innerText = "";
+  },2500);
+};
+
+window.goBack = function(){
+  if(key && key !== "general"){
+    window.location.href = "Risk-Detail.html?key=" + key;
+  }else{
+    window.history.back();
+  }
+};
+
+window.goHome = function(){
+  window.location.href = "index.html";
+};
+
+loadInvestigation();
+</script>
+
+</body>
+</html>
