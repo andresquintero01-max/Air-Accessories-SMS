@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Investigation - Bow-Tie</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --navy:#003b66;
+  --blue:#00aeef;
+  --dark:#021730;
+  --soft:#f8fbff;
+  --gray:#56657d;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#ff9800;
+  --purple:#9333ea;
+}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:35px;
+  background:
+  radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.container{
+  max-width:1450px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  border-radius:38px;
+  padding:45px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.logo{
+  width:92px;
+  height:92px;
+  margin:0 auto 18px;
+  border-radius:26px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:42px;
+  box-shadow:0 14px 32px rgba(0,59,102,.35);
+}
+
+.company{
+  text-align:center;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:8px;
+}
+
+h1{
+  text-align:center;
+  color:var(--navy);
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--gray);
+  font-size:19px;
+  margin-bottom:26px;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:0 auto 34px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
+}
+
+.report-box{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  background:#f8fbff;
+  border-left:8px solid var(--blue);
+  border-radius:20px;
+  padding:20px 25px;
+  margin-bottom:30px;
+  box-shadow:0 10px 24px rgba(0,0,0,.09);
+  font-weight:900;
+  color:var(--navy);
+}
+
+.bowtie{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 300px 1fr;
+  grid-template-rows:auto auto auto auto;
+  gap:24px;
+  align-items:center;
+}
+
+.card{
+  background:white;
+  border-radius:26px;
+  padding:24px;
+  box-shadow:0 14px 34px rgba(0,0,0,.12);
+  border:1px solid #e2e8f0;
+}
+
+.card h3{
+  color:var(--navy);
+  font-size:23px;
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--gray);
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+textarea{
+  width:100%;
+  min-height:100px;
+  border:1px solid #cbd5e1;
+  border-radius:16px;
+  padding:14px;
+  font-size:15px;
+  resize:vertical;
+  outline:none;
+  background:#f8fafc;
+  font-family:inherit;
+}
+
+textarea:focus{
+  background:white;
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px rgba(0,174,239,.15);
+}
+
+.hazard{
+  grid-column:2;
+  grid-row:1;
+  border-left:8px solid var(--orange);
+  background:linear-gradient(135deg,#fff7ed,#ffffff);
+  text-align:center;
+}
+
+.threats{
+  grid-column:1;
+  grid-row:2;
+  border-left:8px solid var(--red);
+  background:linear-gradient(135deg,#fff1f2,#ffffff);
+}
+
+.preventive{
+  grid-column:1;
+  grid-row:3;
+  border-left:8px solid var(--green);
+  background:linear-gradient(135deg,#f0fdf4,#ffffff);
+}
+
+.center{
+  grid-column:2;
+  grid-row:2 / 4;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.top-event{
+  width:290px;
+  min-height:290px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ef4444,#f97316);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:25px;
+  box-shadow:0 22px 45px rgba(239,68,68,.35);
+  border:8px solid white;
+}
+
+.top-event h2{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.top-event p{
+  margin-bottom:12px;
+  font-weight:900;
+}
+
+.top-event textarea{
+  min-height:85px;
+  background:white;
+  color:var(--navy);
+}
+
+.consequences{
+  grid-column:3;
+  grid-row:2;
+  border-left:8px solid var(--purple);
+  background:linear-gradient(135deg,#faf5ff,#ffffff);
+}
+
+.recovery{
+  grid-column:3;
+  grid-row:3;
+  border-left:8px solid var(--blue);
+  background:linear-gradient(135deg,#eff6ff,#ffffff);
+}
+
+.escalation{
+  grid-column:1 / 4;
+  grid-row:4;
+  max-width:760px;
+  margin:auto;
+  width:100%;
+  border-left:8px solid var(--orange);
+  background:linear-gradient(135deg,#fffbeb,#ffffff);
+}
+
+.actions{
+  margin-top:34px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  border-top:1px solid #e2e8f0;
+  padding-top:25px;
+}
+
+button{
+  border:none;
+  color:white;
+  padding:16px 22px;
+  border-radius:17px;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(0,0,0,.22);
+  transition:.25s;
+}
+
+button:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+.save{background:linear-gradient(135deg,#15803d,#22c55e);}
+.delete{background:linear-gradient(135deg,#b91c1c,#ef4444);}
+.print{background:linear-gradient(135deg,#111827,#374151);}
+.back{background:linear-gradient(135deg,var(--navy),var(--blue));}
+.home{background:linear-gradient(135deg,#003b66,#005288);}
+
+.status{
+  text-align:center;
+  margin-top:20px;
+  font-weight:900;
+  color:#047857;
+  font-size:18px;
+}
+
+@media print{
+  body{
+    background:white;
+    padding:10px;
+  }
+
+  .container{
+    box-shadow:none;
+    border-radius:0;
+  }
+
+  .actions{
+    display:none;
+  }
+
+  .card{
+    box-shadow:none;
+    break-inside:avoid;
+  }
+}
+
+@media(max-width:950px){
+  body{
+    padding:20px;
+  }
+
+  .container{
+    padding:26px;
+    border-radius:28px;
+  }
+
+  h1{
+    font-size:38px;
+  }
+
+  .bowtie{
+    display:block;
+  }
+
+  .card,
+  .top-event{
+    margin-bottom:18px;
+  }
+
+  .top-event{
+    width:100%;
+    min-height:auto;
+    border-radius:26px;
+  }
+
+  .report-box{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">🎀</div>
+<div class="company">AIR ACCESSORIES & AVIONICS</div>
+<h1>Investigation - Bow-Tie</h1>
+<p class="subtitle">Threats • Barriers • Top Event • Consequences</p>
+<div class="title-line"></div>
+
+<div class="report-box">
+  <div>Report ID: <span id="reportId">Loading...</span></div>
+  <div>Saved at: <span id="savedAt">Not saved yet</span></div>
+</div>
+
+<div class="bowtie">
+
+<div class="card hazard">
+  <h3>⚠️ Hazard</h3>
+  <p>Describe the hazardous condition or safety issue being analyzed.</p>
+  <textarea id="hazard" placeholder="Enter hazard description..."></textarea>
+</div>
+
+<div class="card threats">
+  <h3>🚨 Threats / Causes</h3>
+  <p>Describe what could cause the top event to occur.</p>
+  <textarea id="threats" placeholder="Enter threats or causes..."></textarea>
+</div>
+
+<div class="center">
+  <div class="top-event">
+    <h2>Top Event</h2>
+    <p>Central unwanted event</p>
+    <textarea id="topEvent" placeholder="Enter top event..."></textarea>
+  </div>
+</div>
+
+<div class="card consequences">
+  <h3>👥 Consequences</h3>
+  <p>Describe possible outcomes or safety impacts.</p>
+  <textarea id="consequences" placeholder="Enter consequences..."></textarea>
+</div>
+
+<div class="card preventive">
+  <h3>🛡 Preventive Barriers</h3>
+  <p>Describe controls that prevent the top event from occurring.</p>
+  <textarea id="preventiveBarriers" placeholder="Enter preventive barriers..."></textarea>
+</div>
+
+<div class="card recovery">
+  <h3>🔵 Recovery / Mitigation Barriers</h3>
+  <p>Describe controls that reduce the impact after the event occurs.</p>
+  <textarea id="recoveryBarriers" placeholder="Enter recovery or mitigation barriers..."></textarea>
+</div>
+
+<div class="card escalation">
+  <h3>📈 Escalation Factors</h3>
+  <p>Describe conditions or factors that could weaken barriers or increase severity.</p>
+  <textarea id="escalationFactors" placeholder="Enter escalation factors..."></textarea>
+</div>
+
+</div>
+
+<div class="actions">
+  <button class="save" onclick="saveInvestigation()">💾 Save</button>
+  <button class="delete" onclick="deleteInvestigation()">🗑 Delete</button>
+  <button class="print" onclick="window.print()">🖨 Print</button>
+  <button class="back" onclick="goBack()">⬅ Risk Detail</button>
+  <button class="home" onclick="goHome()">🏠 Home</button>
+</div>
+
+<div class="status" id="saveStatus"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { getDatabase, ref, get, update, remove }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const urlParams = new URLSearchParams(window.location.search);
+
+let key =
+  urlParams.get("key") ||
+  urlParams.get("id") ||
+  urlParams.get("reportId") ||
+  localStorage.getItem("currentRiskKey") ||
+  "";
+
+if(key && key !== "general"){
+  localStorage.setItem("currentRiskKey", key);
+}
+
+function setValue(id,value){
+  const el = document.getElementById(id);
+  if(el) el.value = value || "";
+}
+
+async function loadInvestigation(){
+
+  if(!key || key === "general"){
+    document.getElementById("reportId").innerText = "No valid key";
+    document.getElementById("saveStatus").innerText = "No valid report key. Open this module from Risk Detail.";
+    return;
+  }
+
+  const snapshot = await get(ref(db,"smsReports/"+key));
+
+  if(snapshot.exists()){
+    const d = snapshot.val();
+
+    document.getElementById("reportId").innerText = d.reportId || key || "N/A";
+
+    if(d.investigationBowTie){
+      const x = d.investigationBowTie;
+
+      setValue("hazard",x.hazard);
+      setValue("threats",x.threats || x.threat1);
+      setValue("preventiveBarriers",x.preventiveBarriers || x.preventiveBarrier1);
+      setValue("topEvent",x.topEvent);
+      setValue("recoveryBarriers",x.recoveryBarriers || x.recoveryBarrier1);
+      setValue("consequences",x.consequences || x.consequence1);
+      setValue("escalationFactors",x.escalationFactors || x.escalationFactorLeft);
+
+      document.getElementById("savedAt").innerText = x.savedAt || "Saved";
+    }
+  }else{
+    document.getElementById("reportId").innerText = "Report not found";
+  }
+}
+
+window.saveInvestigation = async function(){
+
+  if(!key || key === "general"){
+    alert("No valid report key. Open this module from Risk Detail.");
+    return;
+  }
+
+  const savedTime = new Date().toISOString();
+
+  await update(ref(db,"smsReports/"+key+"/investigationBowTie"),{
+    hazard:document.getElementById("hazard").value,
+    threats:document.getElementById("threats").value,
+    preventiveBarriers:document.getElementById("preventiveBarriers").value,
+    topEvent:document.getElementById("topEvent").value,
+    recoveryBarriers:document.getElementById("recoveryBarriers").value,
+    consequences:document.getElementById("consequences").value,
+    escalationFactors:document.getElementById("escalationFactors").value,
+    status:"Saved",
+    savedAt:savedTime
+  });
+
+  await update(ref(db,"smsReports/"+key+"/investigationModules"),{
+    bowTie:true,
+    contributingFactors:false
+  });
+
+  document.getElementById("savedAt").innerText = savedTime;
+  document.getElementById("saveStatus").innerText = "Bow-Tie investigation saved successfully.";
+
+  setTimeout(()=>{
+    document.getElementById("saveStatus").innerText = "";
+  },2500);
+};
+
+window.deleteInvestigation = async function(){
+
+  if(!key || key === "general"){
+    alert("No valid report key.");
+    return;
+  }
+
+  if(confirm("Do you want to delete this Bow-Tie investigation?")){
+    await remove(ref(db,"smsReports/"+key+"/investigationBowTie"));
+
+    await update(ref(db,"smsReports/"+key+"/investigationModules"),{
+      bowTie:false,
+      contributingFactors:false
+    });
+
+    [
+      "hazard",
+      "threats",
+      "preventiveBarriers",
+      "topEvent",
+      "recoveryBarriers",
+      "consequences",
+      "escalationFactors"
+    ].forEach(id=>{
+      document.getElementById(id).value = "";
+    });
+
+    document.getElementById("savedAt").innerText = "Not saved yet";
+    document.getElementById("saveStatus").innerText = "Bow-Tie investigation deleted.";
+
+    setTimeout(()=>{
+      document.getElementById("saveStatus").innerText = "";
+    },2500);
+  }
+};
+
+window.goBack = function(){
+  if(key && key !== "general"){
+    location.href = "Risk-Detail.html?key=" + key;
+  }else{
+    window.history.back();
+  }
+};
+
+window.goHome = function(){
+  location.href = "index.html";
+};
+
+loadInvestigation();
+
+</script>
+
+</body>
+</html>
