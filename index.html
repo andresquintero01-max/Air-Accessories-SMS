@@ -338,9 +338,10 @@ window.login = function(){
     .then(() => {
         localStorage.setItem("loginTime", Date.now());
     })
-    .catch(() => {
-        alert("Invalid email or password");
-    });
+    .catch((error) => {
+    alert(error.code);
+    console.log(error);
+});
 };
 
 document.addEventListener("keydown", function(e){
