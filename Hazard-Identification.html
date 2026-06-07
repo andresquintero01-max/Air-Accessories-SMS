@@ -15,128 +15,280 @@
 body{
   font-family:'Segoe UI', Arial, sans-serif;
   min-height:100vh;
-  background:#f4f4f4;
-  padding:35px 45px;
+  background:
+    radial-gradient(circle at top left, rgba(255,152,0,0.30), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(28,99,219,0.40), transparent 38%),
+    linear-gradient(rgba(5,20,55,0.86), rgba(5,20,55,0.92)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:35px;
 }
 
-.header{
+.container{
+  width:100%;
+  max-width:1080px;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+  padding:55px;
+  border-radius:40px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.45);
   text-align:center;
-  margin-bottom:45px;
+  position:relative;
+  overflow:hidden;
+  animation:fadeIn 0.8s ease;
 }
 
-.header h1{
-  font-size:56px;
-  color:#00426b;
-  font-weight:900;
-  margin-bottom:12px;
+.container::before{
+  content:"";
+  position:absolute;
+  width:460px;
+  height:460px;
+  background:radial-gradient(circle,rgba(28,99,219,0.17),transparent 70%);
+  top:-190px;
+  right:-150px;
 }
 
-.header p{
+.container::after{
+  content:"";
+  position:absolute;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,rgba(255,152,0,0.18),transparent 70%);
+  bottom:-150px;
+  left:-120px;
+}
+
+.logo,
+.company,
+h1,
+.description,
+.title-line,
+.menu,
+.home-btn,
+.footer{
+  position:relative;
+  z-index:2;
+}
+
+.logo{
+  width:112px;
+  height:112px;
+  margin:auto;
+  border-radius:32px;
+  background:linear-gradient(135deg,#071f47,#1450b8,#ff9800);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:50px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.30);
+  margin-bottom:22px;
+}
+
+.company{
   font-size:18px;
-  color:#374151;
+  color:#071f47;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:10px;
+}
+
+h1{
+  font-size:66px;
+  color:#071f47;
+  margin-bottom:12px;
+  font-weight:900;
+  line-height:1.15;
+}
+
+.description{
+  font-size:21px;
+  color:#56657d;
+  margin-bottom:20px;
+  font-weight:500;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:0 auto 45px;
+  border-radius:10px;
+  background:linear-gradient(90deg,transparent,#ff9800,#1450b8,transparent);
 }
 
 .menu{
-  max-width:1250px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:30px;
-}
-
-.card{
-  background:white;
-  border-radius:24px;
-  padding:40px 30px;
-  min-height:360px;
-  box-shadow:0 12px 30px rgba(0,0,0,0.10);
-  border-top:7px solid #00aeef;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
+  gap:28px;
 }
+
+.section{
+  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  border-radius:32px;
+  padding:30px;
+  display:grid;
+  grid-template-columns:100px 1fr 330px;
+  align-items:center;
+  gap:26px;
+  text-align:left;
+  box-shadow:0 16px 35px rgba(0,0,0,0.12);
+  transition:0.35s;
+  position:relative;
+  overflow:hidden;
+  border:1px solid #eef2f7;
+}
+
+.section:hover{
+  transform:translateY(-7px);
+  box-shadow:0 24px 48px rgba(0,0,0,0.18);
+}
+
+.section::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:10px;
+  height:100%;
+}
+
+.section:nth-child(1)::before{background:#ff9800;}
+.section:nth-child(2)::before{background:#1450b8;}
+.section:nth-child(3)::before{background:#22b573;}
 
 .icon{
-  font-size:46px;
-  margin-bottom:25px;
+  width:90px;
+  height:90px;
+  border-radius:28px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:42px;
+  box-shadow:0 14px 28px rgba(0,0,0,0.24);
 }
 
-.card h2{
-  color:#00426b;
-  font-size:28px;
-  line-height:1.25;
-  margin-bottom:18px;
+.section:nth-child(1) .icon{
+  background:linear-gradient(135deg,#ff7b00,#ffb347);
+}
+
+.section:nth-child(2) .icon{
+  background:linear-gradient(135deg,#071f47,#1450b8);
+}
+
+.section:nth-child(3) .icon{
+  background:linear-gradient(135deg,#047857,#22b573);
+}
+
+.info h2{
+  font-size:34px;
+  color:#071f47;
+  margin-bottom:8px;
   font-weight:900;
 }
 
-.card p{
-  color:#4b5563;
-  font-size:17px;
+.info p{
+  color:#56657d;
+  font-size:18px;
   line-height:1.5;
-  margin-bottom:28px;
 }
 
-.btn{
-  width:100%;
-  display:block;
-  text-align:center;
+.main-btn{
   text-decoration:none;
-  background:#006aa0;
+  background:linear-gradient(135deg,#071f47,#1450b8);
   color:white;
-  padding:16px;
-  border-radius:10px;
-  font-size:17px;
-  font-weight:800;
-  transition:0.3s;
-}
-
-.btn:hover{
-  background:#00426b;
-  transform:translateY(-3px);
-}
-
-.home-area{
+  padding:22px;
+  border-radius:18px;
+  font-size:19px;
+  font-weight:900;
   text-align:center;
-  margin-top:45px;
+  transition:0.3s;
+  box-shadow:0 13px 28px rgba(0,0,0,0.22);
+}
+
+.main-btn:hover{
+  transform:translateY(-4px);
+  background:linear-gradient(135deg,#0b2a66,#1d4ed8);
 }
 
 .home-btn{
-  display:inline-block;
-  text-decoration:none;
-  background:#16a34a;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-top:45px;
+  background:linear-gradient(135deg,#ff6b00,#ff9800);
   color:white;
-  padding:16px 55px;
-  border-radius:10px;
-  font-size:20px;
+  text-decoration:none;
+  padding:19px 55px;
+  border-radius:20px;
+  font-size:23px;
   font-weight:900;
   transition:0.3s;
+  box-shadow:0 14px 30px rgba(0,0,0,0.28);
 }
 
 .home-btn:hover{
-  background:#15803d;
-  transform:translateY(-3px);
+  transform:translateY(-5px);
+  background:linear-gradient(135deg,#d83b00,#ff7a00);
 }
 
 .footer{
-  text-align:center;
   margin-top:35px;
-  color:#00426b;
+  color:#071f47;
   font-size:15px;
+  letter-spacing:3px;
   font-weight:900;
-  letter-spacing:2px;
 }
 
-@media(max-width:950px){
-  .menu{
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@media(max-width:850px){
+  .container{
+    padding:35px 22px;
+  }
+
+  h1{
+    font-size:46px;
+  }
+
+  .description{
+    font-size:18px;
+  }
+
+  .section{
     grid-template-columns:1fr;
+    text-align:center;
   }
 
-  .header h1{
-    font-size:42px;
+  .icon{
+    margin:auto;
   }
 
-  body{
-    padding:25px;
+  .main-btn,
+  .home-btn{
+    width:100%;
+  }
+
+  .info h2{
+    font-size:28px;
+  }
+
+  .info p{
+    font-size:16px;
   }
 }
 </style>
@@ -144,63 +296,77 @@ body{
 
 <body>
 
-<div class="header">
+<div class="container">
+
+  <div class="logo">⚠️</div>
+
+  <div class="company">AIR ACCESSORIES & AVIONICS</div>
+
   <h1>Hazard Identification</h1>
-  <p>Air Accessories & Avionics Safety Management System Hazard Portal</p>
-</div>
 
-<div class="menu">
+  <div class="description">
+    Hazard reporting and SMS database management system
+  </div>
 
-  <div class="card">
-    <div>
+  <div class="title-line"></div>
+
+  <div class="menu">
+
+    <div class="section">
       <div class="icon">📝</div>
-      <h2>SMS Report</h2>
-      <p>
-        Create, submit and manage operational safety reports and hazard events.
-      </p>
+
+      <div class="info">
+        <h2>SMS Report</h2>
+        <p>
+          Create, submit and manage operational safety reports and hazard events.
+        </p>
+      </div>
+
+      <a class="main-btn" href="SMS-Report.html">
+        Open SMS Report ›
+      </a>
     </div>
 
-    <a class="btn" href="SMS-Report.html">
-      Open SMS Report
-    </a>
-  </div>
-
-  <div class="card" id="smsDatabaseSection">
-    <div>
+    <div class="section" id="smsDatabaseSection">
       <div class="icon">🗂️</div>
-      <h2>SMS Database</h2>
-      <p>
-        Review, track and analyze hazard reports, investigations and findings.
-      </p>
+
+      <div class="info">
+        <h2>SMS Database</h2>
+        <p>
+          Review, track and analyze hazard reports, investigations and findings.
+        </p>
+      </div>
+
+      <a class="main-btn" href="SMS-Database.html">
+        Open SMS Database ›
+      </a>
     </div>
 
-    <a class="btn" href="SMS-Database.html">
-      Open SMS Database
-    </a>
-  </div>
-
-  <div class="card" id="riskToolsSection">
-    <div>
+    <div class="section" id="riskToolsSection">
       <div class="icon">📊</div>
-      <h2>Risk Management Tools</h2>
-      <p>
-        Access additional safety risk management resources and assessment tools.
-      </p>
+
+      <div class="info">
+        <h2>Risk Management Tools</h2>
+        <p>
+          Access additional safety risk management resources and assessment tools.
+        </p>
+      </div>
+
+      <a class="main-btn" href="Risk-Management-Tools.html">
+        Open Risk Management Tools ›
+      </a>
     </div>
 
-    <a class="btn" href="Risk-Management-Tools.html">
-      Open Risk Management Tools
-    </a>
   </div>
 
-</div>
+  <a class="home-btn" href="index.html">
+    🏠 Home
+  </a>
 
-<div class="home-area">
-  <a class="home-btn" href="index.html">🏠 Home</a>
-</div>
+  <div class="footer">
+    371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+  </div>
 
-<div class="footer">
-  371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
 </div>
 
 <script type="module">
@@ -237,12 +403,16 @@ onAuthStateChanged(auth, async (user) => {
         const role = (snapshot.val().role || "").toLowerCase().trim();
 
         if(role === "tech" || role === "technician"){
+
             document.getElementById("smsDatabaseSection").style.display = "none";
             document.getElementById("riskToolsSection").style.display = "none";
+
         }
 
     }else{
+
         window.location.href = "index.html";
+
     }
 });
 
