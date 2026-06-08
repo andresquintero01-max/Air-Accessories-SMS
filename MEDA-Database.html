@@ -466,11 +466,10 @@ function renderReports(reports){
           </div>
         </div>
 
-        <select class="manual-status ${statusClass}" onchange="manualStatusChange('${clean(firebaseId)}', this)">
-          <option value="Open" ${status === "Open" ? "selected" : ""}>Open</option>
-          <option value="Closed" ${status === "Closed" ? "selected" : ""}>Closed</option>
-        </select>
-      </div>
+        <button class="status-switch ${statusClass}" onclick="manualStatusChange('${clean(firebaseId)}', '${status}')">
+        ${status}
+        </button>
+        </div>
 
       <div class="details-grid">
 
