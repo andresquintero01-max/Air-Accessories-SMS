@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MEDA Database</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --navy:#003b66;
+  --blue:#00aeef;
+  --dark:#021730;
+  --soft:#f8fbff;
+  --gray:#56657d;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#ff9800;
+  --purple:#9333ea;
+}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:35px;
+  background:
+  radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+  url('https://images.unsplash.com/photo-1517976487492-5750f3195933?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.container{
+  max-width:1350px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  border-radius:38px;
+  padding:45px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.logo{
+  width:92px;
+  height:92px;
+  margin:0 auto 18px;
+  border-radius:26px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+}
+
+.company{
+  text-align:center;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:8px;
+}
+
+.badge{
+  display:block;
+  width:max-content;
+  margin:0 auto 16px;
+  background:#e8f8ff;
+  color:var(--navy);
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+
+h1{
+  text-align:center;
+  color:var(--navy);
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.description{
+  text-align:center;
+  color:var(--gray);
+  font-size:19px;
+  margin-bottom:28px;
+  font-weight:500;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:0 auto 32px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
+}
+
+.filter-box{
+  background:#f8fbff;
+  border:1px solid #e5e7eb;
+  padding:22px;
+  border-radius:26px;
+  margin-bottom:26px;
+  box-shadow:0 14px 32px rgba(0,0,0,.10);
+}
+
+.filter-title{
+  font-weight:900;
+  color:var(--navy);
+  margin-bottom:12px;
+  font-size:18px;
+}
+
+.search-input{
+  width:100%;
+  padding:16px;
+  border:1px solid #cbd5e1;
+  border-radius:16px;
+  font-size:16px;
+  outline:none;
+}
+
+.search-input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px rgba(0,174,239,.15);
+}
+
+.top-buttons,
+.bottom-buttons{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+  background:#f8fbff;
+  padding:18px;
+  border-radius:24px;
+  border:1px solid #e5e7eb;
+}
+
+.bottom-buttons{
+  margin-top:40px;
+  margin-bottom:0;
+}
+
+.btn{
+  border:none;
+  color:white;
+  padding:15px 28px;
+  border-radius:16px;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.25s;
+  box-shadow:0 10px 22px rgba(0,0,0,.22);
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+.meda-btn{background:linear-gradient(135deg,#003b66,#005288);}
+.home-btn{background:linear-gradient(135deg,var(--navy),var(--blue));}
+.open-btn{background:linear-gradient(135deg,var(--navy),var(--blue));}
+.save-btn{background:linear-gradient(135deg,#15803d,#22c55e);}
+.status-btn{background:linear-gradient(135deg,#7c3aed,#9333ea);}
+
+.delete-btn{
+  background:linear-gradient(135deg,#b91c1c,#ef4444);
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  padding:0;
+  font-size:20px;
+}
+
+.counter{
+  text-align:center;
+  color:var(--navy);
+  font-weight:900;
+  margin-bottom:20px;
+  font-size:17px;
+}
+
+.report-card{
+  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  border-radius:28px;
+  padding:26px;
+  margin-bottom:24px;
+  box-shadow:0 18px 45px rgba(0,0,0,.14);
+  border-left:10px solid var(--blue);
+  transition:.25s;
+}
+
+.report-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 26px 60px rgba(0,0,0,.20);
+}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.event-title{
+  font-size:26px;
+  font-weight:900;
+  color:var(--navy);
+  margin-bottom:6px;
+}
+
+.meta{
+  color:var(--gray);
+  font-size:15px;
+  line-height:1.7;
+}
+
+.status{
+  display:inline-block;
+  padding:8px 18px;
+  border-radius:999px;
+  color:white;
+  font-size:13px;
+  font-weight:900;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
+}
+
+.status.open{background:linear-gradient(135deg,#15803d,#22c55e);}
+.status.closed{background:linear-gradient(135deg,#475569,#64748b);}
+.status.in-progress{background:linear-gradient(135deg,var(--navy),var(--blue));}
+.status.pending-corrective-action{background:linear-gradient(135deg,#d97706,#ff9800);}
+
+.details-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:18px;
+}
+
+.detail-box{
+  background:#f8fbff;
+  padding:15px;
+  border-radius:18px;
+  border:1px solid #dce3ef;
+}
+
+.detail-label{
+  font-size:12px;
+  color:#64748b;
+  font-weight:900;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+
+.detail-value{
+  font-size:15px;
+  color:var(--navy);
+  font-weight:800;
+  word-break:break-word;
+}
+
+.meda-id-input{
+  width:100%;
+  padding:12px;
+  border:1px solid #cbd5e1;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:800;
+  color:var(--navy);
+}
+
+.small-note{
+  font-size:12px;
+  color:#64748b;
+  margin-top:6px;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:22px;
+  align-items:center;
+}
+
+.separator-buttons{
+  margin:30px 0;
+  padding:18px;
+  background:#f8fbff;
+  border-radius:24px;
+  border:1px solid #e5e7eb;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.no-data{
+  text-align:center;
+  color:var(--gray);
+  font-size:20px;
+  margin-top:35px;
+  background:#f8fbff;
+  padding:42px;
+  border-radius:24px;
+  border:1px solid #e5e7eb;
+  font-weight:700;
+}
+
+.footer{
+  margin-top:35px;
+  text-align:center;
+  color:var(--gray);
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+@media(max-width:700px){
+  body{padding:20px;}
+  .container{padding:26px;border-radius:28px;}
+  h1{font-size:38px;}
+  .event-title{font-size:21px;}
+  .btn{width:100%;}
+  .delete-btn{width:100%;border-radius:16px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">📊</div>
+  <div class="company">AIR ACCESSORIES & AVIONICS</div>
+  <div class="badge">MEDA INVESTIGATION DATABASE</div>
+
+  <h1>MEDA Database</h1>
+
+  <div class="description">
+    Stored Maintenance Error Decision Aid Investigation Reports
+  </div>
+
+  <div class="title-line"></div>
+
+  <div class="filter-box">
+    <div class="filter-title">Search MEDA Reports</div>
+    <input 
+      id="searchInput" 
+      class="search-input" 
+      placeholder="Search by MEDA ID, title, affected person, aircraft, customer, date, status..."
+      oninput="applyFilter()"
+    >
+  </div>
+
+  <div class="top-buttons">
+    <button class="btn meda-btn" onclick="window.location.href='MEDA.html'">🛠️ MEDA</button>
+    <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+  </div>
+
+  <div id="counter" class="counter"></div>
+
+  <div id="medaList"></div>
+
+  <div id="noData" class="no-data" style="display:none;">
+    No MEDA reports found.
+  </div>
+
+  <div class="bottom-buttons">
+    <button class="btn meda-btn" onclick="window.location.href='MEDA.html'">🛠️ MEDA</button>
+    <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+  </div>
+
+  <div class="footer">
+    AIR ACCESSORIES SMS • POWERED BY 371Q
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  remove,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+const medaList = document.getElementById("medaList");
+const noData = document.getElementById("noData");
+const counter = document.getElementById("counter");
+
+let allReports = [];
+
+function clean(value){
+  return String(value || "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function statusClass(status){
+  return String(status || "Open")
+    .toLowerCase()
+    .replaceAll(" ","-");
+}
+
+function renderReports(reports){
+
+  medaList.innerHTML = "";
+
+  if(reports.length === 0){
+    noData.style.display = "block";
+    counter.innerHTML = "0 reports found";
+    return;
+  }
+
+  noData.style.display = "none";
+  counter.innerHTML = reports.length + " report(s) found";
+
+  reports.forEach((report, index) => {
+
+    const firebaseId = report.firebaseId;
+
+    const title = report.title || report.eventTitle || report.event || "Untitled MEDA Report";
+    const affectedPerson = report.affectedPerson || report.personAffected || report.employeeName || report.person || "N/A";
+    const date = report.date || report.eventDate || report.createdAt || "N/A";
+    const aircraft = report.aircraft || "N/A";
+    const customer = report.customer || "N/A";
+    const status = report.status || "Open";
+    const medaVisibleId = report.medaId || report.customId || firebaseId;
+
+    const card = document.createElement("div");
+    card.className = "report-card";
+
+    card.innerHTML = `
+      <div class="card-header">
+        <div>
+          <div class="event-title">${clean(title)}</div>
+          <div class="meta">
+            <strong>Date:</strong> ${clean(date)}<br>
+            <strong>Affected Person:</strong> ${clean(affectedPerson)}<br>
+            <strong>Aircraft:</strong> ${clean(aircraft)} |
+            <strong>Customer:</strong> ${clean(customer)}
+          </div>
+        </div>
+
+        <span class="status ${statusClass(status)}">${clean(status)}</span>
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-box">
+          <div class="detail-label">Editable MEDA ID</div>
+          <input class="meda-id-input" id="medaId_${clean(firebaseId)}" value="${clean(medaVisibleId)}">
+          <div class="small-note">You can write your own MEDA ID here.</div>
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-label">Event Title</div>
+          <div class="detail-value">${clean(title)}</div>
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-label">Report Date</div>
+          <div class="detail-value">${clean(date)}</div>
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-label">Affected Person</div>
+          <div class="detail-value">${clean(affectedPerson)}</div>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="btn open-btn" onclick="openReport('${clean(firebaseId)}')">Open Report</button>
+        <button class="btn save-btn" onclick="saveMEDAId('${clean(firebaseId)}')">Save MEDA ID</button>
+        <button class="btn status-btn" onclick="toggleStatus('${clean(firebaseId)}','${clean(status)}')">
+          ${status === "Open" ? "Close Report" : "Open Report"}
+        </button>
+        <button class="btn delete-btn" onclick="deleteReport('${clean(firebaseId)}')">🗑</button>
+      </div>
+    `;
+
+    medaList.appendChild(card);
+
+    if((index + 1) % 3 === 0){
+      const separator = document.createElement("div");
+      separator.className = "separator-buttons";
+
+      separator.innerHTML = `
+        <button class="btn meda-btn" onclick="window.location.href='MEDA.html'">🛠️ MEDA</button>
+        <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+      `;
+
+      medaList.appendChild(separator);
+    }
+
+  });
+}
+
+window.applyFilter = function(){
+
+  const searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+
+  if(searchText === ""){
+    renderReports(allReports);
+    return;
+  }
+
+  const filtered = allReports.filter(report => {
+
+    const searchArea = `
+      ${report.firebaseId || ""}
+      ${report.medaId || ""}
+      ${report.customId || ""}
+      ${report.title || ""}
+      ${report.eventTitle || ""}
+      ${report.event || ""}
+      ${report.affectedPerson || ""}
+      ${report.personAffected || ""}
+      ${report.employeeName || ""}
+      ${report.person || ""}
+      ${report.aircraft || ""}
+      ${report.customer || ""}
+      ${report.location || ""}
+      ${report.date || ""}
+      ${report.eventDate || ""}
+      ${report.createdAt || ""}
+      ${report.status || ""}
+      ${report.eventType || ""}
+      ${report.detectionMethod || ""}
+      ${report.mainFactor || ""}
+      ${report.workOrder || ""}
+    `.toLowerCase();
+
+    return searchArea.includes(searchText);
+  });
+
+  renderReports(filtered);
+};
+
+const reportsRef = ref(database, "medaReports");
+
+onValue(reportsRef, (snapshot) => {
+
+  allReports = [];
+
+  if(!snapshot.exists()){
+    renderReports([]);
+    return;
+  }
+
+  snapshot.forEach((childSnapshot) => {
+    allReports.push({
+      firebaseId: childSnapshot.key,
+      ...childSnapshot.val()
+    });
+  });
+
+  allReports.sort((a,b) => String(b.firebaseId).localeCompare(String(a.firebaseId)));
+
+  applyFilter();
+});
+
+window.openReport = function(reportId){
+  window.location.href = "MEDA-Details.html?id=" + reportId;
+};
+
+window.saveMEDAId = function(reportId){
+
+  const input = document.getElementById("medaId_" + reportId);
+  const newMEDAId = input.value.trim();
+
+  if(newMEDAId === ""){
+    alert("MEDA ID cannot be empty.");
+    return;
+  }
+
+  update(ref(database, "medaReports/" + reportId), {
+    medaId: newMEDAId,
+    updatedAt: new Date().toISOString()
+  })
+  .then(() => {
+    alert("MEDA ID updated successfully.");
+  })
+  .catch((error) => {
+    alert("Error updating MEDA ID: " + error.message);
+  });
+};
+
+window.toggleStatus = function(reportId, currentStatus){
+
+  const newStatus = currentStatus === "Open" ? "Closed" : "Open";
+
+  update(ref(database, "medaReports/" + reportId), {
+    status: newStatus,
+    updatedAt: new Date().toISOString()
+  })
+  .then(() => {
+    alert("Report status changed to " + newStatus + ".");
+  })
+  .catch((error) => {
+    alert("Error updating status: " + error.message);
+  });
+};
+
+window.deleteReport = function(reportId){
+
+  const confirmDelete = confirm("Are you sure you want to permanently delete this MEDA report?");
+
+  if(!confirmDelete) return;
+
+  remove(ref(database, "medaReports/" + reportId))
+  .then(() => {
+    alert("MEDA Report deleted successfully.");
+  })
+  .catch((error) => {
+    alert("Error deleting report: " + error.message);
+  });
+};
+
+</script>
+
+</body>
+</html>
