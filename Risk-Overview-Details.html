@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Risk Overview Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --navy:#003b66;
+  --blue:#00aeef;
+  --gray:#56657d;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#ff9800;
+}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:35px;
+  background:
+    radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,82,136,.45), transparent 38%),
+    linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.container{
+  max-width:1250px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  padding:45px;
+  border-radius:38px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.logo{
+  width:92px;
+  height:92px;
+  margin:0 auto 18px;
+  border-radius:26px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+}
+
+.company{
+  text-align:center;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:8px;
+}
+
+.badge{
+  display:block;
+  width:max-content;
+  margin:0 auto 16px;
+  background:#e8f8ff;
+  color:var(--navy);
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+
+h1{
+  text-align:center;
+  color:var(--navy);
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  text-align:center;
+  color:var(--gray);
+  font-size:18px;
+  margin-bottom:28px;
+}
+
+.title-line{
+  width:240px;
+  height:6px;
+  margin:0 auto 35px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
+}
+
+.status-area{
+  display:flex;
+  justify-content:center;
+  margin-bottom:22px;
+}
+
+.status-toggle{
+  border:none;
+  color:white;
+  padding:13px 34px;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  min-width:130px;
+  box-shadow:0 10px 22px rgba(0,0,0,.22);
+  transition:.25s;
+}
+
+.status-toggle:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+.status-toggle.open{
+  background:linear-gradient(135deg,#15803d,#22c55e);
+}
+
+.status-toggle.closed{
+  background:linear-gradient(135deg,#475569,#64748b);
+}
+
+.section{
+  margin-top:28px;
+  padding:28px;
+  border-radius:26px;
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  box-shadow:0 12px 28px rgba(15,23,42,.10);
+}
+
+.section h2{
+  color:var(--navy);
+  margin-bottom:20px;
+  font-size:25px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.full{grid-column:1/3;}
+
+label{
+  font-weight:900;
+  color:var(--navy);
+  margin-bottom:7px;
+  display:block;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:15px;
+  border-radius:14px;
+  border:1px solid #cbd5e1;
+  font-size:15px;
+  background:white;
+  font-family:inherit;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px rgba(0,174,239,.15);
+}
+
+textarea{
+  min-height:105px;
+  resize:vertical;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled{
+  background:#f8fbff;
+  color:#0f172a;
+  border:1px solid #dbeafe;
+  opacity:1;
+  font-weight:600;
+}
+
+.hazard-card{
+  margin-top:22px;
+  padding:25px;
+  border-radius:26px;
+  background:white;
+  border:2px solid #dbeafe;
+  box-shadow:0 12px 28px rgba(15,23,42,.10);
+}
+
+.hazard-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+  gap:12px;
+}
+
+.hazard-title h3{
+  color:var(--navy);
+  font-size:24px;
+}
+
+.definition-box{
+  margin-top:10px;
+  padding:14px;
+  border-radius:14px;
+  background:#e8f8ff;
+  color:var(--navy);
+  font-size:14px;
+  line-height:1.5;
+  border-left:5px solid var(--blue);
+}
+
+.risk-box{
+  margin-top:18px;
+  padding:20px;
+  border-radius:18px;
+  font-size:23px;
+  font-weight:900;
+  text-align:center;
+  background:#e2e8f0;
+  color:#0f172a;
+}
+
+.low{background:#dcfce7;color:#166534;}
+.medium{background:#fef9c3;color:#854d0e;}
+.high{background:#ffedd5;color:#9a3412;}
+.extreme{background:#fee2e2;color:#991b1b;}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:35px;
+}
+
+button,a{
+  border:none;
+  text-decoration:none;
+  padding:15px 26px;
+  border-radius:16px;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+  color:white;
+  transition:.25s;
+  box-shadow:0 10px 22px rgba(0,0,0,.22);
+}
+
+button:hover,a:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+.edit{background:linear-gradient(135deg,#0f766e,#14b8a6);}
+.save{background:linear-gradient(135deg,#15803d,#22c55e);display:none;}
+.print{background:linear-gradient(135deg,#111827,#374151);}
+.delete{background:linear-gradient(135deg,#b91c1c,#ef4444);}
+.database{background:linear-gradient(135deg,var(--navy),var(--blue));}
+.back{background:linear-gradient(135deg,#003b66,#005288);}
+.home{background:linear-gradient(135deg,var(--navy),var(--blue));}
+
+.message{
+  margin-top:20px;
+  text-align:center;
+  font-weight:900;
+}
+
+.footer{
+  margin-top:35px;
+  text-align:center;
+  color:var(--gray);
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+@media(max-width:850px){
+  body{padding:20px;}
+  .grid{grid-template-columns:1fr;}
+  .full{grid-column:1/2;}
+  h1{font-size:38px;}
+  .container{padding:26px;border-radius:28px;}
+  button,a,.status-toggle{width:100%;text-align:center;}
+}
+
+@media print{
+  body{background:white;padding:0;}
+  .container{box-shadow:none;border-radius:0;}
+  .buttons,.status-area{display:none!important;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">⚠️</div>
+<div class="company">AIR ACCESSORIES & AVIONICS</div>
+<div class="badge">RISK OVERVIEW DETAILS</div>
+
+<h1>Risk Overview Details</h1>
+<p class="subtitle">Multi-Hazard Risk Panorama | Air Accessories SMS</p>
+<div class="title-line"></div>
+
+<div class="status-area" id="statusButtonArea"></div>
+
+<div id="content">
+  <p class="message">Loading report...</p>
+</div>
+
+<div class="buttons" id="mainButtons">
+  <button class="edit" onclick="enableEdit()">✏ Edit Report</button>
+  <button class="save" id="saveBtn" onclick="saveChanges()">💾 Save Changes</button>
+  <button class="print" onclick="window.print()">🖨 Print</button>
+  <button class="delete" onclick="deleteThisReport()">🗑 Delete</button>
+  <a class="database" href="Risk-Overview-Database.html">🗂 Database</a>
+  <a class="back" href="Risk-Overview-Database.html">⬅ Back</a>
+  <a class="home" href="index.html">🏠 Home</a>
+</div>
+
+<div id="message" class="message"></div>
+
+<div class="footer">
+  AIR ACCESSORIES SMS • POWERED BY 371Q
+</div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let reportId = null;
+let currentReport = null;
+let editMode = false;
+
+function getCompanyId(){
+  return localStorage.getItem("companyId") || "air-accessories";
+}
+
+function normalizeStatus(status){
+  const value = String(status || "OPEN").toUpperCase().trim();
+  return value === "CLOSED" ? "CLOSED" : "OPEN";
+}
+
+function renderStatusButton(){
+  const status = normalizeStatus(currentReport?.status);
+  const cssClass = status === "CLOSED" ? "closed" : "open";
+
+  document.getElementById("statusButtonArea").innerHTML = `
+    <button class="status-toggle ${cssClass}" onclick="toggleOverviewStatus('${status}')">
+      ${status === "CLOSED" ? "Closed" : "Open"}
+    </button>
+  `;
+}
+
+function safe(value){
+  return value || "";
+}
+
+function classifyRisk(score){
+  if(score <= 4) return "LOW";
+  if(score <= 9) return "MEDIUM";
+  if(score <= 16) return "HIGH";
+  return "EXTREME";
+}
+
+function riskClass(level){
+  if(level === "LOW") return "low";
+  if(level === "MEDIUM") return "medium";
+  if(level === "HIGH") return "high";
+  if(level === "EXTREME") return "extreme";
+  return "";
+}
+
+function probabilityDefinition(value){
+  const defs = {
+    "1":"Rare: May occur only in exceptional circumstances.",
+    "2":"Unlikely: Could occur, but is not expected during normal operations.",
+    "3":"Possible: Might occur at some time under current conditions.",
+    "4":"Likely: Will probably occur in many circumstances.",
+    "5":"Almost Certain: Expected to occur frequently or repeatedly."
+  };
+  return defs[value] || "Select a probability level to see the definition.";
+}
+
+function severityDefinition(value){
+  const defs = {
+    "1":"Negligible: No injury or very minor operational impact.",
+    "2":"Minor: Minor injury, minor damage, or limited operational disruption.",
+    "3":"Moderate: Medical treatment, reportable event, equipment damage, or operational interruption.",
+    "4":"Major: Serious injury, major damage, significant safety impact, or major operational disruption.",
+    "5":"Catastrophic: Fatality, aircraft loss, multiple serious injuries, or severe system failure."
+  };
+  return defs[value] || "Select a severity level to see the definition.";
+}
+
+function getIdFromUrl(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id");
+}
+
+function setRiskBox(boxId,label,score){
+  const box = document.getElementById(boxId);
+  if(!box) return;
+
+  box.className = "risk-box";
+
+  if(!score){
+    box.innerText = label + ": Not calculated";
+    return;
+  }
+
+  const level = classifyRisk(score);
+  box.classList.add(riskClass(level));
+  box.innerText = label + ": " + score + " - " + level;
+}
+
+window.calculateHazardRisk = function(index){
+  const p = Number(document.getElementById("probability_" + index)?.value);
+  const s = Number(document.getElementById("severity_" + index)?.value);
+  const rp = Number(document.getElementById("residualProbability_" + index)?.value);
+  const rs = Number(document.getElementById("residualSeverity_" + index)?.value);
+
+  document.getElementById("probDef_" + index).innerText = probabilityDefinition(String(p));
+  document.getElementById("sevDef_" + index).innerText = severityDefinition(String(s));
+  document.getElementById("resProbDef_" + index).innerText = probabilityDefinition(String(rp));
+  document.getElementById("resSevDef_" + index).innerText = severityDefinition(String(rs));
+
+  setRiskBox("initialRiskBox_" + index, "Initial Risk", p && s ? p * s : null);
+  setRiskBox("residualRiskBox_" + index, "Residual Risk", rp && rs ? rp * rs : null);
+};
+
+function buildHazards(r){
+  let hazards = [];
+
+  if(r.hazards && Array.isArray(r.hazards) && r.hazards.length){
+    hazards = r.hazards;
+  }else{
+    hazards = [{
+      hazard:r.hazard || "",
+      consequence:r.consequence || "",
+      existingControls:r.existingControls || "",
+      probability:r.probability || "",
+      severity:r.severity || "",
+      initialRiskScore:r.initialRiskScore || "",
+      initialRiskLevel:r.initialRiskLevel || "",
+      actions:r.actions || "",
+      residualProbability:r.residualProbability || "",
+      residualSeverity:r.residualSeverity || "",
+      residualRiskScore:r.residualRiskScore || "",
+      residualRiskLevel:r.residualRiskLevel || ""
+    }];
+  }
+
+  return hazards.map((h,index)=>`
+    <div class="hazard-card">
+      <div class="hazard-title">
+        <h3>Hazard ${index + 1}</h3>
+      </div>
+
+      <div class="grid">
+        <div class="full">
+          <label>Hazard Description</label>
+          <textarea id="hazard_${index}" disabled>${safe(h.hazard)}</textarea>
+        </div>
+
+        <div class="full">
+          <label>Potential Consequence</label>
+          <textarea id="consequence_${index}" disabled>${safe(h.consequence)}</textarea>
+        </div>
+
+        <div class="full">
+          <label>Existing Controls</label>
+          <textarea id="existingControls_${index}" disabled>${safe(h.existingControls)}</textarea>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top:18px;">
+        <h2>🟠 Initial Risk Assessment</h2>
+
+        <div class="grid">
+          <div>
+            <label>Probability</label>
+            <select id="probability_${index}" disabled onchange="calculateHazardRisk(${index})">
+              <option value="">Select</option>
+              <option value="1" ${String(h.probability)==="1"?"selected":""}>1 - Rare</option>
+              <option value="2" ${String(h.probability)==="2"?"selected":""}>2 - Unlikely</option>
+              <option value="3" ${String(h.probability)==="3"?"selected":""}>3 - Possible</option>
+              <option value="4" ${String(h.probability)==="4"?"selected":""}>4 - Likely</option>
+              <option value="5" ${String(h.probability)==="5"?"selected":""}>5 - Almost Certain</option>
+            </select>
+            <div id="probDef_${index}" class="definition-box">${probabilityDefinition(String(h.probability))}</div>
+          </div>
+
+          <div>
+            <label>Severity</label>
+            <select id="severity_${index}" disabled onchange="calculateHazardRisk(${index})">
+              <option value="">Select</option>
+              <option value="1" ${String(h.severity)==="1"?"selected":""}>1 - Negligible</option>
+              <option value="2" ${String(h.severity)==="2"?"selected":""}>2 - Minor</option>
+              <option value="3" ${String(h.severity)==="3"?"selected":""}>3 - Moderate</option>
+              <option value="4" ${String(h.severity)==="4"?"selected":""}>4 - Major</option>
+              <option value="5" ${String(h.severity)==="5"?"selected":""}>5 - Catastrophic</option>
+            </select>
+            <div id="sevDef_${index}" class="definition-box">${severityDefinition(String(h.severity))}</div>
+          </div>
+        </div>
+
+        <div id="initialRiskBox_${index}" class="risk-box ${riskClass(h.initialRiskLevel)}">
+          Initial Risk: ${safe(h.initialRiskScore)} ${h.initialRiskLevel ? "- " + h.initialRiskLevel : ""}
+        </div>
+      </div>
+
+      <div class="section" style="margin-top:18px;">
+        <h2>🛡 Mitigation Actions</h2>
+        <div class="grid">
+          <div class="full">
+            <label>Recommended Actions</label>
+            <textarea id="actions_${index}" disabled>${safe(h.actions)}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top:18px;">
+        <h2>🟢 Residual Risk Assessment</h2>
+
+        <div class="grid">
+          <div>
+            <label>Residual Probability</label>
+            <select id="residualProbability_${index}" disabled onchange="calculateHazardRisk(${index})">
+              <option value="">Select</option>
+              <option value="1" ${String(h.residualProbability)==="1"?"selected":""}>1 - Rare</option>
+              <option value="2" ${String(h.residualProbability)==="2"?"selected":""}>2 - Unlikely</option>
+              <option value="3" ${String(h.residualProbability)==="3"?"selected":""}>3 - Possible</option>
+              <option value="4" ${String(h.residualProbability)==="4"?"selected":""}>4 - Likely</option>
+              <option value="5" ${String(h.residualProbability)==="5"?"selected":""}>5 - Almost Certain</option>
+            </select>
+            <div id="resProbDef_${index}" class="definition-box">${probabilityDefinition(String(h.residualProbability))}</div>
+          </div>
+
+          <div>
+            <label>Residual Severity</label>
+            <select id="residualSeverity_${index}" disabled onchange="calculateHazardRisk(${index})">
+              <option value="">Select</option>
+              <option value="1" ${String(h.residualSeverity)==="1"?"selected":""}>1 - Negligible</option>
+              <option value="2" ${String(h.residualSeverity)==="2"?"selected":""}>2 - Minor</option>
+              <option value="3" ${String(h.residualSeverity)==="3"?"selected":""}>3 - Moderate</option>
+              <option value="4" ${String(h.residualSeverity)==="4"?"selected":""}>4 - Major</option>
+              <option value="5" ${String(h.residualSeverity)==="5"?"selected":""}>5 - Catastrophic</option>
+            </select>
+            <div id="resSevDef_${index}" class="definition-box">${severityDefinition(String(h.residualSeverity))}</div>
+          </div>
+        </div>
+
+        <div id="residualRiskBox_${index}" class="risk-box ${riskClass(h.residualRiskLevel)}">
+          Residual Risk: ${safe(h.residualRiskScore)} ${h.residualRiskLevel ? "- " + h.residualRiskLevel : ""}
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function loadDetails(){
+  reportId = getIdFromUrl();
+
+  if(!reportId){
+    document.getElementById("content").innerHTML = `<p class="message">No report ID found.</p>`;
+    return;
+  }
+
+  const companyId = getCompanyId();
+  const snapshot = await get(ref(db,"riskOverview/" + companyId + "/" + reportId));
+
+  if(!snapshot.exists()){
+    document.getElementById("content").innerHTML = `<p class="message">Report not found in Firebase.</p>`;
+    return;
+  }
+
+  currentReport = snapshot.val();
+  renderStatusButton();
+
+  document.getElementById("content").innerHTML = `
+    <div class="section">
+      <h2>🧾 General Information</h2>
+
+      <div class="grid">
+        <div>
+          <label>Report Title</label>
+          <input id="title" disabled value="${safe(currentReport.title)}">
+        </div>
+
+        <div>
+          <label>Date</label>
+          <input id="date" type="date" disabled value="${safe(currentReport.date)}">
+        </div>
+
+        <div>
+          <label>Operational Environment</label>
+          <input id="environment" disabled value="${safe(currentReport.environment)}">
+        </div>
+
+        <div>
+          <label>Operation Type</label>
+          <input id="operationType" disabled value="${safe(currentReport.operationType)}">
+        </div>
+
+        <div>
+          <label>Department / Area</label>
+          <input id="department" disabled value="${safe(currentReport.department)}">
+        </div>
+
+        <div>
+          <label>Location</label>
+          <input id="location" disabled value="${safe(currentReport.location)}">
+        </div>
+
+        <div>
+          <label>Reported By</label>
+          <input id="reportedBy" disabled value="${safe(currentReport.reportedBy)}">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🧩 Hazard Panorama</h2>
+      ${buildHazards(currentReport)}
+    </div>
+
+    <div class="section">
+      <h2>📌 General Mitigation / Follow-Up</h2>
+
+      <div class="grid">
+        <div class="full">
+          <label>Overall Comments / Follow-Up</label>
+          <textarea id="overallComments" disabled>${safe(currentReport.overallComments)}</textarea>
+        </div>
+
+        <div>
+          <label>Responsible Person</label>
+          <input id="responsible" disabled value="${safe(currentReport.responsible)}">
+        </div>
+
+        <div>
+          <label>Due Date</label>
+          <input id="dueDate" type="date" disabled value="${safe(currentReport.dueDate)}">
+        </div>
+
+        <div>
+          <label>Email To</label>
+          <input id="emailTo" disabled value="${safe(currentReport.emailTo)}">
+        </div>
+
+        <div>
+          <label>Attachments</label>
+          <input disabled value="${currentReport.attachmentNames ? currentReport.attachmentNames.join(", ") : ""}">
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+window.toggleOverviewStatus = async function(currentStatus){
+  if(!reportId) return;
+
+  const newStatus = currentStatus === "OPEN" ? "CLOSED" : "OPEN";
+  const companyId = getCompanyId();
+
+  try{
+    await update(ref(db,"riskOverview/" + companyId + "/" + reportId),{
+      status:newStatus,
+      updatedAt:new Date().toISOString()
+    });
+
+    currentReport.status = newStatus;
+    renderStatusButton();
+
+  }catch(error){
+    alert("Error updating status: " + error.message);
+  }
+};
+
+window.enableEdit = function(){
+  editMode = true;
+  document.querySelectorAll("input,select,textarea").forEach(el => el.disabled = false);
+  document.getElementById("saveBtn").style.display = "inline-block";
+  document.getElementById("message").style.color = "#0f766e";
+  document.getElementById("message").innerText = "Edit mode enabled. You can now update the report.";
+};
+
+function collectHazards(){
+  const hazards = [];
+  const cards = document.querySelectorAll(".hazard-card");
+
+  cards.forEach((card,index) => {
+    const p = Number(document.getElementById("probability_" + index)?.value);
+    const s = Number(document.getElementById("severity_" + index)?.value);
+    const rp = Number(document.getElementById("residualProbability_" + index)?.value);
+    const rs = Number(document.getElementById("residualSeverity_" + index)?.value);
+
+    const initialScore = p && s ? p * s : "";
+    const residualScore = rp && rs ? rp * rs : "";
+
+    hazards.push({
+      hazard:document.getElementById("hazard_" + index)?.value || "",
+      consequence:document.getElementById("consequence_" + index)?.value || "",
+      existingControls:document.getElementById("existingControls_" + index)?.value || "",
+      probability:p || "",
+      severity:s || "",
+      initialRiskScore:initialScore,
+      initialRiskLevel:initialScore ? classifyRisk(initialScore) : "",
+      actions:document.getElementById("actions_" + index)?.value || "",
+      residualProbability:rp || "",
+      residualSeverity:rs || "",
+      residualRiskScore:residualScore,
+      residualRiskLevel:residualScore ? classifyRisk(residualScore) : ""
+    });
+  });
+
+  return hazards;
+}
+
+window.saveChanges = async function(){
+  if(!editMode || !reportId) return;
+
+  const hazards = collectHazards();
+  const highestInitial = hazards.reduce((max,h)=>Math.max(max,Number(h.initialRiskScore || 0)),0);
+  const highestResidual = hazards.reduce((max,h)=>Math.max(max,Number(h.residualRiskScore || 0)),0);
+
+  const data = {
+    title:document.getElementById("title").value,
+    date:document.getElementById("date").value,
+    environment:document.getElementById("environment").value,
+    operationType:document.getElementById("operationType").value,
+    department:document.getElementById("department").value,
+    location:document.getElementById("location").value,
+    reportedBy:document.getElementById("reportedBy").value,
+    status:normalizeStatus(currentReport.status),
+    responsible:document.getElementById("responsible").value,
+    dueDate:document.getElementById("dueDate").value,
+    overallComments:document.getElementById("overallComments").value,
+    emailTo:document.getElementById("emailTo").value,
+
+    hazards:hazards,
+
+    hazard:hazards[0]?.hazard || "",
+    consequence:hazards[0]?.consequence || "",
+    existingControls:hazards[0]?.existingControls || "",
+    actions:hazards[0]?.actions || "",
+
+    initialRiskScore:highestInitial || "",
+    initialRiskLevel:highestInitial ? classifyRisk(highestInitial) : "",
+    residualRiskScore:highestResidual || "",
+    residualRiskLevel:highestResidual ? classifyRisk(highestResidual) : "",
+
+    updatedAt:new Date().toISOString()
+  };
+
+  const companyId = getCompanyId();
+
+  try{
+    await update(ref(db,"riskOverview/" + companyId + "/" + reportId),data);
+
+    document.getElementById("message").style.color = "green";
+    document.getElementById("message").innerText = "Report updated successfully.";
+
+    setTimeout(()=>window.location.reload(),900);
+
+  }catch(error){
+    document.getElementById("message").style.color = "red";
+    document.getElementById("message").innerText = "Error updating report: " + error.message;
+  }
+};
+
+window.deleteThisReport = async function(){
+  const confirmDelete = confirm("Are you sure you want to delete this Risk Overview report?");
+  if(!confirmDelete) return;
+
+  const companyId = getCompanyId();
+  await remove(ref(db,"riskOverview/" + companyId + "/" + reportId));
+
+  alert("Report deleted successfully.");
+  window.location.href = "Risk-Overview-Database.html";
+};
+
+loadDetails();
+</script>
+
+</body>
+</html>
