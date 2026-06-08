@@ -98,18 +98,11 @@ h1{
   background:linear-gradient(90deg,transparent,var(--blue),var(--navy),transparent);
 }
 
-.filter-box,
-.top-buttons,
-.bottom-buttons,
-.separator-buttons{
+.filter-box{
   background:#f8fbff;
   border:1px solid #e5e7eb;
-  border-radius:24px;
-  padding:18px;
-}
-
-.filter-box{
   padding:22px;
+  border-radius:26px;
   margin-bottom:26px;
   box-shadow:0 14px 32px rgba(0,0,0,.10);
 }
@@ -142,6 +135,10 @@ h1{
   justify-content:center;
   gap:14px;
   flex-wrap:wrap;
+  background:#f8fbff;
+  padding:18px;
+  border-radius:24px;
+  border:1px solid #e5e7eb;
 }
 
 .top-buttons{margin-bottom:30px;}
@@ -178,23 +175,29 @@ h1{
   font-size:20px;
 }
 
-.manual-status{
+.status-toggle{
   border:none;
   color:white;
-  padding:15px 28px;
-  border-radius:16px;
+  padding:13px 30px;
+  border-radius:999px;
   font-size:15px;
   font-weight:900;
   cursor:pointer;
+  min-width:120px;
   box-shadow:0 10px 22px rgba(0,0,0,.22);
-  outline:none;
+  transition:.25s;
 }
 
-.manual-status.open{
+.status-toggle:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.08);
+}
+
+.status-toggle.open{
   background:linear-gradient(135deg,#15803d,#22c55e);
 }
 
-.manual-status.closed{
+.status-toggle.closed{
   background:linear-gradient(135deg,#475569,#64748b);
 }
 
@@ -326,7 +329,7 @@ h1{
   .container{padding:26px;border-radius:28px;}
   h1{font-size:38px;}
   .event-title{font-size:21px;}
-  .btn,.manual-status{width:100%;}
+  .btn,.status-toggle{width:100%;}
   .delete-btn{width:100%;border-radius:16px;}
 }
 </style>
@@ -364,6 +367,7 @@ h1{
   </div>
 
   <div id="counter" class="counter"></div>
+
   <div id="medaList"></div>
 
   <div id="noData" class="no-data" style="display:none;">
@@ -442,6 +446,7 @@ function renderReports(reports){
   reports.forEach((report, index) => {
 
     const firebaseId = report.firebaseId;
+
     const title = report.title || report.eventTitle || report.event || "Untitled MEDA Report";
     const affectedPerson = report.affectedPerson || report.personAffected || report.employeeName || report.person || "N/A";
     const date = report.date || report.eventDate || report.createdAt || "N/A";
@@ -466,10 +471,12 @@ function renderReports(reports){
           </div>
         </div>
 
-        <button class="status-switch ${statusClass}" onclick="manualStatusChange('${clean(firebaseId)}', '${status}')">
-        ${status}
+        <button 
+          class="status-toggle ${statusClass}" 
+          onclick="toggleMEDAStatus('${clean(firebaseId)}','${status}')">
+          ${status}
         </button>
-        </div>
+      </div>
 
       <div class="details-grid">
 
@@ -508,10 +515,12 @@ function renderReports(reports){
     if((index + 1) % 3 === 0){
       const separator = document.createElement("div");
       separator.className = "separator-buttons";
+
       separator.innerHTML = `
         <button class="btn meda-btn" onclick="window.location.href='MEDA.html'">🛠️ MEDA</button>
         <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
       `;
+
       medaList.appendChild(separator);
     }
 
@@ -608,19 +617,16 @@ window.saveMEDAId = function(reportId){
   });
 };
 
-window.manualStatusChange = function(reportId, selectElement){
+window.toggleMEDAStatus = function(reportId, currentStatus){
 
-  const newStatus = selectElement.value;
-
-  selectElement.classList.remove("open","closed");
-  selectElement.classList.add(newStatus === "Closed" ? "closed" : "open");
+  const newStatus = currentStatus === "Open" ? "Closed" : "Open";
 
   update(ref(database, "medaReports/" + reportId), {
     status: newStatus,
     updatedAt: new Date().toISOString()
   })
   .then(() => {
-    alert("Report status changed to " + newStatus + ".");
+    alert("Report changed to " + newStatus + ".");
   })
   .catch((error) => {
     alert("Error updating status: " + error.message);
