@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Internal Audit Detail</title>
+<title>Air Accessories Internal Audit Detail</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -11,6 +11,7 @@
 body{
   font-family:'Segoe UI',Arial,sans-serif;
   min-height:100vh;
+  padding:40px;
   background:
   radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
   radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
@@ -19,7 +20,6 @@ body{
   background-size:cover;
   background-position:center;
   background-attachment:fixed;
-  padding:40px;
 }
 
 .container{
@@ -27,73 +27,43 @@ body{
   margin:auto;
   background:rgba(255,255,255,.97);
   backdrop-filter:blur(14px);
-  padding:55px;
+  padding:45px;
   border-radius:38px;
   box-shadow:0 28px 70px rgba(0,0,0,.38);
-  position:relative;
-  overflow:hidden;
-}
-
-.container::before{
-  content:"";
-  position:absolute;
-  width:420px;
-  height:420px;
-  background:radial-gradient(circle,rgba(0,174,239,.15),transparent 70%);
-  top:-170px;
-  right:-120px;
-}
-
-.container::after{
-  content:"";
-  position:absolute;
-  width:350px;
-  height:350px;
-  background:radial-gradient(circle,rgba(0,59,102,.14),transparent 70%);
-  bottom:-150px;
-  left:-120px;
-}
-
-#reportContent,
-.loading,
-.error{
-  position:relative;
-  z-index:2;
 }
 
 .header{
   text-align:center;
-  margin-bottom:45px;
+  margin-bottom:30px;
 }
 
 .logo{
-  width:96px;
-  height:96px;
-  margin:0 auto 20px;
+  width:90px;
+  height:90px;
+  margin:0 auto 18px;
   border-radius:28px;
   background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:44px;
+  font-size:42px;
   box-shadow:0 16px 34px rgba(0,0,0,.28);
 }
 
 .company-label{
   color:#00aeef;
-  font-size:16px;
+  font-size:15px;
   font-weight:900;
   letter-spacing:4px;
   margin-bottom:10px;
 }
 
 .header h1{
-  font-size:52px;
+  font-size:44px;
   color:#003b66;
-  margin-bottom:12px;
   font-weight:900;
-  line-height:1.1;
+  margin-bottom:10px;
 }
 
 .header p{
@@ -104,14 +74,12 @@ body{
 
 .badge{
   display:inline-block;
-  background:#eaf8ff;
-  color:#003b66;
-  padding:10px 24px;
+  background:linear-gradient(135deg,#003b66,#00aeef);
+  color:white;
+  padding:9px 20px;
   border-radius:999px;
-  font-size:14px;
   font-weight:900;
-  letter-spacing:1.8px;
-  margin-top:16px;
+  margin-top:14px;
 }
 
 .title-line{
@@ -123,24 +91,25 @@ body{
 }
 
 .section{
-  margin-top:28px;
+  margin-top:25px;
   border:1px solid #e6eef5;
   border-radius:24px;
   overflow:hidden;
-  background:linear-gradient(135deg,#ffffff,#f8fcff);
-  box-shadow:0 14px 30px rgba(0,0,0,.10);
+  background:white;
+  box-shadow:0 14px 30px rgba(0,0,0,.09);
 }
 
 .section-title{
-  background:linear-gradient(135deg,#003b66,#005f99);
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
-  padding:16px 22px;
+  padding:17px 22px;
   font-size:21px;
   font-weight:900;
 }
 
 .section-body{
-  padding:26px;
+  padding:25px;
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
 }
 
 .grid{
@@ -152,53 +121,59 @@ body{
 .box{
   background:#f8fcff;
   border:1px solid #e6eef5;
-  border-radius:18px;
-  padding:16px;
+  border-radius:16px;
+  padding:15px;
 }
 
 .label{
-  color:#64748b;
+  color:#003b66;
   font-size:12px;
   text-transform:uppercase;
   font-weight:900;
-  margin-bottom:6px;
+  margin-bottom:7px;
 }
 
 .value{
-  color:#003b66;
+  color:#071f47;
   font-size:15px;
   font-weight:800;
   white-space:pre-wrap;
   word-break:break-word;
 }
 
-.long-box{
-  margin-top:15px;
+.long-box{margin-top:15px;}
+
+input,textarea,select{
+  width:100%;
+  padding:13px;
+  border:1px solid #cfd8e3;
+  border-radius:15px;
+  font-size:15px;
+  background:#f9fbfd;
+  outline:none;
+  transition:.25s;
 }
 
-.check-card,
-.action-card{
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+  background:white;
+}
+
+.check-card{
   background:linear-gradient(135deg,#ffffff,#f8fcff);
   border:1px solid #e6eef5;
-  border-top:7px solid #00aeef;
+  border-left:9px solid #00aeef;
   border-radius:22px;
   padding:20px;
   margin-bottom:18px;
-  box-shadow:0 10px 24px rgba(0,0,0,.08);
-  position:relative;
-  overflow:hidden;
-}
-
-.check-card::before,
-.action-card::before{
-  content:"";
-  position:absolute;
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  background:rgba(0,174,239,.08);
-  top:-60px;
-  right:-50px;
 }
 
 .check-card h3,
@@ -207,22 +182,23 @@ body{
   font-size:21px;
   margin-bottom:12px;
   font-weight:900;
-  position:relative;
-  z-index:2;
 }
 
-.check-card .grid,
-.action-card .grid{
-  position:relative;
-  z-index:2;
+.action-card{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border:1px solid #e6eef5;
+  border-left:9px solid #22c55e;
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:18px;
 }
 
 .btn-area{
   text-align:center;
-  margin-top:34px;
+  margin-top:30px;
   display:flex;
   justify-content:center;
-  gap:12px;
+  gap:14px;
   flex-wrap:wrap;
 }
 
@@ -234,7 +210,7 @@ body{
   font-size:16px;
   font-weight:900;
   cursor:pointer;
-  transition:.25s;
+  transition:.3s;
   box-shadow:0 12px 26px rgba(0,0,0,.20);
 }
 
@@ -243,10 +219,12 @@ body{
   filter:brightness(1.08);
 }
 
-.database-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.edit-btn{background:linear-gradient(135deg,#f59e0b,#f97316);}
+.save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
+.database-btn{background:linear-gradient(135deg,#003b66,#005f99,#00aeef);}
 .back-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
 .home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
-.print-btn{background:linear-gradient(135deg,#64748b,#334155);}
+.print-btn{background:linear-gradient(135deg,#047857,#22c55e);}
 
 .loading,
 .error{
@@ -259,7 +237,7 @@ body{
 
 .footer{
   text-align:center;
-  margin-top:38px;
+  margin-top:32px;
   color:#003b66;
   font-size:15px;
   font-weight:900;
@@ -267,26 +245,16 @@ body{
 }
 
 @media print{
-  body{
-    background:white;
-    padding:0;
-  }
-
-  .container{
-    box-shadow:none;
-    border-radius:0;
-  }
-
-  .btn-area{
-    display:none;
-  }
+  body{background:white;padding:0;}
+  .container{box-shadow:none;border-radius:0;}
+  .btn-area{display:none;}
 }
 
-@media(max-width:800px){
+@media(max-width:900px){
   body{padding:25px;}
-  .container{padding:35px 22px;}
-  .header h1{font-size:36px;}
-  .company-label{font-size:14px;letter-spacing:3px;}
+  .container{padding:30px 22px;border-radius:28px;}
+  .header h1{font-size:34px;}
+  .btn{width:100%;}
 }
 </style>
 </head>
@@ -295,115 +263,76 @@ body{
 
 <div class="container">
 
-  <div id="loading" class="loading">
-    Loading Internal Audit Report...
+<div id="loading" class="loading">Loading Internal Audit Report...</div>
+<div id="errorBox" class="error" style="display:none;">Internal Audit Report not found.</div>
+
+<div id="reportContent" style="display:none;">
+
+<div class="header">
+  <div class="logo">🛡️</div>
+  <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
+  <h1 id="pageTitle">Internal Audit Report Detail</h1>
+  <p>Internal audit record for compliance verification, findings, corrective actions and follow-up</p>
+  <div class="badge">INTERNAL AUDIT</div>
+  <div class="title-line"></div>
+</div>
+
+<div class="section">
+  <div class="section-title">1. Audit Information</div>
+  <div class="section-body">
+    <div class="grid" id="auditInfo"></div>
+    <div class="box long-box"><div class="label">Audit Scope</div><div class="value" id="auditScope"></div></div>
+    <div class="box long-box"><div class="label">Audit Objective</div><div class="value" id="auditObjective"></div></div>
   </div>
+</div>
 
-  <div id="errorBox" class="error" style="display:none;">
-    Internal Audit Report not found.
+<div class="section">
+  <div class="section-title">2. Audit Criteria / Reference</div>
+  <div class="section-body">
+    <div class="grid" id="criteriaInfo"></div>
+    <div class="box long-box"><div class="label">Audit Criteria Description</div><div class="value" id="criteriaDescription"></div></div>
   </div>
+</div>
 
-  <div id="reportContent" style="display:none;">
+<div class="section">
+  <div class="section-title">3. Internal Audit Checklist Areas</div>
+  <div class="section-body" id="checklistArea"></div>
+</div>
 
-    <div class="header">
-      <div class="logo">🛡️</div>
-      <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
-      <h1 id="pageTitle">Internal Audit Report Detail</h1>
-      <p>Internal audit record for compliance verification, findings, corrective actions and follow-up.</p>
-      <div class="badge">INTERNAL AUDIT</div>
-      <div class="title-line"></div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">1. Audit Information</div>
-      <div class="section-body">
-        <div class="grid" id="auditInfo"></div>
-
-        <div class="box long-box">
-          <div class="label">Audit Scope</div>
-          <div class="value" id="auditScope"></div>
-        </div>
-
-        <div class="box long-box">
-          <div class="label">Audit Objective</div>
-          <div class="value" id="auditObjective"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">2. Audit Criteria / Reference</div>
-      <div class="section-body">
-        <div class="grid" id="criteriaInfo"></div>
-
-        <div class="box long-box">
-          <div class="label">Audit Criteria Description</div>
-          <div class="value" id="criteriaDescription"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">3. Internal Audit Checklist Areas</div>
-      <div class="section-body" id="checklistArea"></div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">4. Finding / Nonconformity Summary</div>
-      <div class="section-body">
-        <div class="grid" id="findingInfo"></div>
-
-        <div class="box long-box">
-          <div class="label">Finding Statement</div>
-          <div class="value" id="findingStatement"></div>
-        </div>
-
-        <div class="box long-box">
-          <div class="label">Evidence</div>
-          <div class="value" id="evidence"></div>
-        </div>
-
-        <div class="box long-box">
-          <div class="label">Root Cause / System Weakness</div>
-          <div class="value" id="rootCause"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">5. Corrective / Preventive Actions</div>
-      <div class="section-body" id="actionsArea"></div>
-    </div>
-
-    <div class="btn-area">
-      <button class="btn database-btn" onclick="window.location.href='Safety-Assurance-Audit-Database.html'">
-        📊 Audit Database
-      </button>
-
-      <button class="btn back-btn" onclick="window.location.href='Safety-Assurance-Audit.html'">
-        🛡️ Back to Audits
-      </button>
-
-      <button class="btn home-btn" onclick="window.location.href='index.html'">
-        🏠 Home
-      </button>
-
-      <button class="btn print-btn" onclick="window.print()">
-        🖨️ Print Report
-      </button>
-    </div>
-
-    <div class="footer">
-      371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
-    </div>
-
+<div class="section">
+  <div class="section-title">4. Finding / Nonconformity Summary</div>
+  <div class="section-body">
+    <div class="grid" id="findingInfo"></div>
+    <div class="box long-box"><div class="label">Finding Statement</div><div class="value" id="findingStatement"></div></div>
+    <div class="box long-box"><div class="label">Evidence</div><div class="value" id="evidence"></div></div>
+    <div class="box long-box"><div class="label">Root Cause / System Weakness</div><div class="value" id="rootCause"></div></div>
   </div>
+</div>
 
+<div class="section">
+  <div class="section-title">5. Corrective / Preventive Actions</div>
+  <div class="section-body" id="actionsArea"></div>
+</div>
+
+<div class="btn-area">
+  <button class="btn edit-btn" onclick="enableEditMode()">✏️ Edit</button>
+  <button class="btn save-btn" id="saveEditBtn" style="display:none;" onclick="saveEditedReport()">💾 Save Changes</button>
+  <button class="btn database-btn" onclick="window.location.href='Safety-Assurance-Audit-Database.html'">📊 Audit Database</button>
+  <button class="btn back-btn" onclick="window.location.href='Safety-Assurance-Audit.html'">🛡️ Back to Audits</button>
+  <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+  <button class="btn print-btn" onclick="window.print()">🖨️ Print Report</button>
+</div>
+
+<div class="footer">
+  371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+</div>
+
+</div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
@@ -418,6 +347,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+let currentReport = {};
+let currentReportId = "";
+let editMode = false;
+
 function clean(value){
   return String(value || "N/A")
     .replaceAll("&","&amp;")
@@ -428,17 +361,81 @@ function clean(value){
 }
 
 function getParam(name){
-  const params = new URLSearchParams(window.location.search);
-  return params.get(name);
+  return new URLSearchParams(window.location.search).get(name);
 }
 
-function field(label,value){
+function field(label,value,key){
+  if(editMode && key){
+    return `
+      <div class="box">
+        <div class="label">${clean(label)}</div>
+        <input id="edit_${key}" value="${clean(value === "N/A" ? "" : value)}">
+      </div>
+    `;
+  }
+
   return `
     <div class="box">
       <div class="label">${clean(label)}</div>
       <div class="value">${clean(value)}</div>
     </div>
   `;
+}
+
+function longField(elementId,label,value,key){
+  const box = document.getElementById(elementId);
+
+  if(editMode){
+    box.innerHTML = `<textarea id="edit_${key}">${clean(value === "N/A" ? "" : value)}</textarea>`;
+  }else{
+    box.innerHTML = clean(value);
+  }
+}
+
+function renderReport(){
+  document.getElementById("pageTitle").innerText = currentReport.title || "Internal Audit Report Detail";
+
+  document.getElementById("auditInfo").innerHTML = `
+    ${field("Audit Category", currentReport.auditCategory || "Internal Audit", "auditCategory")}
+    ${field("Audit ID", currentReport.auditId || currentReport.auditNumber || currentReportId, "")}
+    ${field("Audit Number", currentReport.auditNumber, "auditNumber")}
+    ${field("Auditor Name", currentReport.auditorName, "auditorName")}
+    ${field("Audited Department / Area", currentReport.auditedArea, "auditedArea")}
+    ${field("Responsible Manager", currentReport.responsibleManager, "responsibleManager")}
+    ${field("Location", currentReport.location, "location")}
+    ${field("Audit Date", currentReport.date, "date")}
+    ${field("Audit Type", currentReport.auditType, "auditType")}
+    ${field("Audit Status", currentReport.status, "status")}
+    ${field("Created At", currentReport.createdAt, "")}
+    ${field("Updated At", currentReport.updatedAt, "")}
+  `;
+
+  longField("auditScope","Audit Scope",currentReport.auditScope,"auditScope");
+  longField("auditObjective","Audit Objective",currentReport.auditObjective,"auditObjective");
+
+  document.getElementById("criteriaInfo").innerHTML = `
+    ${field("Reference Standard / Regulation", currentReport.referenceStandard, "referenceStandard")}
+    ${field("Manual / Procedure Reference", currentReport.procedureReference, "procedureReference")}
+    ${field("Customer / Authority Requirement", currentReport.customerRequirement, "customerRequirement")}
+  `;
+
+  longField("criteriaDescription","Audit Criteria Description",currentReport.criteriaDescription,"criteriaDescription");
+
+  renderChecklist(currentReport.checklist);
+  renderFinding();
+  renderActions(currentReport.correctiveActions);
+}
+
+function renderFinding(){
+  document.getElementById("findingInfo").innerHTML = `
+    ${field("Finding Classification", currentReport.findingClassification, "findingClassification")}
+    ${field("Main Finding Area", currentReport.mainFindingArea, "mainFindingArea")}
+    ${field("Risk / Priority", currentReport.riskPriority, "riskPriority")}
+  `;
+
+  longField("findingStatement","Finding Statement",currentReport.findingStatement,"findingStatement");
+  longField("evidence","Evidence",currentReport.evidence,"evidence");
+  longField("rootCause","Root Cause / System Weakness",currentReport.rootCause,"rootCause");
 }
 
 function renderChecklist(checklist){
@@ -451,17 +448,31 @@ function renderChecklist(checklist){
   }
 
   checklist.forEach((item,index) => {
-    area.innerHTML += `
-      <div class="check-card">
-        <h3>${index + 1}. ${clean(item.area)}</h3>
-        <div class="grid">
-          ${field("Result", item.result)}
-          ${field("Checklist Item", item.checklistItem)}
-          ${field("Evidence / Notes", item.evidence)}
-          ${field("Recommended Action", item.recommendedAction)}
+    if(editMode){
+      area.innerHTML += `
+        <div class="check-card">
+          <h3>${index + 1}. ${clean(item.area)}</h3>
+          <div class="grid">
+            <div class="box"><div class="label">Result</div><input id="check_${index}_result" value="${clean(item.result)}"></div>
+            <div class="box"><div class="label">Checklist Item</div><input id="check_${index}_checklistItem" value="${clean(item.checklistItem)}"></div>
+            <div class="box"><div class="label">Evidence / Notes</div><textarea id="check_${index}_evidence">${clean(item.evidence)}</textarea></div>
+            <div class="box"><div class="label">Recommended Action</div><textarea id="check_${index}_recommendedAction">${clean(item.recommendedAction)}</textarea></div>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }else{
+      area.innerHTML += `
+        <div class="check-card">
+          <h3>${index + 1}. ${clean(item.area)}</h3>
+          <div class="grid">
+            ${field("Result", item.result)}
+            ${field("Checklist Item", item.checklistItem)}
+            ${field("Evidence / Notes", item.evidence)}
+            ${field("Recommended Action", item.recommendedAction)}
+          </div>
+        </div>
+      `;
+    }
   });
 }
 
@@ -475,19 +486,33 @@ function renderActions(actions){
   }
 
   actions.forEach((action,index) => {
-    if(!action.action && !action.responsible && !action.dueDate) return;
-
-    area.innerHTML += `
-      <div class="action-card">
-        <h3>CPA ${index + 1}</h3>
-        <div class="grid">
-          ${field("Corrective / Preventive Action", action.action)}
-          ${field("Responsible Person", action.responsible)}
-          ${field("Due Date", action.dueDate)}
-          ${field("Status", action.status)}
+    if(editMode){
+      area.innerHTML += `
+        <div class="action-card">
+          <h3>CPA ${index + 1}</h3>
+          <div class="grid">
+            <div class="box"><div class="label">Corrective / Preventive Action</div><textarea id="action_${index}_action">${clean(action.action)}</textarea></div>
+            <div class="box"><div class="label">Responsible Person</div><input id="action_${index}_responsible" value="${clean(action.responsible)}"></div>
+            <div class="box"><div class="label">Due Date</div><input id="action_${index}_dueDate" value="${clean(action.dueDate)}"></div>
+            <div class="box"><div class="label">Status</div><input id="action_${index}_status" value="${clean(action.status)}"></div>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }else{
+      if(!action.action && !action.responsible && !action.dueDate) return;
+
+      area.innerHTML += `
+        <div class="action-card">
+          <h3>CPA ${index + 1}</h3>
+          <div class="grid">
+            ${field("Corrective / Preventive Action", action.action)}
+            ${field("Responsible Person", action.responsible)}
+            ${field("Due Date", action.dueDate)}
+            ${field("Status", action.status)}
+          </div>
+        </div>
+      `;
+    }
   });
 
   if(area.innerHTML.trim() === ""){
@@ -495,17 +520,91 @@ function renderActions(actions){
   }
 }
 
-async function loadReport(){
-  const reportId = getParam("id");
-  const companyId = localStorage.getItem("companyId") || "defaultCompany";
+window.enableEditMode = function(){
+  editMode = true;
+  document.getElementById("saveEditBtn").style.display = "inline-block";
+  renderReport();
+};
 
-  if(!reportId){
+window.saveEditedReport = async function(){
+  if(!currentReportId){
+    alert("Report ID not found.");
+    return;
+  }
+
+  const updated = {
+    ...currentReport,
+
+    auditCategory:document.getElementById("edit_auditCategory")?.value.trim() || "Internal Audit",
+    auditNumber:document.getElementById("edit_auditNumber")?.value.trim() || "",
+    auditorName:document.getElementById("edit_auditorName")?.value.trim() || "",
+    auditedArea:document.getElementById("edit_auditedArea")?.value.trim() || "",
+    responsibleManager:document.getElementById("edit_responsibleManager")?.value.trim() || "",
+    location:document.getElementById("edit_location")?.value.trim() || "",
+    date:document.getElementById("edit_date")?.value.trim() || "",
+    auditType:document.getElementById("edit_auditType")?.value.trim() || "",
+    status:document.getElementById("edit_status")?.value.trim() || "",
+
+    auditScope:document.getElementById("edit_auditScope")?.value.trim() || "",
+    auditObjective:document.getElementById("edit_auditObjective")?.value.trim() || "",
+
+    referenceStandard:document.getElementById("edit_referenceStandard")?.value.trim() || "",
+    procedureReference:document.getElementById("edit_procedureReference")?.value.trim() || "",
+    customerRequirement:document.getElementById("edit_customerRequirement")?.value.trim() || "",
+    criteriaDescription:document.getElementById("edit_criteriaDescription")?.value.trim() || "",
+
+    findingClassification:document.getElementById("edit_findingClassification")?.value.trim() || "",
+    mainFindingArea:document.getElementById("edit_mainFindingArea")?.value.trim() || "",
+    riskPriority:document.getElementById("edit_riskPriority")?.value.trim() || "",
+    findingStatement:document.getElementById("edit_findingStatement")?.value.trim() || "",
+    evidence:document.getElementById("edit_evidence")?.value.trim() || "",
+    rootCause:document.getElementById("edit_rootCause")?.value.trim() || "",
+
+    company:"Air Accessories & Avionics",
+    updatedAt:new Date().toLocaleString()
+  };
+
+  if(Array.isArray(currentReport.checklist)){
+    updated.checklist = currentReport.checklist.map((item,index) => ({
+      area:item.area,
+      result:document.getElementById(`check_${index}_result`)?.value.trim() || "",
+      checklistItem:document.getElementById(`check_${index}_checklistItem`)?.value.trim() || "",
+      evidence:document.getElementById(`check_${index}_evidence`)?.value.trim() || "",
+      recommendedAction:document.getElementById(`check_${index}_recommendedAction`)?.value.trim() || ""
+    }));
+  }
+
+  if(Array.isArray(currentReport.correctiveActions)){
+    updated.correctiveActions = currentReport.correctiveActions.map((action,index) => ({
+      action:document.getElementById(`action_${index}_action`)?.value.trim() || "",
+      responsible:document.getElementById(`action_${index}_responsible`)?.value.trim() || "",
+      dueDate:document.getElementById(`action_${index}_dueDate`)?.value.trim() || "",
+      status:document.getElementById(`action_${index}_status`)?.value.trim() || ""
+    }));
+  }
+
+  try{
+    await update(ref(database, "auditReports/" + currentReportId), updated);
+    currentReport = updated;
+    editMode = false;
+    document.getElementById("saveEditBtn").style.display = "none";
+    renderReport();
+    alert("Internal Audit Report updated successfully.");
+  }catch(error){
+    alert("Error updating report: " + error.message);
+  }
+};
+
+async function loadReport(){
+  currentReportId = getParam("id");
+
+  if(!currentReportId){
     document.getElementById("loading").style.display = "none";
     document.getElementById("errorBox").style.display = "block";
     return;
   }
 
-  const snapshot = await get(ref(database, "auditReports/" + companyId + "/" + reportId));
+  const snapshot = await get(ref(database, "auditReports/" + currentReportId));
 
   if(!snapshot.exists()){
     document.getElementById("loading").style.display = "none";
@@ -513,52 +612,12 @@ async function loadReport(){
     return;
   }
 
-  const report = snapshot.val();
+  currentReport = snapshot.val();
 
   document.getElementById("loading").style.display = "none";
   document.getElementById("reportContent").style.display = "block";
 
-  document.getElementById("pageTitle").innerText = report.title || "Internal Audit Report Detail";
-
-  document.getElementById("auditInfo").innerHTML = `
-    ${field("Audit Category", report.auditCategory || "Internal Audit")}
-    ${field("Audit ID", report.auditId || report.auditNumber || reportId)}
-    ${field("Audit Number", report.auditNumber)}
-    ${field("Auditor Name", report.auditorName)}
-    ${field("Audited Department / Area", report.auditedArea)}
-    ${field("Responsible Manager", report.responsibleManager)}
-    ${field("Location", report.location)}
-    ${field("Audit Date", report.date)}
-    ${field("Audit Type", report.auditType)}
-    ${field("Audit Status", report.status)}
-    ${field("Created At", report.createdAtDisplay || report.createdAt)}
-    ${field("Updated At", report.updatedAtDisplay || report.updatedAt)}
-  `;
-
-  document.getElementById("auditScope").innerHTML = clean(report.auditScope);
-  document.getElementById("auditObjective").innerHTML = clean(report.auditObjective);
-
-  document.getElementById("criteriaInfo").innerHTML = `
-    ${field("Reference Standard / Regulation", report.referenceStandard)}
-    ${field("Manual / Procedure Reference", report.procedureReference)}
-    ${field("Customer / Authority Requirement", report.customerRequirement)}
-  `;
-
-  document.getElementById("criteriaDescription").innerHTML = clean(report.criteriaDescription);
-
-  renderChecklist(report.checklist);
-
-  document.getElementById("findingInfo").innerHTML = `
-    ${field("Finding Classification", report.findingClassification)}
-    ${field("Main Finding Area", report.mainFindingArea)}
-    ${field("Risk / Priority", report.riskPriority)}
-  `;
-
-  document.getElementById("findingStatement").innerHTML = clean(report.findingStatement);
-  document.getElementById("evidence").innerHTML = clean(report.evidence);
-  document.getElementById("rootCause").innerHTML = clean(report.rootCause);
-
-  renderActions(report.correctiveActions);
+  renderReport();
 }
 
 loadReport();
