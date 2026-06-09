@@ -149,7 +149,6 @@ h1{
 .home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
 .open-btn{background:linear-gradient(135deg,#003b66,#005f99,#00aeef);}
 .save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
-.status-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
 
 .delete-btn{
   background:linear-gradient(135deg,#dc2626,#ef4444);
@@ -255,19 +254,36 @@ h1{
 }
 
 .status{
-  display:inline-block;
-  padding:8px 18px;
+  border:none;
+  cursor:pointer;
+  padding:10px 22px;
   border-radius:999px;
   color:white;
   font-size:13px;
   font-weight:900;
-  box-shadow:0 8px 18px rgba(0,0,0,.18);
+  transition:.30s;
+  box-shadow:0 8px 18px rgba(0,0,0,.20);
 }
 
-.status.open{background:linear-gradient(135deg,#16a34a,#22c55e);}
-.status.closed{background:linear-gradient(135deg,#475569,#64748b);}
-.status.in-progress{background:linear-gradient(135deg,#003b66,#005f99);}
-.status.pending-corrective-action{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.status:hover{
+  transform:scale(1.08);
+}
+
+.status.open{
+  background:linear-gradient(135deg,#dc2626,#ef4444);
+}
+
+.status.closed{
+  background:linear-gradient(135deg,#15803d,#22c55e);
+}
+
+.status.in-progress{
+  background:linear-gradient(135deg,#003b66,#005f99);
+}
+
+.status.pending-corrective-action{
+  background:linear-gradient(135deg,#00aeef,#0284c7);
+}
 
 .details-grid{
   display:grid;
@@ -380,7 +396,6 @@ h1{
 <div class="content">
 
   <div class="logo">📊</div>
-
   <div class="badge">AIR ACCESSORIES & AVIONICS</div>
 
   <h1>MOC Database</h1>
@@ -400,7 +415,6 @@ h1{
 
   <div id="filterPanel" class="filter-panel">
     <input id="searchInput" placeholder="Search ID, title, department, owner, risk, status..." oninput="applyFilter()">
-
     <input type="date" id="dateFilter" onchange="applyFilter()">
 
     <select id="statusFilter" onchange="applyFilter()">
@@ -421,7 +435,6 @@ h1{
   </div>
 
   <div id="counter" class="counter"></div>
-
   <div id="mocList"></div>
 
   <div id="noData" class="no-data" style="display:none;">
@@ -483,9 +496,7 @@ function clean(value){
 }
 
 function statusClass(status){
-  return String(status || "Open")
-    .toLowerCase()
-    .replaceAll(" ","-");
+  return String(status || "Open").toLowerCase().replaceAll(" ","-");
 }
 
 function normalizeDate(value){
@@ -508,55 +519,20 @@ function renderReports(reports){
   noData.style.display = "none";
   counter.innerHTML = reports.length + " report(s) found";
 
-  reports.forEach((report, index) => {
+  reports.forEach((report,index) => {
 
     const firebaseId = report.firebaseId;
-
-    const mocVisibleId =
-      report.mocId ||
-      report.customId ||
-      firebaseId;
-
-    const title =
-      report.changeTitle ||
-      "Untitled MOC Report";
-
-    const department =
-      report.department ||
-      "N/A";
-
-    const owner =
-      report.changeOwner ||
-      "N/A";
-
-    const changeType =
-      report.changeType ||
-      "N/A";
-
-    const status =
-      report.status ||
-      "Open";
-
-    const date =
-      report.changeDate ||
-      report.createdAt ||
-      "N/A";
-
-    const initialRisk =
-      report.initialRisk?.level ||
-      "N/A";
-
-    const initialScore =
-      report.initialRisk?.score ??
-      "N/A";
-
-    const residualRisk =
-      report.residualRisk?.level ||
-      "N/A";
-
-    const residualScore =
-      report.residualRisk?.score ??
-      "N/A";
+    const mocVisibleId = report.mocId || report.customId || firebaseId;
+    const title = report.changeTitle || "Untitled MOC Report";
+    const department = report.department || "N/A";
+    const owner = report.changeOwner || "N/A";
+    const changeType = report.changeType || "N/A";
+    const status = report.status || "Open";
+    const date = report.changeDate || report.createdAt || "N/A";
+    const initialRisk = report.initialRisk?.level || "N/A";
+    const initialScore = report.initialRisk?.score ?? "N/A";
+    const residualRisk = report.residualRisk?.level || "N/A";
+    const residualScore = report.residualRisk?.score ?? "N/A";
 
     const card = document.createElement("div");
     card.className = "report-card";
@@ -564,9 +540,7 @@ function renderReports(reports){
     card.innerHTML = `
       <div class="card-header">
         <div>
-          <div class="event-title">
-            ${clean(mocVisibleId)} | ${clean(title)}
-          </div>
+          <div class="event-title">${clean(mocVisibleId)} | ${clean(title)}</div>
 
           <div class="meta">
             <strong>Date:</strong> ${clean(date)}<br>
@@ -577,13 +551,14 @@ function renderReports(reports){
           </div>
         </div>
 
-        <span class="status ${statusClass(status)}">
+        <button
+          class="status ${statusClass(status)}"
+          onclick="toggleStatus('${clean(firebaseId)}','${clean(status)}')">
           ${clean(status)}
-        </span>
+        </button>
       </div>
 
       <div class="details-grid">
-
         <div class="detail-box">
           <div class="detail-label">Editable MOC ID</div>
           <input class="moc-id-input" id="mocId_${clean(firebaseId)}" value="${clean(mocVisibleId)}">
@@ -604,11 +579,9 @@ function renderReports(reports){
           <div class="detail-label">Final Decision</div>
           <div class="detail-value">${clean(report.finalDecision || "N/A")}</div>
         </div>
-
       </div>
 
       <div class="actions">
-
         <button class="btn open-btn" onclick="openReport('${clean(firebaseId)}')">
           Open Report
         </button>
@@ -617,14 +590,9 @@ function renderReports(reports){
           Save MOC ID
         </button>
 
-        <button class="btn status-btn" onclick="toggleStatus('${clean(firebaseId)}', '${clean(status)}')">
-          ${status === "Open" ? "Close Report" : "Open Report"}
-        </button>
-
         <button class="btn delete-btn" onclick="deleteReport('${clean(firebaseId)}')">
           🗑
         </button>
-
       </div>
     `;
 
@@ -680,25 +648,16 @@ window.applyFilter = function(){
       ${report.updatedAt || ""}
     `.toLowerCase();
 
-    const matchesSearch =
-      searchText === "" || searchArea.includes(searchText);
-
-    const reportDate =
-      normalizeDate(report.changeDate || report.createdAt || "");
-
-    const matchesDate =
-      dateFilter === "" || reportDate === dateFilter;
-
-    const matchesStatus =
-      statusFilter === "" || (report.status || "Open") === statusFilter;
-
+    const matchesSearch = searchText === "" || searchArea.includes(searchText);
+    const reportDate = normalizeDate(report.changeDate || report.createdAt || "");
+    const matchesDate = dateFilter === "" || reportDate === dateFilter;
+    const matchesStatus = statusFilter === "" || (report.status || "Open") === statusFilter;
     const matchesRisk =
       riskFilter === "" ||
       (report.initialRisk?.level || "") === riskFilter ||
       (report.residualRisk?.level || "") === riskFilter;
 
     return matchesSearch && matchesDate && matchesStatus && matchesRisk;
-
   });
 
   filteredReports.sort((a,b) => {
@@ -770,19 +729,35 @@ window.saveMOCId = function(reportId){
 
 };
 
-window.toggleStatus = function(reportId, currentStatus){
+window.toggleStatus = function(reportId,currentStatus){
 
-  const newStatus = currentStatus === "Open" ? "Closed" : "Open";
+  let newStatus = "";
+  let question = "";
+  let message = "";
 
-  update(ref(database, "mocReports/" + reportId), {
-    status: newStatus,
-    updatedAt: new Date().toISOString()
+  if(currentStatus === "Open"){
+    question = "Are you sure you want to CLOSE this MOC Report?";
+    if(!confirm(question)) return;
+
+    newStatus = "Closed";
+    message = "The MOC Report has been successfully CLOSED.";
+  }else{
+    question = "Are you sure you want to REOPEN this MOC Report?";
+    if(!confirm(question)) return;
+
+    newStatus = "Open";
+    message = "The MOC Report has been successfully REOPENED.";
+  }
+
+  update(ref(database,"mocReports/" + reportId), {
+    status:newStatus,
+    updatedAt:new Date().toISOString()
   })
   .then(() => {
-    alert("Report status changed to " + newStatus + ".");
+    alert(message);
   })
   .catch((error) => {
-    alert("Error updating status: " + error.message);
+    alert("Error updating report status: " + error.message);
   });
 
 };
