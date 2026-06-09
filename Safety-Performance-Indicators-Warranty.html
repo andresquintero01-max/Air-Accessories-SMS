@@ -1,1 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SPI - Warranty Claim</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:40px;
+  background:
+    radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
+    linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.94)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.container{
+  max-width:1250px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);
+  padding:45px;
+  border-radius:38px;
+  box-shadow:0 28px 70px rgba(0,0,0,.38);
+}
+
+.header{text-align:center;margin-bottom:32px;}
+
+.logo{
+  width:100px;height:100px;margin:0 auto 18px;border-radius:30px;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  color:white;display:flex;align-items:center;justify-content:center;
+  font-size:46px;box-shadow:0 18px 40px rgba(0,0,0,.30);
+}
+
+.badge{
+  display:inline-block;background:#ecfeff;color:#003b66;
+  padding:10px 24px;border-radius:999px;font-size:14px;
+  font-weight:900;letter-spacing:1.8px;margin-bottom:14px;
+}
+
+h1{
+  color:#003b66;font-size:52px;font-weight:900;margin-bottom:10px;
+}
+
+.subtitle{
+  color:#536172;font-size:19px;font-weight:600;
+}
+
+.title-line{
+  width:260px;height:6px;margin:24px auto 0;border-radius:999px;
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
+}
+
+.card{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border:1px solid #e6eef5;
+  border-radius:28px;
+  padding:28px;
+  margin-bottom:32px;
+  box-shadow:0 14px 30px rgba(0,0,0,.11);
+  border-top:9px solid #00aeef;
+}
+
+.card h2{
+  text-align:center;color:#003b66;font-size:30px;margin-bottom:20px;font-weight:900;
+}
+
+.top-buttons{
+  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+  margin-bottom:30px;
+}
+
+button{
+  border:none;color:white;padding:15px 26px;border-radius:16px;
+  font-size:15px;font-weight:900;cursor:pointer;transition:.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,.20);
+}
+
+button:hover{transform:translateY(-4px);filter:brightness(1.08);}
+
+.print-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
+.add-btn{background:linear-gradient(135deg,#003b66,#005f99,#00aeef);}
+.back-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.year-save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
+.delete-year-btn{background:linear-gradient(135deg,#dc2626,#ef4444);}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:25px;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+th{
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  color:white;
+  padding:14px 10px;
+  font-size:15px;
+}
+
+td{
+  border:1px solid #dbe5ef;
+  padding:10px;
+  text-align:center;
+  font-size:15px;
+  color:#071f47;
+}
+
+.objective-label{
+  background:#f8fcff;
+  color:#003b66;
+  font-weight:900;
+  width:30%;
+}
+
+.editable-cell{
+  width:100%;
+  min-height:44px;
+  padding:10px;
+  border:1px solid #cfd8e3;
+  border-radius:12px;
+  outline:none;
+  background:white;
+  font-weight:700;
+  color:#071f47;
+}
+
+.editable-cell:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+}
+
+.year-section{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  padding:28px;
+  margin-bottom:35px;
+  border-radius:28px;
+  box-shadow:0 14px 30px rgba(0,0,0,.11);
+  border:1px solid #e6eef5;
+  border-top:9px solid #00aeef;
+}
+
+.year-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.year-title{
+  font-size:32px;
+  color:#003b66;
+  font-weight:900;
+}
+
+.right-buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+input{
+  width:85px;
+  padding:8px;
+  text-align:center;
+  border:1px solid #cfd8e3;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:800;
+  outline:none;
+}
+
+input:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+}
+
+.rate{
+  background:#f8fcff;
+  color:#003b66;
+  font-weight:900;
+}
+
+.summary{
+  font-weight:900;
+  background:#ecfeff !important;
+  color:#003b66;
+}
+
+.acceptable-row{background:#dcfce7 !important;font-weight:900;}
+.tolerable-row{background:#fef9c3 !important;font-weight:900;}
+.notacceptable-row{background:#fee2e2 !important;font-weight:900;}
+
+canvas{
+  background:white;
+  margin-top:20px;
+  border-radius:18px;
+  padding:15px;
+}
+
+.historical{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  padding:28px;
+  border-radius:28px;
+  box-shadow:0 14px 30px rgba(0,0,0,.11);
+  border:1px solid #e6eef5;
+  border-top:9px solid #005f99;
+}
+
+.trend-box{
+  margin-top:18px;
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  color:#003b66;
+  background:#ecfeff;
+  padding:16px;
+  border-radius:16px;
+}
+
+.footer{
+  text-align:center;
+  margin-top:35px;
+  color:#003b66;
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+@media print{
+  button{display:none;}
+  body{background:white;padding:0;}
+  .container{box-shadow:none;border-radius:0;}
+}
+
+@media(max-width:800px){
+  body{padding:25px;}
+  .container{padding:28px 18px;border-radius:28px;}
+  h1{font-size:38px;}
+  .year-header{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">🧾</div>
+    <div class="badge">AIR ACCESSORIES & AVIONICS</div>
+    <h1>SPI - Warranty Claim</h1>
+    <div class="subtitle">Safety Performance Indicator Monitoring</div>
+    <div class="title-line"></div>
+  </div>
+
+  <div class="card">
+    <h2>SPI Objective</h2>
+
+    <table>
+      <tr>
+        <th>Indicator</th>
+        <th>Warranty Claim</th>
+      </tr>
+
+      <tr>
+        <td class="objective-label">Specific Objective</td>
+        <td><div id="objSpecific" class="editable-cell" contenteditable="true">Reduce warranty claims through enhanced avionics inspection procedures, post-maintenance checks, and documentation practices.</div></td>
+      </tr>
+
+      <tr>
+        <td class="objective-label">Formula for its Calculation</td>
+        <td><div id="objFormula" class="editable-cell" contenteditable="true">(Number of Warranty Claims / Man-Hours per Month) * 1000 Man-Hours</div></td>
+      </tr>
+
+      <tr>
+        <td class="objective-label">Data Sources</td>
+        <td><div id="objSources" class="editable-cell" contenteditable="true">Quality Assurance</div></td>
+      </tr>
+
+      <tr>
+        <td class="objective-label">Measurement Frequency</td>
+        <td><div id="objFrequency" class="editable-cell" contenteditable="true">Monthly</div></td>
+      </tr>
+
+      <tr>
+        <td class="objective-label">Responsible Party for Monitoring</td>
+        <td><div id="objResponsible" class="editable-cell" contenteditable="true">Chief Inspector</div></td>
+      </tr>
+    </table>
+
+    <div class="top-buttons">
+      <button class="year-save-btn" onclick="saveData()">💾 Save Objective</button>
+    </div>
+  </div>
+
+  <div class="top-buttons">
+    <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+    <button class="add-btn" onclick="addYear()">➕ Add Year</button>
+    <button class="back-btn" onclick="window.location.href='Safety-Performance-Indicators.html'">📊 Back to SPI</button>
+    <button class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+  </div>
+
+  <div id="yearsContainer"></div>
+
+  <div class="historical">
+    <h2 style="text-align:center;color:#003b66;">Historical Trend</h2>
+    <canvas id="historicalChart"></canvas>
+    <div class="trend-box" id="trendSummary">
+      Historical trend will be calculated automatically.
+    </div>
+  </div>
+
+  <div class="footer">
+    371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+let years = [2024,2025,2026];
+
+let charts = {};
+let historicalChart;
+
+let objectiveData = {
+  specific:"Reduce warranty claims through enhanced avionics inspection procedures, post-maintenance checks, and documentation practices.",
+  formula:"(Number of Warranty Claims / Man-Hours per Month) * 1000 Man-Hours",
+  sources:"Quality Assurance",
+  frequency:"Monthly",
+  responsible:"Chief Inspector"
+};
+
+window.onload = loadData;
+
+function defaultData(){
+  let data = {};
+  years.forEach(year=>{
+    data[year] = months.map(month=>({
+      month:month,
+      workhours:0,
+      events:0
+    }));
+  });
+  return data;
+}
+
+let spiData = defaultData();
+
+function calculateRate(events, workhours){
+  if(!workhours || workhours <= 0) return 0;
+  return (events / workhours) * 1000;
+}
+
+function getYearRates(year){
+  if(!spiData[year]) return [];
+  return spiData[year].map(row=>calculateRate(row.events,row.workhours));
+}
+
+function getAverage(rates){
+  if(!rates.length) return 0;
+  return rates.reduce((a,b)=>a+b,0) / rates.length;
+}
+
+function getStandardDeviation(rates){
+  if(!rates.length) return 0;
+  const average = getAverage(rates);
+  return Math.sqrt(rates.map(x=>Math.pow(x-average,2)).reduce((a,b)=>a+b,0) / rates.length);
+}
+
+function getThresholds(year){
+  const previousYear = year - 1;
+  if(!spiData[previousYear]) return null;
+
+  const previousRates = getYearRates(previousYear);
+  const average = getAverage(previousRates);
+  const sd = getStandardDeviation(previousRates);
+
+  return {
+    acceptable: average,
+    tolerable: average + sd,
+    notAcceptable: average + (sd * 2),
+    baseYear: previousYear
+  };
+}
+
+function calculateTrendLine(values){
+  const n = values.length;
+  if(n === 0) return { slope:0, trendValues:[] };
+
+  let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+
+  values.forEach((y,x)=>{
+    sumX += x;
+    sumY += y;
+    sumXY += x * y;
+    sumXX += x * x;
+  });
+
+  const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX || 1);
+  const intercept = (sumY - slope * sumX) / n;
+  const trendValues = values.map((_,x)=> intercept + slope * x);
+
+  return { slope, trendValues };
+}
+
+function renderAll(){
+  const container = document.getElementById("yearsContainer");
+  container.innerHTML = "";
+
+  years.forEach(year=>{
+    const section = document.createElement("div");
+    section.className = "year-section";
+
+    section.innerHTML = `
+      <div class="year-header">
+        <div class="year-title">${year}</div>
+
+        <div class="right-buttons">
+          <button class="year-save-btn" onclick="saveData()">💾 Save</button>
+          <button class="delete-year-btn" onclick="deleteYear(${year})">🗑</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:18%;">Month</th>
+            <th style="width:18%;">Man-Hours</th>
+            <th style="width:15%;">Warranty Claims</th>
+            <th style="width:18%;">Claim Rate</th>
+          </tr>
+        </thead>
+        <tbody id="table-${year}"></tbody>
+      </table>
+
+      <canvas id="chart-${year}"></canvas>
+    `;
+
+    container.appendChild(section);
+
+    renderTable(year);
+    renderYearChart(year);
+  });
+
+  renderHistoricalChart();
+}
+
+function renderTable(year){
+  const tbody = document.getElementById(`table-${year}`);
+  tbody.innerHTML = "";
+
+  let totalWorkHours = 0;
+  let totalEvents = 0;
+  const rates = [];
+
+  spiData[year].forEach((row,index)=>{
+    const rate = calculateRate(row.events,row.workhours);
+    rates.push(rate);
+
+    totalWorkHours += Number(row.workhours || 0);
+    totalEvents += Number(row.events || 0);
+
+    tbody.innerHTML += `
+      <tr>
+        <td><strong>${row.month}</strong></td>
+        <td>
+          <input type="number" value="${row.workhours}"
+          onchange="updateValue(${year},${index},'workhours',this.value)">
+        </td>
+        <td>
+          <input type="number" value="${row.events}"
+          onchange="updateValue(${year},${index},'events',this.value)">
+        </td>
+        <td class="rate">${rate.toFixed(2)}</td>
+      </tr>
+    `;
+  });
+
+  const average = getAverage(rates);
+  const sd = getStandardDeviation(rates);
+
+  tbody.innerHTML += `
+    <tr class="summary">
+      <td>Total</td>
+      <td>${totalWorkHours.toFixed(2)}</td>
+      <td>${totalEvents}</td>
+      <td></td>
+    </tr>
+
+    <tr class="summary">
+      <td colspan="3">Average</td>
+      <td>${average.toFixed(2)}</td>
+    </tr>
+
+    <tr class="summary">
+      <td colspan="3">Standard Deviation</td>
+      <td>${sd.toFixed(2)}</td>
+    </tr>
+  `;
+
+  if(year >= 2025){
+    const thresholds = getThresholds(year);
+
+    if(thresholds){
+      tbody.innerHTML += `
+        <tr class="acceptable-row">
+          <td colspan="3">Acceptable Limit - Based on ${thresholds.baseYear}</td>
+          <td>${thresholds.acceptable.toFixed(2)}</td>
+        </tr>
+
+        <tr class="tolerable-row">
+          <td colspan="3">Tolerable Limit - Based on ${thresholds.baseYear}</td>
+          <td>${thresholds.tolerable.toFixed(2)}</td>
+        </tr>
+
+        <tr class="notacceptable-row">
+          <td colspan="3">Not Acceptable Limit - Based on ${thresholds.baseYear}</td>
+          <td>${thresholds.notAcceptable.toFixed(2)}</td>
+        </tr>
+      `;
+    }
+  }
+}
+
+window.updateValue = function(year,index,field,value){
+  spiData[year][index][field] = Number(value);
+  renderAll();
+};
+
+function renderYearChart(year){
+  const ctx = document.getElementById(`chart-${year}`);
+
+  if(charts[year]) charts[year].destroy();
+
+  const rates = getYearRates(year);
+
+  let datasets = [{
+    label:String(year),
+    data:rates,
+    borderColor:"#00aeef",
+    backgroundColor:"#00aeef",
+    borderWidth:4,
+    tension:0.25,
+    pointRadius:5
+  }];
+
+  if(year >= 2025){
+    const thresholds = getThresholds(year);
+
+    if(thresholds){
+      datasets.push(
+        {
+          label:"Acceptable Limit",
+          data:months.map(()=>thresholds.acceptable),
+          borderColor:"#22c55e",
+          backgroundColor:"#22c55e",
+          pointRadius:0,
+          borderWidth:4
+        },
+        {
+          label:"Tolerable Limit",
+          data:months.map(()=>thresholds.tolerable),
+          borderColor:"#f59e0b",
+          backgroundColor:"#f59e0b",
+          pointRadius:0,
+          borderWidth:4
+        },
+        {
+          label:"Not Acceptable Limit",
+          data:months.map(()=>thresholds.notAcceptable),
+          borderColor:"#ef4444",
+          backgroundColor:"#ef4444",
+          pointRadius:0,
+          borderWidth:4
+        }
+      );
+    }
+  }
+
+  charts[year] = new Chart(ctx,{
+    type:"line",
+    data:{ labels:months, datasets:datasets },
+    options:{
+      responsive:true,
+      plugins:{
+        title:{
+          display:true,
+          text:"Warranty Claim Rate"
+        }
+      },
+      scales:{ y:{ beginAtZero:true } }
+    }
+  });
+}
+
+function renderHistoricalChart(){
+  const ctx = document.getElementById("historicalChart");
+
+  if(historicalChart) historicalChart.destroy();
+
+  let labels = [];
+  let rates = [];
+
+  years.forEach(year=>{
+    spiData[year].forEach(row=>{
+      labels.push(row.month + "-" + String(year).slice(2));
+      rates.push(calculateRate(row.events,row.workhours));
+    });
+  });
+
+  const trend = calculateTrendLine(rates);
+
+  let trendText = "";
+
+  if(trend.slope > 0.05){
+    trendText = "Increasing trend: the warranty claim rate is rising over time.";
+  }else if(trend.slope < -0.05){
+    trendText = "Decreasing trend: the warranty claim rate is improving over time.";
+  }else{
+    trendText = "Stable trend: the warranty claim rate remains relatively unchanged over time.";
+  }
+
+  document.getElementById("trendSummary").innerHTML =
+  "Historical Slope: " + trend.slope.toFixed(2) + " | " + trendText;
+
+  historicalChart = new Chart(ctx,{
+    type:"line",
+    data:{
+      labels:labels,
+      datasets:[
+        {
+          label:"Historical Warranty Claim Rate",
+          data:rates,
+          borderColor:"#00aeef",
+          backgroundColor:"#00aeef",
+          borderWidth:4,
+          tension:0.25,
+          pointRadius:4
+        },
+        {
+          label:"Trend Line / Slope",
+          data:trend.trendValues,
+          borderColor:"#003b66",
+          backgroundColor:"#003b66",
+          borderWidth:4,
+          pointRadius:0,
+          tension:0
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        title:{
+          display:true,
+          text:"Historical Warranty Claim Rate"
+        }
+      },
+      scales:{ y:{ beginAtZero:true } }
+    }
+  });
+}
+
+window.addYear = function(){
+  let lastYear = Math.max(...years);
+  let newYear = lastYear + 1;
+
+  years.push(newYear);
+
+  spiData[newYear] = months.map(month=>({
+    month:month,
+    workhours:0,
+    events:0
+  }));
+
+  renderAll();
+};
+
+window.deleteYear = async function(year){
+  if(!confirm("Are you sure you want to delete year " + year + "?")) return;
+
+  years = years.filter(y => y !== year);
+  delete spiData[year];
+
+  await saveData();
+  renderAll();
+};
+
+window.saveData = async function(){
+
+  objectiveData = {
+    specific:document.getElementById("objSpecific").innerText.trim(),
+    formula:document.getElementById("objFormula").innerText.trim(),
+    sources:document.getElementById("objSources").innerText.trim(),
+    frequency:document.getElementById("objFrequency").innerText.trim(),
+    responsible:document.getElementById("objResponsible").innerText.trim()
+  };
+
+  await set(
+    ref(db,"SPI-Warranty-Claim"),
+    {
+      objective:objectiveData,
+      years:years,
+      data:spiData,
+      updatedAt:new Date().toISOString()
+    }
+  );
+
+  alert("SPI Warranty Claim saved successfully.");
+};
+
+async function loadData(){
+  const snapshot = await get(ref(db,"SPI-Warranty-Claim"));
+
+  if(snapshot.exists()){
+    const saved = snapshot.val();
+
+    years = saved.years || [2024,2025,2026];
+    spiData = saved.data || defaultData();
+
+    if(saved.objective){
+      objectiveData = saved.objective;
+
+      document.getElementById("objSpecific").innerText = objectiveData.specific || "";
+      document.getElementById("objFormula").innerText = objectiveData.formula || "";
+      document.getElementById("objSources").innerText = objectiveData.sources || "";
+      document.getElementById("objFrequency").innerText = objectiveData.frequency || "";
+      document.getElementById("objResponsible").innerText = objectiveData.responsible || "";
+    }
+  }
+
+  renderAll();
+}
+
+</script>
+
+</body>
+</html>
