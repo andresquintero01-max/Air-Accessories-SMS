@@ -423,7 +423,15 @@ function renderReport(){
 
   renderChecklist(currentReport.checklist);
   renderFinding();
-  renderActions(currentReport.correctiveActions);
+  renderActions(
+  currentReport.correctiveActions ||
+  currentReport.correctivePreventiveActions ||
+  currentReport.correctivePreventiveAction ||
+  currentReport.cpa ||
+  currentReport.cpas ||
+  currentReport.actions ||
+  []
+);
 }
 
 function renderFinding(){
@@ -564,7 +572,16 @@ window.saveEditedReport = async function(){
     updatedAt:new Date().toLocaleString()
   };
 
-  if(Array.isArray(currentReport.checklist)){
+  const reportActions =
+  currentReport.correctiveActions ||
+  currentReport.correctivePreventiveActions ||
+  currentReport.correctivePreventiveAction ||
+  currentReport.cpa ||
+  currentReport.cpas ||
+  currentReport.actions ||
+  [];
+
+if(Array.isArray(reportActions)){
     updated.checklist = currentReport.checklist.map((item,index) => ({
       area:item.area,
       result:document.getElementById(`check_${index}_result`)?.value.trim() || "",
@@ -575,7 +592,7 @@ window.saveEditedReport = async function(){
   }
 
   if(Array.isArray(currentReport.correctiveActions)){
-    updated.correctiveActions = currentReport.correctiveActions.map((action,index) => ({
+    updated.correctiveActions = reportActions.map((action,index) => ({
       action:document.getElementById(`action_${index}_action`)?.value.trim() || "",
       responsible:document.getElementById(`action_${index}_responsible`)?.value.trim() || "",
       dueDate:document.getElementById(`action_${index}_dueDate`)?.value.trim() || "",
