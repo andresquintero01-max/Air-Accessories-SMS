@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>External Audit Report</title>
+<title>Air Accessories External Audit Report</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -11,6 +11,8 @@
 body{
   font-family:'Segoe UI',Arial,sans-serif;
   min-height:100vh;
+  color:#111;
+  padding:40px;
   background:
   radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
   radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
@@ -19,8 +21,6 @@ body{
   background-size:cover;
   background-position:center;
   background-attachment:fixed;
-  padding:40px;
-  color:#003b66;
 }
 
 .container{
@@ -29,82 +29,42 @@ body{
   background:rgba(255,255,255,.97);
   backdrop-filter:blur(14px);
   border-radius:38px;
-  padding:55px;
+  padding:45px;
   box-shadow:0 28px 70px rgba(0,0,0,.38);
-  position:relative;
-  overflow:hidden;
-}
-
-.container::before{
-  content:"";
-  position:absolute;
-  width:420px;
-  height:420px;
-  background:radial-gradient(circle,rgba(0,174,239,.15),transparent 70%);
-  top:-170px;
-  right:-120px;
-}
-
-.container::after{
-  content:"";
-  position:absolute;
-  width:350px;
-  height:350px;
-  background:radial-gradient(circle,rgba(0,59,102,.14),transparent 70%);
-  bottom:-150px;
-  left:-120px;
-}
-
-.header,.section,.btn-area,.saved-box,.footer{
-  position:relative;
-  z-index:2;
 }
 
 .header{
   text-align:center;
-  margin-bottom:45px;
+  margin-bottom:35px;
 }
 
 .logo{
-  width:96px;
-  height:96px;
-  margin:0 auto 20px;
+  width:90px;
+  height:90px;
+  margin:0 auto 18px;
   border-radius:28px;
   background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:44px;
+  font-size:42px;
   box-shadow:0 16px 34px rgba(0,0,0,.28);
 }
 
 .company-label{
   color:#00aeef;
-  font-size:16px;
+  font-size:15px;
   font-weight:900;
   letter-spacing:4px;
   margin-bottom:10px;
 }
 
-.badge{
-  display:inline-block;
-  background:#eaf8ff;
-  color:#003b66;
-  padding:10px 24px;
-  border-radius:999px;
-  font-size:14px;
-  font-weight:900;
-  letter-spacing:1.8px;
-  margin-bottom:16px;
-}
-
 .header h1{
-  font-size:52px;
+  font-size:48px;
   color:#003b66;
   margin-bottom:12px;
   font-weight:900;
-  line-height:1.1;
 }
 
 .header p{
@@ -122,24 +82,25 @@ body{
 }
 
 .section{
-  margin-top:28px;
+  margin-top:25px;
   border:1px solid #e6eef5;
   border-radius:24px;
   overflow:hidden;
-  background:linear-gradient(135deg,#ffffff,#f8fcff);
-  box-shadow:0 14px 30px rgba(0,0,0,.10);
+  background:white;
+  box-shadow:0 14px 30px rgba(0,0,0,.09);
 }
 
 .section-title{
-  background:linear-gradient(135deg,#003b66,#005f99);
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
-  padding:16px 22px;
+  padding:17px 22px;
   font-size:21px;
   font-weight:900;
 }
 
 .section-body{
-  padding:26px;
+  padding:25px;
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
 }
 
 .grid{
@@ -159,13 +120,16 @@ input,select,textarea{
   width:100%;
   padding:13px;
   border:1px solid #cfd8e3;
-  border-radius:14px;
+  border-radius:15px;
   font-size:15px;
   background:#f9fbfd;
   outline:none;
+  transition:.25s;
 }
 
-input:focus,select:focus,textarea:focus{
+input:focus,
+select:focus,
+textarea:focus{
   border-color:#00aeef;
   box-shadow:0 0 0 4px rgba(0,174,239,.14);
   background:white;
@@ -178,25 +142,12 @@ textarea{
 
 .audit-card{
   border:1px solid #e6eef5;
-  border-top:7px solid #00aeef;
+  border-left:9px solid #00aeef;
   border-radius:22px;
   padding:22px;
   margin-bottom:20px;
   background:linear-gradient(135deg,#ffffff,#f8fcff);
-  box-shadow:0 10px 24px rgba(0,0,0,.08);
-  position:relative;
-  overflow:hidden;
-}
-
-.audit-card::before{
-  content:"";
-  position:absolute;
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  background:rgba(0,174,239,.08);
-  top:-60px;
-  right:-50px;
+  box-shadow:0 12px 26px rgba(0,0,0,.08);
 }
 
 .audit-card h3{
@@ -204,16 +155,12 @@ textarea{
   margin-bottom:8px;
   font-size:22px;
   font-weight:900;
-  position:relative;
-  z-index:2;
 }
 
 .audit-card p{
   color:#5f6b7a;
-  margin-bottom:16px;
+  margin-bottom:14px;
   line-height:1.45;
-  position:relative;
-  z-index:2;
 }
 
 .audit-row{
@@ -221,8 +168,6 @@ textarea{
   grid-template-columns:170px 1fr 1fr 1fr;
   gap:14px;
   align-items:start;
-  position:relative;
-  z-index:2;
 }
 
 .action-table{
@@ -239,21 +184,25 @@ textarea{
   border:1px solid #e6eef5;
   border-radius:22px;
   padding:18px;
-  box-shadow:0 10px 24px rgba(0,0,0,.08);
+  box-shadow:0 10px 22px rgba(0,0,0,.07);
 }
 
 .action-number{
   background:linear-gradient(135deg,#003b66,#00aeef);
   color:white;
   font-weight:900;
-  border-radius:14px;
+  border-radius:15px;
   padding:15px;
   text-align:center;
+  box-shadow:0 10px 22px rgba(0,59,102,.22);
 }
 
 .btn-area{
-  text-align:center;
-  margin-top:34px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:35px;
 }
 
 .btn{
@@ -264,7 +213,6 @@ textarea{
   font-size:16px;
   font-weight:900;
   cursor:pointer;
-  margin:7px;
   transition:.3s;
   box-shadow:0 12px 26px rgba(0,0,0,.20);
 }
@@ -274,18 +222,19 @@ textarea{
   filter:brightness(1.08);
 }
 
-.save-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
 .reset-btn{background:linear-gradient(135deg,#64748b,#334155);}
 .back-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
 .home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.database-btn{background:linear-gradient(135deg,#003b66,#005f99,#00aeef);}
 
 .saved-box{
   margin-top:25px;
-  background:#eaf8ff;
+  background:#ecfeff;
   color:#003b66;
   border-left:6px solid #00aeef;
   padding:16px;
-  border-radius:16px;
+  border-radius:15px;
   display:none;
   font-weight:900;
   text-align:center;
@@ -293,7 +242,7 @@ textarea{
 
 .footer{
   text-align:center;
-  margin-top:38px;
+  margin-top:35px;
   color:#003b66;
   font-size:15px;
   font-weight:900;
@@ -301,21 +250,24 @@ textarea{
 }
 
 @media(max-width:1000px){
+  body{padding:25px;}
+
+  .container{
+    padding:30px 22px;
+    border-radius:28px;
+  }
+
   .audit-row,
   .action-row{
     grid-template-columns:1fr;
   }
 
   .header h1{
-    font-size:36px;
+    font-size:34px;
   }
 
-  .container{
-    padding:35px 22px;
-  }
-
-  body{
-    padding:25px;
+  .btn{
+    width:100%;
   }
 }
 </style>
@@ -326,10 +278,9 @@ textarea{
 <div class="container">
 
 <div class="header">
-  <div class="logo">🧾</div>
+  <div class="logo">🌐</div>
   <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
-  <div class="badge">SAFETY ASSURANCE MODULE</div>
-  <h1>External Audit Report</h1>
+  <h1>Safety Assurance - External Audit Report</h1>
   <p>External audit tool for vendors, service providers, contractors and third-party supplier compliance monitoring.</p>
   <div class="title-line"></div>
 </div>
@@ -339,50 +290,15 @@ textarea{
   <div class="section-body">
 
     <div class="grid">
-      <div class="field">
-        <label>Audit Title *</label>
-        <input id="title" placeholder="Example: External Vendor Audit - Fueling Service Provider">
-      </div>
-
-      <div class="field">
-        <label>Audit Number</label>
-        <input id="auditNumber" placeholder="Example: EA-2026-001">
-      </div>
-
-      <div class="field">
-        <label>Auditor Name</label>
-        <input id="auditorName" placeholder="Name of auditor">
-      </div>
-
-      <div class="field">
-        <label>Vendor / Service Provider Name</label>
-        <input id="vendorName" placeholder="Company or provider name">
-      </div>
-
-      <div class="field">
-        <label>Vendor Contact Person</label>
-        <input id="vendorContact" placeholder="Vendor representative name">
-      </div>
-
-      <div class="field">
-        <label>Vendor Email / Phone</label>
-        <input id="vendorContactInfo" placeholder="Email or phone number">
-      </div>
-
-      <div class="field">
-        <label>Service Provided</label>
-        <input id="serviceProvided" placeholder="Example: Fueling, GSE, Cleaning, Parts Supplier">
-      </div>
-
-      <div class="field">
-        <label>Location</label>
-        <input id="location" placeholder="Example: Station, Hangar, Ramp, Vendor Facility">
-      </div>
-
-      <div class="field">
-        <label>Audit Date</label>
-        <input type="date" id="date">
-      </div>
+      <div class="field"><label>Audit Title *</label><input id="title" placeholder="Example: External Vendor Audit - Fueling Service Provider"></div>
+      <div class="field"><label>Audit Number</label><input id="auditNumber" placeholder="Example: EA-2026-001"></div>
+      <div class="field"><label>Auditor Name</label><input id="auditorName" placeholder="Name of auditor"></div>
+      <div class="field"><label>Vendor / Service Provider Name</label><input id="vendorName" placeholder="Company or provider name"></div>
+      <div class="field"><label>Vendor Contact Person</label><input id="vendorContact" placeholder="Vendor representative name"></div>
+      <div class="field"><label>Vendor Email / Phone</label><input id="vendorContactInfo" placeholder="Email or phone number"></div>
+      <div class="field"><label>Service Provided</label><input id="serviceProvided" placeholder="Example: Fueling, GSE, Cleaning, Parts Supplier"></div>
+      <div class="field"><label>Location</label><input id="location" placeholder="Example: Station, Hangar, Ramp, Vendor Facility"></div>
+      <div class="field"><label>Audit Date</label><input type="date" id="date"></div>
 
       <div class="field">
         <label>External Audit Type</label>
@@ -421,18 +337,9 @@ textarea{
     </div>
 
     <br>
-
-    <div class="field">
-      <label>Audit Scope</label>
-      <textarea id="auditScope" placeholder="Describe the scope of the external audit."></textarea>
-    </div>
-
+    <div class="field"><label>Audit Scope</label><textarea id="auditScope" placeholder="Describe the scope of the external audit."></textarea></div>
     <br>
-
-    <div class="field">
-      <label>Audit Objective</label>
-      <textarea id="auditObjective" placeholder="Describe the objective of the audit."></textarea>
-    </div>
+    <div class="field"><label>Audit Objective</label><textarea id="auditObjective" placeholder="Describe the objective of the audit."></textarea></div>
 
   </div>
 </div>
@@ -442,33 +349,14 @@ textarea{
   <div class="section-body">
 
     <div class="grid">
-      <div class="field">
-        <label>Reference Standard / Regulation</label>
-        <input id="referenceStandard" placeholder="Example: 14 CFR Part 145, OSHA, SMS Manual, Contract">
-      </div>
-
-      <div class="field">
-        <label>Contract / Agreement Reference</label>
-        <input id="contractReference" placeholder="Example: Vendor agreement, service contract, purchase order">
-      </div>
-
-      <div class="field">
-        <label>Customer / Company Requirement</label>
-        <input id="customerRequirement" placeholder="Example: Internal vendor approval procedure">
-      </div>
-
-      <div class="field">
-        <label>Insurance / Certificate Requirement</label>
-        <input id="insuranceRequirement" placeholder="Example: Insurance certificate, authorization, license">
-      </div>
+      <div class="field"><label>Reference Standard / Regulation</label><input id="referenceStandard" placeholder="Example: 14 CFR Part 145, OSHA, SMS Manual, Contract"></div>
+      <div class="field"><label>Contract / Agreement Reference</label><input id="contractReference" placeholder="Example: Vendor agreement, service contract, purchase order"></div>
+      <div class="field"><label>Customer / Company Requirement</label><input id="customerRequirement" placeholder="Example: Internal vendor approval procedure"></div>
+      <div class="field"><label>Insurance / Certificate Requirement</label><input id="insuranceRequirement" placeholder="Example: Insurance certificate, authorization, license"></div>
     </div>
 
     <br>
-
-    <div class="field">
-      <label>Audit Criteria Description</label>
-      <textarea id="criteriaDescription" placeholder="Describe the criteria used to evaluate this vendor or external service provider."></textarea>
-    </div>
+    <div class="field"><label>Audit Criteria Description</label><textarea id="criteriaDescription" placeholder="Describe the criteria used to evaluate this vendor or external service provider."></textarea></div>
 
   </div>
 </div>
@@ -534,32 +422,13 @@ textarea{
     </div>
 
     <br>
-
-    <div class="field">
-      <label>Finding Statement</label>
-      <textarea id="findingStatement" placeholder="Describe the finding or nonconformity identified during the external audit."></textarea>
-    </div>
-
+    <div class="field"><label>Finding Statement</label><textarea id="findingStatement" placeholder="Describe the finding or nonconformity identified during the external audit."></textarea></div>
     <br>
-
-    <div class="field">
-      <label>Objective Evidence</label>
-      <textarea id="evidence" placeholder="Describe evidence reviewed: certificates, training records, service records, interviews, observations, photos or documents."></textarea>
-    </div>
-
+    <div class="field"><label>Objective Evidence</label><textarea id="evidence" placeholder="Describe evidence reviewed: certificates, training records, service records, interviews, observations, photos or documents."></textarea></div>
     <br>
-
-    <div class="field">
-      <label>Root Cause / Vendor System Weakness</label>
-      <textarea id="rootCause" placeholder="Describe why the finding occurred and what weakness exists in the vendor or service provider system."></textarea>
-    </div>
-
+    <div class="field"><label>Root Cause / Vendor System Weakness</label><textarea id="rootCause" placeholder="Describe why the finding occurred and what weakness exists in the vendor or service provider system."></textarea></div>
     <br>
-
-    <div class="field">
-      <label>Vendor Response / Commitment</label>
-      <textarea id="vendorResponse" placeholder="Document vendor response, commitment, corrective action plan or limitations."></textarea>
-    </div>
+    <div class="field"><label>Vendor Response / Commitment</label><textarea id="vendorResponse" placeholder="Document vendor response, commitment, corrective action plan or limitations."></textarea></div>
 
   </div>
 </div>
@@ -572,77 +441,26 @@ textarea{
 
       <div class="action-row">
         <div class="action-number">CPA 1</div>
-        <div class="field">
-          <label>Corrective / Preventive Action</label>
-          <textarea id="action1" placeholder="Describe the action required from the vendor or company to correct the finding and prevent recurrence."></textarea>
-        </div>
-        <div class="field">
-          <label>Responsible Person</label>
-          <input id="responsible1">
-        </div>
-        <div class="field">
-          <label>Due Date</label>
-          <input type="date" id="dueDate1">
-        </div>
-        <div class="field">
-          <label>Status</label>
-          <select id="actionStatus1">
-            <option>Open</option>
-            <option>In Progress</option>
-            <option>Completed</option>
-            <option>Verified</option>
-          </select>
-        </div>
+        <div class="field"><label>Corrective / Preventive Action</label><textarea id="action1" placeholder="Describe the action required from the vendor or company to correct the finding and prevent recurrence."></textarea></div>
+        <div class="field"><label>Responsible Person</label><input id="responsible1"></div>
+        <div class="field"><label>Due Date</label><input type="date" id="dueDate1"></div>
+        <div class="field"><label>Status</label><select id="actionStatus1"><option>Open</option><option>In Progress</option><option>Completed</option><option>Verified</option></select></div>
       </div>
 
       <div class="action-row">
         <div class="action-number">CPA 2</div>
-        <div class="field">
-          <label>Corrective / Preventive Action</label>
-          <textarea id="action2"></textarea>
-        </div>
-        <div class="field">
-          <label>Responsible Person</label>
-          <input id="responsible2">
-        </div>
-        <div class="field">
-          <label>Due Date</label>
-          <input type="date" id="dueDate2">
-        </div>
-        <div class="field">
-          <label>Status</label>
-          <select id="actionStatus2">
-            <option>Open</option>
-            <option>In Progress</option>
-            <option>Completed</option>
-            <option>Verified</option>
-          </select>
-        </div>
+        <div class="field"><label>Corrective / Preventive Action</label><textarea id="action2"></textarea></div>
+        <div class="field"><label>Responsible Person</label><input id="responsible2"></div>
+        <div class="field"><label>Due Date</label><input type="date" id="dueDate2"></div>
+        <div class="field"><label>Status</label><select id="actionStatus2"><option>Open</option><option>In Progress</option><option>Completed</option><option>Verified</option></select></div>
       </div>
 
       <div class="action-row">
         <div class="action-number">CPA 3</div>
-        <div class="field">
-          <label>Corrective / Preventive Action</label>
-          <textarea id="action3"></textarea>
-        </div>
-        <div class="field">
-          <label>Responsible Person</label>
-          <input id="responsible3">
-        </div>
-        <div class="field">
-          <label>Due Date</label>
-          <input type="date" id="dueDate3">
-        </div>
-        <div class="field">
-          <label>Status</label>
-          <select id="actionStatus3">
-            <option>Open</option>
-            <option>In Progress</option>
-            <option>Completed</option>
-            <option>Verified</option>
-          </select>
-        </div>
+        <div class="field"><label>Corrective / Preventive Action</label><textarea id="action3"></textarea></div>
+        <div class="field"><label>Responsible Person</label><input id="responsible3"></div>
+        <div class="field"><label>Due Date</label><input type="date" id="dueDate3"></div>
+        <div class="field"><label>Status</label><select id="actionStatus3"><option>Open</option><option>In Progress</option><option>Completed</option><option>Verified</option></select></div>
       </div>
 
     </div>
@@ -653,6 +471,7 @@ textarea{
 <div class="btn-area">
   <button class="btn save-btn" onclick="saveExternalAudit()">Save External Audit</button>
   <button class="btn reset-btn" onclick="resetForm()">Reset Form</button>
+  <button class="btn database-btn" onclick="window.location.href='Safety-Assurance-Audit-Database.html'">Go to Database</button>
   <button class="btn back-btn" onclick="window.location.href='Safety-Assurance-Audit.html'">Back to Audits</button>
   <button class="btn home-btn" onclick="window.location.href='index.html'">Home</button>
 </div>
@@ -838,10 +657,9 @@ function saveExternalAudit(){
     return;
   }
 
-  const companyId = localStorage.getItem("companyId") || "defaultCompany";
-
   const data = {
     auditCategory:"External Audit",
+    company:"Air Accessories & Avionics",
     title:title,
     auditNumber:document.getElementById("auditNumber").value.trim(),
     auditorName:document.getElementById("auditorName").value.trim(),
@@ -854,14 +672,18 @@ function saveExternalAudit(){
     auditType:document.getElementById("auditType").value,
     status:document.getElementById("status").value,
     vendorApprovalStatus:document.getElementById("vendorApprovalStatus").value,
+
     auditScope:document.getElementById("auditScope").value.trim(),
     auditObjective:document.getElementById("auditObjective").value.trim(),
+
     referenceStandard:document.getElementById("referenceStandard").value.trim(),
     contractReference:document.getElementById("contractReference").value.trim(),
     customerRequirement:document.getElementById("customerRequirement").value.trim(),
     insuranceRequirement:document.getElementById("insuranceRequirement").value.trim(),
     criteriaDescription:document.getElementById("criteriaDescription").value.trim(),
+
     checklist:collectChecklist(),
+
     findingClassification:document.getElementById("findingClassification").value,
     mainFindingArea:document.getElementById("mainFindingArea").value,
     riskPriority:document.getElementById("riskPriority").value,
@@ -870,12 +692,13 @@ function saveExternalAudit(){
     evidence:document.getElementById("evidence").value.trim(),
     rootCause:document.getElementById("rootCause").value.trim(),
     vendorResponse:document.getElementById("vendorResponse").value.trim(),
+
     correctiveActions:collectActions(),
-    createdAt:new Date().toISOString(),
-    createdAtDisplay:new Date().toLocaleString()
+
+    createdAt:new Date().toLocaleString()
   };
 
-  const newRef = window.dbPush(window.dbRef(window.database,"auditReports/" + companyId));
+  const newRef = window.dbPush(window.dbRef(window.database,"auditReports"));
 
   window.dbSet(newRef,data)
   .then(() => {
