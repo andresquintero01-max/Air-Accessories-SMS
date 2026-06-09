@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safety Performance Indicators</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    min-height:100vh;
+    background:
+    radial-gradient(circle at top left, rgba(0,174,239,0.25), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,0.35), transparent 35%),
+    linear-gradient(rgba(2,23,48,0.88), rgba(2,23,48,0.94)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:35px;
+}
+
+.main-container{
+    width:100%;
+    max-width:1080px;
+    background:rgba(255,255,255,0.97);
+    backdrop-filter:blur(14px);
+    border-radius:38px;
+    padding:55px;
+    text-align:center;
+    box-shadow:0 28px 70px rgba(0,0,0,0.38);
+    position:relative;
+    overflow:hidden;
+    animation:fadeIn 0.8s ease;
+}
+
+.main-container::before{
+    content:"";
+    position:absolute;
+    width:470px;
+    height:470px;
+    background:radial-gradient(circle,rgba(0,174,239,0.16),transparent 70%);
+    top:-190px;
+    right:-150px;
+}
+
+.main-container::after{
+    content:"";
+    position:absolute;
+    width:340px;
+    height:340px;
+    background:radial-gradient(circle,rgba(0,59,102,0.14),transparent 70%);
+    bottom:-150px;
+    left:-120px;
+}
+
+.content{position:relative;z-index:2;}
+
+.logo{
+    width:112px;
+    height:112px;
+    margin:auto;
+    border-radius:32px;
+    background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:50px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.30);
+    margin-bottom:22px;
+}
+
+.badge{
+    display:block;
+    width:max-content;
+    margin:0 auto 16px auto;
+    background:#ecfeff;
+    color:#003b66;
+    padding:10px 24px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:1.8px;
+}
+
+h1{
+    font-size:60px;
+    color:#003b66;
+    margin-bottom:12px;
+    line-height:1.15;
+    font-weight:900;
+}
+
+.subtitle{
+    font-size:21px;
+    color:#536172;
+    margin-bottom:22px;
+    font-weight:600;
+}
+
+.title-line{
+    width:260px;
+    height:6px;
+    margin:0 auto 45px;
+    border-radius:999px;
+    background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+}
+
+.btn{
+    text-decoration:none;
+    background:linear-gradient(135deg,#ffffff,#f8fcff);
+    border-radius:32px;
+    padding:30px;
+    transition:0.35s;
+    box-shadow:0 16px 35px rgba(0,0,0,0.12);
+    display:grid;
+    grid-template-columns:100px 1fr 70px;
+    align-items:center;
+    gap:25px;
+    text-align:left;
+    position:relative;
+    overflow:hidden;
+    border:1px solid #e6eef5;
+}
+
+.btn:hover{
+    transform:translateY(-7px);
+    box-shadow:0 24px 48px rgba(0,0,0,0.18);
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:10px;
+    height:100%;
+    background:#00aeef;
+}
+
+.btn:nth-child(2)::before{background:#005f99;}
+.btn:nth-child(3)::before{background:#003b66;}
+.btn:nth-child(4)::before{background:#0284c7;}
+
+.icon{
+    width:88px;
+    height:88px;
+    border-radius:28px;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+    box-shadow:0 14px 28px rgba(0,0,0,0.24);
+}
+
+.btn:nth-child(1) .icon{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.btn:nth-child(2) .icon{background:linear-gradient(135deg,#003b66,#005f99);}
+.btn:nth-child(3) .icon{background:linear-gradient(135deg,#005f99,#00aeef);}
+.btn:nth-child(4) .icon{background:linear-gradient(135deg,#003b66,#00aeef);}
+
+.btn-title{
+    font-size:30px;
+    font-weight:900;
+    margin-bottom:8px;
+    color:#003b66;
+}
+
+.btn-description{
+    font-size:17px;
+    color:#536172;
+    line-height:1.5;
+}
+
+.arrow{
+    font-size:58px;
+    color:#00aeef;
+    text-align:center;
+    transition:0.3s;
+}
+
+.btn:hover .arrow{transform:translateX(8px);}
+
+.bottom-buttons{
+    margin-top:45px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.home-btn,
+.assurance-btn{
+    min-height:64px;
+    border:none;
+    border-radius:18px;
+    color:white;
+    text-decoration:none;
+    font-size:21px;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.3s;
+    box-shadow:0 12px 26px rgba(0,0,0,0.26);
+}
+
+.home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.assurance-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+
+.home-btn:hover,
+.assurance-btn:hover{
+    transform:translateY(-4px);
+    filter:brightness(1.08);
+}
+
+.footer{
+    margin-top:35px;
+    color:#003b66;
+    font-size:14px;
+    letter-spacing:3px;
+    font-weight:900;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:850px){
+    body{padding:20px;}
+    .main-container{padding:35px 22px;}
+    h1{font-size:42px;}
+    .subtitle{font-size:18px;}
+    .btn{grid-template-columns:1fr;text-align:center;}
+    .icon{margin:auto;}
+    .arrow{display:none;}
+    .btn-title{font-size:26px;}
+    .btn-description{font-size:16px;}
+    .bottom-buttons{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="main-container">
+<div class="content">
+
+    <div class="logo">📊</div>
+
+    <div class="badge">AIR ACCESSORIES & AVIONICS</div>
+
+    <h1>Safety Performance Indicators</h1>
+
+    <div class="subtitle">
+        Monitor operational safety trends, performance and reliability
+    </div>
+
+    <div class="title-line"></div>
+
+    <div class="menu">
+
+        <a class="btn" href="SPI-Warranty-Claim.html">
+            <div class="icon">🧾</div>
+            <div>
+                <div class="btn-title">SPI - Warranty Claim</div>
+                <div class="btn-description">Track warranty claim events, trends and operational impact.</div>
+            </div>
+            <div class="arrow">›</div>
+        </a>
+
+        <a class="btn" href="SPI-Use-of-Non-Current-Documents.html">
+            <div class="icon">📄</div>
+            <div>
+                <div class="btn-title">SPI - Use of Non-Current Documents</div>
+                <div class="btn-description">Monitor events related to outdated or non-current technical documents.</div>
+            </div>
+            <div class="arrow">›</div>
+        </a>
+
+        <a class="btn" href="SPI-Incorrect-Incomplete-Maintenance-Data.html">
+            <div class="icon">🛠️</div>
+            <div>
+                <div class="btn-title">SPI - Incorrect or Incomplete Maintenance Data or Procedures</div>
+                <div class="btn-description">Track errors or gaps in maintenance data, procedures and technical references.</div>
+            </div>
+            <div class="arrow">›</div>
+        </a>
+
+        <a class="btn" href="SPI-Improper-Storage-Maintenance-Materials.html">
+            <div class="icon">📦</div>
+            <div>
+                <div class="btn-title">SPI - Improper Storage of Maintenance Materials or Components</div>
+                <div class="btn-description">Monitor improper storage events involving maintenance materials or components.</div>
+            </div>
+            <div class="arrow">›</div>
+        </a>
+
+    </div>
+
+    <div class="bottom-buttons">
+
+        <a class="home-btn" href="index.html">
+            🏠 Home
+        </a>
+
+        <a class="assurance-btn" href="Safety-Assurance.html">
+            ✅ Safety Assurance
+        </a>
+
+    </div>
+
+    <div class="footer">
+        371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>
