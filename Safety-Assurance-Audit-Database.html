@@ -751,8 +751,10 @@ onValue(reportsRef, (snapshot) => {
   });
 
   allReports.sort((a,b) => {
-    return String(b.firebaseId).localeCompare(String(a.firebaseId));
-  });
+  const dateA = new Date(a.createdAt || a.date || 0).getTime();
+  const dateB = new Date(b.createdAt || b.date || 0).getTime();
+  return dateB - dateA;
+});
 
   applyFilter();
 
