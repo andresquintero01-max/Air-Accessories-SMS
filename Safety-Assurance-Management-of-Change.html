@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Management of Change</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Segoe UI', Arial, sans-serif;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(0,174,239,0.25), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,0.35), transparent 35%),
+    linear-gradient(rgba(2,23,48,0.88), rgba(2,23,48,0.94)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  padding:35px;
+}
+
+.container{
+  max-width:1220px;
+  margin:auto;
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(14px);
+  border-radius:38px;
+  padding:55px;
+  box-shadow:0 28px 70px rgba(0,0,0,0.38);
+  position:relative;
+  overflow:hidden;
+}
+
+.container::before{
+  content:"";
+  position:absolute;
+  width:470px;
+  height:470px;
+  background:radial-gradient(circle,rgba(0,174,239,0.16),transparent 70%);
+  top:-190px;
+  right:-150px;
+}
+
+.container::after{
+  content:"";
+  position:absolute;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,rgba(0,59,102,0.14),transparent 70%);
+  bottom:-150px;
+  left:-120px;
+}
+
+.content{position:relative;z-index:2;}
+
+.logo{
+  width:112px;
+  height:112px;
+  margin:0 auto 22px;
+  border-radius:32px;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:50px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.30);
+}
+
+.badge{
+  display:block;
+  width:max-content;
+  margin:0 auto 16px auto;
+  background:#ecfeff;
+  color:#003b66;
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+
+h1{
+  text-align:center;
+  color:#003b66;
+  font-size:58px;
+  margin-bottom:12px;
+  font-weight:900;
+  line-height:1.15;
+}
+
+.subtitle{
+  text-align:center;
+  color:#536172;
+  font-size:20px;
+  margin-bottom:26px;
+  line-height:1.6;
+  font-weight:600;
+}
+
+.title-line{
+  width:260px;
+  height:6px;
+  margin:0 auto 38px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
+}
+
+.flow{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-bottom:38px;
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  padding:18px;
+  border-radius:24px;
+  border:1px solid #e6eef5;
+  box-shadow:0 14px 32px rgba(0,0,0,0.10);
+}
+
+.flow-step{
+  background:white;
+  color:#003b66;
+  border:1px solid #dbe5ef;
+  padding:13px 20px;
+  border-radius:999px;
+  font-weight:900;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:28px;
+}
+
+.card{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border:1px solid #e6eef5;
+  border-radius:32px;
+  padding:34px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 16px 35px rgba(0,0,0,0.12);
+  transition:0.35s;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  box-shadow:0 24px 48px rgba(0,0,0,0.18);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:10px;
+  background:linear-gradient(90deg,#003b66,#005f99,#00aeef);
+}
+
+.icon{
+  width:88px;
+  height:88px;
+  border-radius:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+  margin-bottom:22px;
+  color:white;
+  box-shadow:0 14px 28px rgba(0,0,0,0.24);
+}
+
+.icon.report{
+  background:linear-gradient(135deg,#003b66,#005f99);
+}
+
+.icon.database{
+  background:linear-gradient(135deg,#00aeef,#0284c7);
+}
+
+.card h2{
+  color:#003b66;
+  font-size:30px;
+  margin-bottom:14px;
+  font-weight:900;
+}
+
+.card p{
+  color:#536172;
+  font-size:17px;
+  line-height:1.6;
+  margin-bottom:26px;
+}
+
+.card ul{
+  margin-left:18px;
+  margin-bottom:28px;
+  color:#334155;
+  line-height:1.7;
+  font-size:15px;
+}
+
+.btn{
+  border:none;
+  color:white;
+  padding:16px 30px;
+  border-radius:18px;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  transition:0.25s;
+  box-shadow:0 12px 26px rgba(0,0,0,0.22);
+}
+
+.btn:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
+
+.report-btn{
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+}
+
+.database-btn{
+  background:linear-gradient(135deg,#00aeef,#0284c7);
+}
+
+.bottom-buttons{
+  margin-top:45px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.home-btn,
+.assurance-btn{
+  min-height:64px;
+  border:none;
+  border-radius:18px;
+  color:white;
+  font-size:21px;
+  font-weight:900;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,0.26);
+}
+
+.home-btn{
+  background:linear-gradient(135deg,#003b66,#005f99);
+}
+
+.assurance-btn{
+  background:linear-gradient(135deg,#00aeef,#0284c7);
+}
+
+.home-btn:hover,
+.assurance-btn:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
+
+.footer-note{
+  margin-top:35px;
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border:1px solid #e6eef5;
+  border-radius:24px;
+  padding:22px;
+  text-align:center;
+  color:#003b66;
+  font-weight:900;
+  font-size:17px;
+}
+
+.footer{
+  margin-top:32px;
+  text-align:center;
+  color:#003b66;
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+@media(max-width:700px){
+  body{padding:20px;}
+  .container{padding:35px 22px;border-radius:28px;}
+  h1{font-size:40px;}
+  .subtitle{font-size:17px;}
+  .cards,.bottom-buttons{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="content">
+
+  <div class="logo">📋</div>
+
+  <div class="badge">AIR ACCESSORIES & AVIONICS</div>
+
+  <h1>Management of Change</h1>
+
+  <div class="subtitle">
+    Control operational, procedural, organizational, and equipment changes through a structured safety process.
+  </div>
+
+  <div class="title-line"></div>
+
+  <div class="flow">
+    <div class="flow-step">1. Create Report</div>
+    <div class="flow-step">2. Risk Assessment</div>
+    <div class="flow-step">3. Controls</div>
+    <div class="flow-step">4. Database</div>
+    <div class="flow-step">5. Details</div>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon report">📝</div>
+
+      <h2>Create MOC Report</h2>
+
+      <p>
+        Start a new Management of Change evaluation and document the proposed change,
+        affected areas, hazards, controls, action plan, residual risk, and approvals.
+      </p>
+
+      <ul>
+        <li>Initial and residual risk assessment</li>
+        <li>Required controls and action plan</li>
+        <li>Approval and verification tracking</li>
+      </ul>
+
+      <button 
+        class="btn report-btn" 
+        onclick="window.location.href='Safety-Assurance-Management-of-Change-Report.html'"
+      >
+        Open MOC Report ›
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="icon database">📊</div>
+
+      <h2>MOC Database</h2>
+
+      <p>
+        Review all saved Management of Change records, search reports,
+        open full details, edit IDs, close records, delete reports, and export information.
+      </p>
+
+      <ul>
+        <li>Open saved MOC reports</li>
+        <li>Track status and risk level</li>
+        <li>Access full report details</li>
+      </ul>
+
+      <button 
+        class="btn database-btn" 
+        onclick="window.location.href='Safety-Assurance-Management-of-Change-Database.html'"
+      >
+        Open MOC Database ›
+      </button>
+    </div>
+
+  </div>
+
+  <div class="bottom-buttons">
+    <button 
+      class="home-btn" 
+      onclick="window.location.href='index.html'"
+    >
+      🏠 Home
+    </button>
+
+    <button 
+      class="assurance-btn" 
+      onclick="window.location.href='Safety-Assurance.html'"
+    >
+      ✅ Safety Assurance
+    </button>
+  </div>
+
+  <div class="footer-note">
+    MOC Flow: Report → Database → Details
+  </div>
+
+  <div class="footer">
+    371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+  </div>
+
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+onAuthStateChanged(auth, async (user) => {
+  if(!user){
+    window.location.href = "index.html";
+    return;
+  }
+
+  const snapshot = await get(child(ref(db), "users/" + user.uid));
+
+  if(!snapshot.exists()){
+    window.location.href = "index.html";
+  }
+});
+</script>
+
+</body>
+</html>
