@@ -16,9 +16,9 @@ body{
   font-family:'Segoe UI', Arial, sans-serif;
   min-height:100vh;
   background:
-    radial-gradient(circle at top left, rgba(255,152,0,0.30), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(34,181,115,0.42), transparent 38%),
-    linear-gradient(rgba(5,20,55,0.86), rgba(5,20,55,0.94)),
+    radial-gradient(circle at top left, rgba(0,174,239,0.25), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,0.35), transparent 35%),
+    linear-gradient(rgba(2,23,48,0.88), rgba(2,23,48,0.94)),
     url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
   background-size:cover;
   background-position:center;
@@ -44,7 +44,7 @@ body{
   position:absolute;
   width:420px;
   height:420px;
-  background:radial-gradient(circle,rgba(34,181,115,0.18),transparent 70%);
+  background:radial-gradient(circle,rgba(0,174,239,0.16),transparent 70%);
   top:-170px;
   right:-120px;
 }
@@ -54,7 +54,7 @@ body{
   position:absolute;
   width:350px;
   height:350px;
-  background:radial-gradient(circle,rgba(255,152,0,0.18),transparent 70%);
+  background:radial-gradient(circle,rgba(0,59,102,0.14),transparent 70%);
   bottom:-150px;
   left:-120px;
 }
@@ -74,7 +74,7 @@ body{
   height:96px;
   margin:0 auto 20px;
   border-radius:28px;
-  background:linear-gradient(135deg,#071f47,#22b573,#1450b8);
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
   display:flex;
   justify-content:center;
@@ -84,7 +84,7 @@ body{
 }
 
 .company{
-  color:#1450b8;
+  color:#00aeef;
   font-size:16px;
   font-weight:900;
   letter-spacing:4px;
@@ -93,8 +93,8 @@ body{
 
 .badge{
   display:inline-block;
-  background:#ecfdf5;
-  color:#071f47;
+  background:#ecfeff;
+  color:#003b66;
   padding:10px 24px;
   border-radius:999px;
   font-size:14px;
@@ -105,7 +105,7 @@ body{
 
 h1{
   font-size:56px;
-  color:#071f47;
+  color:#003b66;
   margin-bottom:12px;
   font-weight:900;
   line-height:1.1;
@@ -122,7 +122,7 @@ h1{
   height:6px;
   margin:25px auto 0;
   border-radius:999px;
-  background:linear-gradient(90deg,transparent,#22b573,#ff9800,transparent);
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
 }
 
 .menu{
@@ -132,11 +132,11 @@ h1{
 }
 
 .card{
-  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
   border-radius:28px;
   padding:32px;
   border:1px solid #e6eef5;
-  border-top:9px solid #22b573;
+  border-top:9px solid #00aeef;
   box-shadow:0 14px 30px rgba(0,0,0,0.11);
   transition:0.35s;
   position:relative;
@@ -154,25 +154,25 @@ h1{
   width:150px;
   height:150px;
   border-radius:50%;
-  background:rgba(34,181,115,0.10);
+  background:rgba(0,174,239,0.10);
   top:-65px;
   right:-55px;
 }
 
 .card:nth-child(2){
-  border-top-color:#1450b8;
+  border-top-color:#005f99;
 }
 
 .card:nth-child(2)::before{
-  background:rgba(20,80,184,0.09);
+  background:rgba(0,95,153,0.10);
 }
 
 .card:nth-child(3){
-  border-top-color:#ff9800;
+  border-top-color:#003b66;
 }
 
 .card:nth-child(3)::before{
-  background:rgba(255,152,0,0.10);
+  background:rgba(0,59,102,0.10);
 }
 
 .card:hover{
@@ -196,15 +196,15 @@ h1{
 }
 
 .card:nth-child(1) .icon{
-  background:linear-gradient(135deg,#047857,#22b573);
+  background:linear-gradient(135deg,#00aeef,#0284c7);
 }
 
 .card:nth-child(2) .icon{
-  background:linear-gradient(135deg,#071f47,#1450b8);
+  background:linear-gradient(135deg,#003b66,#005f99);
 }
 
 .card:nth-child(3) .icon{
-  background:linear-gradient(135deg,#ff6b00,#ff9800);
+  background:linear-gradient(135deg,#005f99,#00aeef);
 }
 
 .card-content{
@@ -213,7 +213,7 @@ h1{
 }
 
 .card-title{
-  color:#071f47;
+  color:#003b66;
   margin-bottom:14px;
   font-size:28px;
   line-height:1.25;
@@ -221,7 +221,7 @@ h1{
 }
 
 .card-description{
-  color:#5f6b7a;
+  color:#536172;
   margin-bottom:25px;
   line-height:1.55;
   font-size:16px;
@@ -240,8 +240,8 @@ h1{
   font-weight:900;
   transition:0.3s;
   letter-spacing:0.3px;
-  background:linear-gradient(135deg,#071f47,#1450b8);
-  box-shadow:0 10px 22px rgba(20,80,184,0.25);
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  box-shadow:0 10px 22px rgba(0,95,153,0.25);
 }
 
 .card:hover .open-btn{
@@ -273,11 +273,11 @@ h1{
 }
 
 .home-btn{
-  background:linear-gradient(135deg,#071f47,#1450b8);
+  background:linear-gradient(135deg,#003b66,#005f99);
 }
 
 .dashboard-btn{
-  background:linear-gradient(135deg,#ff6b00,#ff9800);
+  background:linear-gradient(135deg,#00aeef,#0284c7);
 }
 
 .nav-btn:hover{
@@ -288,7 +288,7 @@ h1{
 .footer{
   text-align:center;
   margin-top:38px;
-  color:#071f47;
+  color:#003b66;
   font-size:15px;
   font-weight:900;
   letter-spacing:2px;
