@@ -32,85 +32,566 @@ body{
   box-shadow:0 28px 70px rgba(0,0,0,.38);
 }
 
-.header{
-  text-align:center;
-  margin-bottom:30px;
-}
+.header{text-align:center;margin-bottom:30px;}
 
 .logo{
-  width:90px;
-  height:90px;
-  margin:0 auto 18px;
-  border-radius:28px;
+  width:90px;height:90px;margin:0 auto 18px;border-radius:28px;
   background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:42px;
-  box-shadow:0 16px 34px rgba(0,0,0,.28);
+  color:white;display:flex;justify-content:center;align-items:center;
+  font-size:42px;box-shadow:0 16px 34px rgba(0,0,0,.28);
 }
 
 .company-label{
-  color:#00aeef;
-  font-size:15px;
-  font-weight:900;
-  letter-spacing:4px;
-  margin-bottom:10px;
+  color:#00aeef;font-size:15px;font-weight:900;
+  letter-spacing:4px;margin-bottom:10px;
 }
 
 .header h1{
-  font-size:44px;
-  color:#003b66;
-  font-weight:900;
-  margin-bottom:10px;
+  font-size:44px;color:#003b66;font-weight:900;margin-bottom:10px;
 }
 
 .header p{
-  color:#536172;
-  font-size:18px;
-  font-weight:600;
+  color:#536172;font-size:18px;font-weight:600;
 }
 
 .badge{
   display:inline-block;
   background:linear-gradient(135deg,#003b66,#00aeef);
-  color:white;
-  padding:9px 20px;
-  border-radius:999px;
-  font-weight:900;
-  margin-top:14px;
+  color:white;padding:9px 20px;border-radius:999px;
+  font-weight:900;margin-top:14px;
 }
 
 .title-line{
-  width:260px;
-  height:6px;
-  margin:25px auto 0;
-  border-radius:999px;
+  width:260px;height:6px;margin:25px auto 0;border-radius:999px;
   background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
 }
 
 .section{
-  margin-top:25px;
-  border:1px solid #e6eef5;
-  border-radius:24px;
-  overflow:hidden;
-  background:white;
-  box-shadow:0 14px 30px rgba(0,0,0,.09);
+  margin-top:25px;border:1px solid #e6eef5;border-radius:24px;
+  overflow:hidden;background:white;box-shadow:0 14px 30px rgba(0,0,0,.09);
 }
 
 .section-title{
   background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
-  color:white;
-  padding:17px 22px;
-  font-size:21px;
-  font-weight:900;
+  color:white;padding:17px 22px;font-size:21px;font-weight:900;
 }
 
 .section-body{
-  padding:25px;
-  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  padding:25px;background:linear-gradient(135deg,#ffffff,#f8fcff);
 }
 
 .grid{
-  display
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:15px;
+}
+
+.box{
+  background:#f8fcff;border:1px solid #e6eef5;
+  border-radius:16px;padding:15px;
+}
+
+.label{
+  color:#003b66;font-size:12px;text-transform:uppercase;
+  font-weight:900;margin-bottom:7px;
+}
+
+.value{
+  color:#071f47;font-size:15px;font-weight:800;
+  white-space:pre-wrap;word-break:break-word;
+}
+
+.long-box{margin-top:15px;}
+
+input,textarea{
+  width:100%;padding:13px;border:1px solid #cfd8e3;
+  border-radius:15px;font-size:15px;background:#f9fbfd;
+  outline:none;transition:.25s;
+}
+
+textarea{min-height:90px;resize:vertical;}
+
+input:focus,textarea:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+  background:white;
+}
+
+.check-card{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border:1px solid #e6eef5;border-left:9px solid #00aeef;
+  border-radius:22px;padding:20px;margin-bottom:18px;
+}
+
+.action-card{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border:1px solid #e6eef5;border-left:9px solid #22c55e;
+  border-radius:22px;padding:20px;margin-bottom:18px;
+}
+
+.check-card h3,
+.action-card h3{
+  color:#003b66;font-size:21px;margin-bottom:12px;font-weight:900;
+}
+
+.btn-area{
+  text-align:center;margin-top:30px;display:flex;
+  justify-content:center;gap:14px;flex-wrap:wrap;
+}
+
+.btn{
+  border:none;padding:16px 30px;border-radius:16px;color:white;
+  font-size:16px;font-weight:900;cursor:pointer;transition:.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,.20);
+}
+
+.btn:hover{transform:translateY(-4px);filter:brightness(1.08);}
+
+.edit-btn{background:linear-gradient(135deg,#f59e0b,#f97316);}
+.save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
+.database-btn{background:linear-gradient(135deg,#003b66,#005f99,#00aeef);}
+.back-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.print-btn{background:linear-gradient(135deg,#047857,#22c55e);}
+
+.loading,.error{
+  text-align:center;padding:35px;font-size:20px;font-weight:900;color:#003b66;
+}
+
+.footer{
+  text-align:center;margin-top:32px;color:#003b66;
+  font-size:15px;font-weight:900;letter-spacing:2px;
+}
+
+@media print{
+  body{background:white;padding:0;}
+  .container{box-shadow:none;border-radius:0;}
+  .btn-area{display:none;}
+}
+
+@media(max-width:900px){
+  body{padding:25px;}
+  .container{padding:30px 22px;border-radius:28px;}
+  .header h1{font-size:34px;}
+  .btn{width:100%;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="loading" class="loading">Loading External Audit Report...</div>
+<div id="errorBox" class="error" style="display:none;">External Audit Report not found.</div>
+
+<div id="reportContent" style="display:none;">
+
+<div class="header">
+  <div class="logo">🛡️</div>
+  <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
+  <h1 id="pageTitle">External Audit Report Detail</h1>
+  <p>Vendor, supplier, contractor and external service provider audit record</p>
+  <div class="badge">EXTERNAL AUDIT</div>
+  <div class="title-line"></div>
+</div>
+
+<div class="section">
+  <div class="section-title">1. External Audit Information</div>
+  <div class="section-body">
+    <div class="grid" id="auditInfo"></div>
+    <div class="box long-box"><div class="label">Audit Scope</div><div class="value" id="auditScope"></div></div>
+    <div class="box long-box"><div class="label">Audit Objective</div><div class="value" id="auditObjective"></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">2. External Audit Criteria / Contractual Requirements</div>
+  <div class="section-body">
+    <div class="grid" id="criteriaInfo"></div>
+    <div class="box long-box"><div class="label">Audit Criteria Description</div><div class="value" id="criteriaDescription"></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">3. Vendor / Service Provider Checklist Areas</div>
+  <div class="section-body" id="checklistArea"></div>
+</div>
+
+<div class="section">
+  <div class="section-title">4. Finding / Supplier Performance Summary</div>
+  <div class="section-body">
+    <div class="grid" id="findingInfo"></div>
+    <div class="box long-box"><div class="label">Finding Statement</div><div class="value" id="findingStatement"></div></div>
+    <div class="box long-box"><div class="label">Objective Evidence</div><div class="value" id="evidence"></div></div>
+    <div class="box long-box"><div class="label">Root Cause / Vendor System Weakness</div><div class="value" id="rootCause"></div></div>
+    <div class="box long-box"><div class="label">Vendor Response / Commitment</div><div class="value" id="vendorResponse"></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">5. Corrective / Preventive Actions</div>
+  <div class="section-body" id="actionsArea"></div>
+</div>
+
+<div class="btn-area">
+  <button class="btn edit-btn" onclick="enableEditMode()">✏️ Edit</button>
+  <button class="btn save-btn" id="addCpaBtn" style="display:none;" onclick="addCPA()">➕ Add CPA</button>
+  <button class="btn save-btn" id="saveEditBtn" style="display:none;" onclick="saveEditedReport()">💾 Save Changes</button>
+  <button class="btn database-btn" onclick="window.location.href='Safety-Assurance-Audit-Database.html'">📊 Audit Database</button>
+  <button class="btn back-btn" onclick="window.location.href='Safety-Assurance-Audit.html'">🛡️ Back to Audits</button>
+  <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+  <button class="btn print-btn" onclick="window.print()">🖨️ Print Report</button>
+</div>
+
+<div class="footer">
+  371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+</div>
+
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+let currentReport = {};
+let currentReportId = "";
+let editMode = false;
+
+function clean(value){
+  return String(value || "N/A")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function getParam(name){
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+function field(label,value,key){
+  if(editMode && key){
+    return `
+      <div class="box">
+        <div class="label">${clean(label)}</div>
+        <input id="edit_${key}" value="${clean(value === "N/A" ? "" : value)}">
+      </div>
+    `;
+  }
+
+  return `
+    <div class="box">
+      <div class="label">${clean(label)}</div>
+      <div class="value">${clean(value)}</div>
+    </div>
+  `;
+}
+
+function longField(elementId,value,key){
+  const box = document.getElementById(elementId);
+
+  if(editMode){
+    box.innerHTML = `<textarea id="edit_${key}">${clean(value === "N/A" ? "" : value)}</textarea>`;
+  }else{
+    box.innerHTML = clean(value);
+  }
+}
+
+function renderReport(){
+  document.getElementById("pageTitle").innerText = currentReport.title || "External Audit Report Detail";
+
+  document.getElementById("auditInfo").innerHTML = `
+    ${field("Audit Category", currentReport.auditCategory || "External Audit", "auditCategory")}
+    ${field("Audit ID", currentReport.auditId || currentReport.auditNumber || currentReportId, "")}
+    ${field("Audit Number", currentReport.auditNumber, "auditNumber")}
+    ${field("Auditor Name", currentReport.auditorName, "auditorName")}
+    ${field("Vendor / Service Provider Name", currentReport.vendorName, "vendorName")}
+    ${field("Vendor Contact Person", currentReport.vendorContact, "vendorContact")}
+    ${field("Vendor Email / Phone", currentReport.vendorContactInfo, "vendorContactInfo")}
+    ${field("Service Provided", currentReport.serviceProvided, "serviceProvided")}
+    ${field("Location", currentReport.location, "location")}
+    ${field("Audit Date", currentReport.date, "date")}
+    ${field("External Audit Type", currentReport.auditType, "auditType")}
+    ${field("Audit Status", currentReport.status, "status")}
+    ${field("Vendor Approval Status", currentReport.vendorApprovalStatus, "vendorApprovalStatus")}
+    ${field("Created At", currentReport.createdAt, "")}
+    ${field("Updated At", currentReport.updatedAt, "")}
+  `;
+
+  longField("auditScope", currentReport.auditScope, "auditScope");
+  longField("auditObjective", currentReport.auditObjective, "auditObjective");
+
+  document.getElementById("criteriaInfo").innerHTML = `
+    ${field("Reference Standard / Regulation", currentReport.referenceStandard, "referenceStandard")}
+    ${field("Contract / Agreement Reference", currentReport.contractReference, "contractReference")}
+    ${field("Customer / Company Requirement", currentReport.customerRequirement, "customerRequirement")}
+    ${field("Insurance / Certificate Requirement", currentReport.insuranceRequirement, "insuranceRequirement")}
+  `;
+
+  longField("criteriaDescription", currentReport.criteriaDescription, "criteriaDescription");
+
+  renderChecklist(currentReport.checklist);
+  renderFinding();
+
+  renderActions(
+    currentReport.correctiveActions ||
+    currentReport.correctivePreventiveActions ||
+    currentReport.correctivePreventiveAction ||
+    currentReport.cpa ||
+    currentReport.cpas ||
+    currentReport.actions ||
+    []
+  );
+}
+
+function renderFinding(){
+  document.getElementById("findingInfo").innerHTML = `
+    ${field("Finding Classification", currentReport.findingClassification, "findingClassification")}
+    ${field("Main Finding Area", currentReport.mainFindingArea, "mainFindingArea")}
+    ${field("Risk / Priority", currentReport.riskPriority, "riskPriority")}
+    ${field("Service Continuation Decision", currentReport.serviceDecision, "serviceDecision")}
+  `;
+
+  longField("findingStatement", currentReport.findingStatement, "findingStatement");
+  longField("evidence", currentReport.evidence, "evidence");
+  longField("rootCause", currentReport.rootCause, "rootCause");
+  longField("vendorResponse", currentReport.vendorResponse, "vendorResponse");
+}
+
+function renderChecklist(checklist){
+  const area = document.getElementById("checklistArea");
+  area.innerHTML = "";
+
+  if(!Array.isArray(checklist) || checklist.length === 0){
+    area.innerHTML = `<div class="box"><div class="value">No checklist information available.</div></div>`;
+    return;
+  }
+
+  checklist.forEach((item,index) => {
+    if(editMode){
+      area.innerHTML += `
+        <div class="check-card">
+          <h3>${index + 1}. ${clean(item.area)}</h3>
+          <div class="grid">
+            <div class="box"><div class="label">Result</div><input id="check_${index}_result" value="${clean(item.result)}"></div>
+            <div class="box"><div class="label">Checklist Item</div><input id="check_${index}_checklistItem" value="${clean(item.checklistItem)}"></div>
+            <div class="box"><div class="label">Evidence / Notes</div><textarea id="check_${index}_evidence">${clean(item.evidence)}</textarea></div>
+            <div class="box"><div class="label">Recommended Action</div><textarea id="check_${index}_recommendedAction">${clean(item.recommendedAction)}</textarea></div>
+          </div>
+        </div>
+      `;
+    }else{
+      area.innerHTML += `
+        <div class="check-card">
+          <h3>${index + 1}. ${clean(item.area)}</h3>
+          <div class="grid">
+            ${field("Result", item.result)}
+            ${field("Checklist Item", item.checklistItem)}
+            ${field("Evidence / Notes", item.evidence)}
+            ${field("Recommended Action", item.recommendedAction)}
+          </div>
+        </div>
+      `;
+    }
+  });
+}
+
+function renderActions(actions){
+  const area = document.getElementById("actionsArea");
+  area.innerHTML = "";
+
+  if(!Array.isArray(actions) || actions.length === 0){
+    area.innerHTML = `<div class="box"><div class="value">No corrective actions available.</div></div>`;
+    return;
+  }
+
+  actions.forEach((action,index) => {
+    if(editMode){
+      area.innerHTML += `
+        <div class="action-card">
+          <h3>CPA ${index + 1}</h3>
+          <div class="grid">
+            <div class="box"><div class="label">Corrective / Preventive Action</div><textarea id="action_${index}_action">${clean(action.action)}</textarea></div>
+            <div class="box"><div class="label">Responsible Person</div><input id="action_${index}_responsible" value="${clean(action.responsible)}"></div>
+            <div class="box"><div class="label">Due Date</div><input id="action_${index}_dueDate" value="${clean(action.dueDate)}"></div>
+            <div class="box"><div class="label">Status</div><input id="action_${index}_status" value="${clean(action.status)}"></div>
+          </div>
+        </div>
+      `;
+    }else{
+      if(!action.action && !action.responsible && !action.dueDate) return;
+
+      area.innerHTML += `
+        <div class="action-card">
+          <h3>CPA ${index + 1}</h3>
+          <div class="grid">
+            ${field("Corrective / Preventive Action", action.action)}
+            ${field("Responsible Person", action.responsible)}
+            ${field("Due Date", action.dueDate)}
+            ${field("Status", action.status)}
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  if(area.innerHTML.trim() === ""){
+    area.innerHTML = `<div class="box"><div class="value">No corrective actions entered.</div></div>`;
+  }
+}
+
+window.enableEditMode = function(){
+  editMode = true;
+  document.getElementById("saveEditBtn").style.display = "inline-block";
+  document.getElementById("addCpaBtn").style.display = "inline-block";
+  renderReport();
+};
+
+window.addCPA = function(){
+  const reportActions =
+    currentReport.correctiveActions ||
+    currentReport.correctivePreventiveActions ||
+    currentReport.correctivePreventiveAction ||
+    currentReport.cpa ||
+    currentReport.cpas ||
+    currentReport.actions ||
+    [];
+
+  currentReport.correctiveActions = Array.isArray(reportActions) ? reportActions : [];
+
+  currentReport.correctiveActions.push({
+    action:"",
+    responsible:"",
+    dueDate:"",
+    status:"Open"
+  });
+
+  renderReport();
+};
+
+window.saveEditedReport = async function(){
+  const updated = {
+    ...currentReport,
+
+    auditCategory:document.getElementById("edit_auditCategory")?.value.trim() || "External Audit",
+    auditNumber:document.getElementById("edit_auditNumber")?.value.trim() || "",
+    auditorName:document.getElementById("edit_auditorName")?.value.trim() || "",
+    vendorName:document.getElementById("edit_vendorName")?.value.trim() || "",
+    vendorContact:document.getElementById("edit_vendorContact")?.value.trim() || "",
+    vendorContactInfo:document.getElementById("edit_vendorContactInfo")?.value.trim() || "",
+    serviceProvided:document.getElementById("edit_serviceProvided")?.value.trim() || "",
+    location:document.getElementById("edit_location")?.value.trim() || "",
+    date:document.getElementById("edit_date")?.value.trim() || "",
+    auditType:document.getElementById("edit_auditType")?.value.trim() || "",
+    status:document.getElementById("edit_status")?.value.trim() || "",
+    vendorApprovalStatus:document.getElementById("edit_vendorApprovalStatus")?.value.trim() || "",
+
+    auditScope:document.getElementById("edit_auditScope")?.value.trim() || "",
+    auditObjective:document.getElementById("edit_auditObjective")?.value.trim() || "",
+
+    referenceStandard:document.getElementById("edit_referenceStandard")?.value.trim() || "",
+    contractReference:document.getElementById("edit_contractReference")?.value.trim() || "",
+    customerRequirement:document.getElementById("edit_customerRequirement")?.value.trim() || "",
+    insuranceRequirement:document.getElementById("edit_insuranceRequirement")?.value.trim() || "",
+    criteriaDescription:document.getElementById("edit_criteriaDescription")?.value.trim() || "",
+
+    findingClassification:document.getElementById("edit_findingClassification")?.value.trim() || "",
+    mainFindingArea:document.getElementById("edit_mainFindingArea")?.value.trim() || "",
+    riskPriority:document.getElementById("edit_riskPriority")?.value.trim() || "",
+    serviceDecision:document.getElementById("edit_serviceDecision")?.value.trim() || "",
+    findingStatement:document.getElementById("edit_findingStatement")?.value.trim() || "",
+    evidence:document.getElementById("edit_evidence")?.value.trim() || "",
+    rootCause:document.getElementById("edit_rootCause")?.value.trim() || "",
+    vendorResponse:document.getElementById("edit_vendorResponse")?.value.trim() || "",
+
+    company:"Air Accessories & Avionics",
+    updatedAt:new Date().toLocaleString()
+  };
+
+  const reportActions =
+    currentReport.correctiveActions ||
+    currentReport.correctivePreventiveActions ||
+    currentReport.correctivePreventiveAction ||
+    currentReport.cpa ||
+    currentReport.cpas ||
+    currentReport.actions ||
+    [];
+
+  if(Array.isArray(currentReport.checklist)){
+    updated.checklist = currentReport.checklist.map((item,index) => ({
+      area:item.area,
+      result:document.getElementById(`check_${index}_result`)?.value.trim() || "",
+      checklistItem:document.getElementById(`check_${index}_checklistItem`)?.value.trim() || "",
+      evidence:document.getElementById(`check_${index}_evidence`)?.value.trim() || "",
+      recommendedAction:document.getElementById(`check_${index}_recommendedAction`)?.value.trim() || ""
+    }));
+  }
+
+  if(Array.isArray(reportActions)){
+    updated.correctiveActions = reportActions.map((action,index) => ({
+      action:document.getElementById(`action_${index}_action`)?.value.trim() || "",
+      responsible:document.getElementById(`action_${index}_responsible`)?.value.trim() || "",
+      dueDate:document.getElementById(`action_${index}_dueDate`)?.value.trim() || "",
+      status:document.getElementById(`action_${index}_status`)?.value.trim() || ""
+    }));
+  }
+
+  try{
+    await update(ref(database, "auditReports/" + currentReportId), updated);
+    currentReport = updated;
+    editMode = false;
+    document.getElementById("saveEditBtn").style.display = "none";
+    document.getElementById("addCpaBtn").style.display = "none";
+    renderReport();
+    alert("External Audit Report updated successfully.");
+  }catch(error){
+    alert("Error updating report: " + error.message);
+  }
+};
+
+async function loadReport(){
+  currentReportId = getParam("id");
+
+  if(!currentReportId){
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("errorBox").style.display = "block";
+    return;
+  }
+
+  const snapshot = await get(ref(database, "auditReports/" + currentReportId));
+
+  if(!snapshot.exists()){
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("errorBox").style.display = "block";
+    return;
+  }
+
+  currentReport = snapshot.val();
+
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("reportContent").style.display = "block";
+
+  renderReport();
+}
+
+loadReport();
+</script>
+
+</body>
+</html>
