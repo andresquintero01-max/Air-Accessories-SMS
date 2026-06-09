@@ -316,7 +316,8 @@ select:focus{
 
 <div class="btn-area">
   <button class="btn edit-btn" onclick="enableEditMode()">✏️ Edit</button>
-  <button class="btn save-btn" id="saveEditBtn" style="display:none;" onclick="saveEditedReport()">💾 Save Changes</button>
+<button class="btn save-btn" id="addCpaBtn" style="display:none;" onclick="addCPA()">➕ Add CPA</button>
+<button class="btn save-btn" id="saveEditBtn" style="display:none;" onclick="saveEditedReport()">💾 Save Changes</button>
   <button class="btn database-btn" onclick="window.location.href='Safety-Assurance-Audit-Database.html'">📊 Audit Database</button>
   <button class="btn back-btn" onclick="window.location.href='Safety-Assurance-Audit.html'">🛡️ Back to Audits</button>
   <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
@@ -531,9 +532,38 @@ function renderActions(actions){
 window.enableEditMode = function(){
   editMode = true;
   document.getElementById("saveEditBtn").style.display = "inline-block";
+
+  const addBtn = document.getElementById("addCpaBtn");
+  if(addBtn){
+    addBtn.style.display = "inline-block";
+  }
+
   renderReport();
 };
 
+window.addCPA = function(){
+
+  const reportActions =
+    currentReport.correctiveActions ||
+    currentReport.correctivePreventiveActions ||
+    currentReport.correctivePreventiveAction ||
+    currentReport.cpa ||
+    currentReport.cpas ||
+    currentReport.actions ||
+    [];
+
+  currentReport.correctiveActions = Array.isArray(reportActions) ? reportActions : [];
+
+  currentReport.correctiveActions.push({
+    action:"",
+    responsible:"",
+    dueDate:"",
+    status:"Open"
+  });
+
+  renderReport();
+};
+  
 window.saveEditedReport = async function(){
   if(!currentReportId){
     alert("Report ID not found.");
@@ -581,7 +611,7 @@ window.saveEditedReport = async function(){
   currentReport.actions ||
   [];
 
-if(Array.isArray(reportActions)){
+if(Array.isArray(currentReport.checklist)){
     updated.checklist = currentReport.checklist.map((item,index) => ({
       area:item.area,
       result:document.getElementById(`check_${index}_result`)?.value.trim() || "",
@@ -591,7 +621,7 @@ if(Array.isArray(reportActions)){
     }));
   }
 
-  if(Array.isArray(currentReport.correctiveActions)){
+ if(Array.isArray(reportActions)){
     updated.correctiveActions = reportActions.map((action,index) => ({
       action:document.getElementById(`action_${index}_action`)?.value.trim() || "",
       responsible:document.getElementById(`action_${index}_responsible`)?.value.trim() || "",
@@ -605,6 +635,7 @@ if(Array.isArray(reportActions)){
     currentReport = updated;
     editMode = false;
     document.getElementById("saveEditBtn").style.display = "none";
+    document.getElementById("addCpaBtn").style.display = "none";
     renderReport();
     alert("Internal Audit Report updated successfully.");
   }catch(error){
