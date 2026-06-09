@@ -9,50 +9,127 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
   color:#111;
-  padding:25px;
+  padding:40px;
+  background:
+    radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
+    linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.94)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
 }
 
 .container{
   max-width:1350px;
   margin:auto;
-  background:white;
-  border-radius:24px;
-  padding:30px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);
+  border-radius:38px;
+  padding:45px;
+  box-shadow:0 28px 70px rgba(0,0,0,.38);
+  position:relative;
+  overflow:hidden;
 }
+
+.container::before{
+  content:"";
+  position:absolute;
+  width:480px;
+  height:480px;
+  background:radial-gradient(circle,rgba(0,174,239,.16),transparent 70%);
+  top:-200px;
+  right:-160px;
+}
+
+.container::after{
+  content:"";
+  position:absolute;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,rgba(0,59,102,.14),transparent 70%);
+  bottom:-150px;
+  left:-120px;
+}
+
+.content{position:relative;z-index:2;}
 
 .header{
-  background:linear-gradient(135deg,#071f47,#1450b8);
-  color:white;
-  padding:35px;
-  border-radius:22px;
   text-align:center;
-  margin-bottom:25px;
+  margin-bottom:35px;
 }
 
-.header h1{font-size:42px;margin-bottom:8px;}
-.header p{font-size:17px;color:#dbeafe;}
+.logo{
+  width:112px;
+  height:112px;
+  margin:0 auto 20px;
+  border-radius:32px;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:50px;
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
+}
+
+.badge{
+  display:inline-block;
+  background:#ecfeff;
+  color:#003b66;
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+  margin-bottom:14px;
+}
+
+.header h1{
+  color:#003b66;
+  font-size:56px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.header p{
+  color:#536172;
+  font-size:18px;
+  font-weight:600;
+}
+
+.title-line{
+  width:260px;
+  height:6px;
+  margin:24px auto 0;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
+}
 
 .section{
   margin-top:25px;
-  border:1px solid #d8e1ef;
-  border-radius:18px;
+  border:1px solid #e6eef5;
+  border-radius:24px;
   overflow:hidden;
   background:white;
+  box-shadow:0 14px 30px rgba(0,0,0,.09);
 }
 
 .section-title{
-  background:#004080;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
-  padding:14px 18px;
+  padding:17px 22px;
   font-size:21px;
-  font-weight:bold;
+  font-weight:900;
 }
 
-.section-body{padding:22px;}
+.section-body{
+  padding:25px;
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+}
 
 .grid{
   display:grid;
@@ -62,23 +139,35 @@ body{
 
 .field label{
   display:block;
-  color:#004080;
-  font-weight:bold;
-  margin-bottom:6px;
+  color:#003b66;
+  font-weight:900;
+  margin-bottom:7px;
+  font-size:15px;
 }
 
 input,select,textarea{
   width:100%;
-  padding:11px;
-  border:1px solid #b8c7da;
-  border-radius:10px;
+  padding:13px;
+  border:1px solid #cfd8e3;
+  border-radius:15px;
   font-size:15px;
-  background:white;
+  background:#f9fbfd;
+  outline:none;
+  transition:.25s;
+  font-family:'Segoe UI',Arial,sans-serif;
 }
 
 textarea{
   min-height:95px;
   resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+  background:white;
 }
 
 .risk-area{
@@ -88,66 +177,69 @@ textarea{
 }
 
 .matrix-box{
-  background:#f8fbff;
-  border:1px solid #d8e1ef;
-  border-radius:18px;
-  padding:18px;
+  background:#f8fcff;
+  border:1px solid #e6eef5;
+  border-radius:22px;
+  padding:20px;
 }
 
 .matrix-box h3{
-  color:#071f47;
-  margin-bottom:12px;
+  color:#003b66;
+  margin-bottom:14px;
   font-size:22px;
+  font-weight:900;
 }
 
 .matrix{
   width:100%;
   border-collapse:collapse;
   text-align:center;
+  border-radius:16px;
+  overflow:hidden;
 }
 
 .matrix th,
 .matrix td{
-  border:1px solid #d8e1ef;
+  border:1px solid #dbe5ef;
   padding:12px;
-  font-weight:bold;
+  font-weight:900;
 }
 
 .matrix th{
-  background:#071f47;
+  background:linear-gradient(135deg,#003b66,#005f99);
   color:white;
 }
 
 .matrix td{
   cursor:pointer;
-  transition:0.2s;
+  transition:.2s;
 }
 
 .matrix td:hover{
   transform:scale(1.05);
-  outline:3px solid #071f47;
+  outline:3px solid #003b66;
 }
 
-.low{background:#2f9144;color:white;}
-.medium{background:#ffd966;color:#111;}
-.high{background:#ff9800;color:#111;}
-.extreme{background:#ff1a0a;color:white;}
+.low{background:#22c55e;color:white;}
+.medium{background:#facc15;color:#111;}
+.high{background:#fb923c;color:#111;}
+.extreme{background:#ef4444;color:white;}
 
 .selected-risk{
-  outline:4px solid #071f47 !important;
+  outline:4px solid #003b66 !important;
   transform:scale(1.06);
 }
 
 .risk-result{
   margin-top:15px;
   padding:18px;
-  border-radius:14px;
+  border-radius:16px;
   text-align:left;
   font-size:15px;
-  font-weight:bold;
-  background:#eef4ff;
-  color:#071f47;
-  border:1px solid #c8d8f0;
+  font-weight:800;
+  background:#ecfeff;
+  color:#003b66;
+  border:1px solid #bae6fd;
   line-height:1.6;
 }
 
@@ -155,73 +247,144 @@ textarea{
   text-align:center;
   font-size:19px;
   margin-bottom:10px;
-  color:#071f47;
+  color:#003b66;
+  font-weight:900;
 }
 
 .action-row{
   display:grid;
-  grid-template-columns:70px 2fr 1fr 1fr 1fr;
+  grid-template-columns:70px 2fr 1fr 1fr 1fr 55px;
   gap:14px;
   align-items:start;
-  background:#f8fbff;
-  border:1px solid #d8e1ef;
-  border-radius:16px;
+  background:#f8fcff;
+  border:1px solid #e6eef5;
+  border-radius:18px;
   padding:16px;
   margin-bottom:16px;
 }
 
 .action-number{
-  background:#004080;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
-  font-weight:bold;
-  border-radius:12px;
+  font-weight:900;
+  border-radius:14px;
   padding:14px;
   text-align:center;
+}
+
+.remove-action-btn{
+  background:linear-gradient(135deg,#dc2626,#ef4444);
+  color:white;
+  border:none;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 9px 20px rgba(0,0,0,.20);
+  margin-top:24px;
+}
+
+.add-action-area{
+  display:flex;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.add-action-btn{
+  background:linear-gradient(135deg,#00aeef,#0284c7);
+  color:white;
+  border:none;
+  padding:15px 28px;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 26px rgba(0,0,0,.20);
+  transition:.3s;
+}
+
+.add-action-btn:hover,
+.remove-action-btn:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
 }
 
 .btn-area{
   text-align:center;
   margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
 .btn{
   border:none;
   padding:15px 28px;
-  border-radius:12px;
+  border-radius:16px;
   color:white;
   font-size:16px;
-  font-weight:bold;
+  font-weight:900;
   cursor:pointer;
-  margin:6px;
+  transition:.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,.20);
 }
 
-.save-btn{background:#004080;}
-.reset-btn{background:#666;}
-.database-btn{background:#2f9144;}
-.back-btn{background:#c40000;}
-.home-btn{background:#0b2a66;}
+.btn:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
+
+.save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
+.reset-btn{background:linear-gradient(135deg,#64748b,#334155);}
+.database-btn{background:linear-gradient(135deg,#003b66,#005f99,#00aeef);}
+.back-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
 
 .saved-box{
   margin-top:25px;
-  background:#e8f5e9;
+  background:#dcfce7;
   color:#14532d;
-  border:1px solid #2f9144;
+  border:1px solid #22c55e;
   padding:16px;
-  border-radius:14px;
+  border-radius:16px;
   display:none;
-  font-weight:bold;
+  font-weight:900;
   text-align:center;
 }
 
-@media(max-width:1000px){
+.footer{
+  text-align:center;
+  margin-top:35px;
+  color:#003b66;
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+@media(max-width:1100px){
   .risk-area,
   .action-row{
     grid-template-columns:1fr;
   }
 
-  .header h1{
-    font-size:32px;
+  .remove-action-btn{
+    margin-top:0;
+    width:100%;
+    border-radius:14px;
   }
+
+  .header h1{
+    font-size:40px;
+  }
+}
+
+@media(max-width:700px){
+  body{padding:25px;}
+  .container{padding:30px 22px;border-radius:28px;}
+  .btn,.add-action-btn{width:100%;}
 }
 </style>
 </head>
@@ -229,10 +392,14 @@ textarea{
 <body>
 
 <div class="container">
+<div class="content">
 
 <div class="header">
-  <h1>Safety Assurance - Management of Change</h1>
-  <p>Management of Change report with risk assessment, ICAO definitions, controls, action plan, and approval tracking.</p>
+  <div class="logo">📋</div>
+  <div class="badge">AIR ACCESSORIES & AVIONICS</div>
+  <h1>Management of Change Report</h1>
+  <p>Management of Change report with risk assessment, controls, action plan, and approval tracking.</p>
+  <div class="title-line"></div>
 </div>
 
 <div class="section">
@@ -307,7 +474,7 @@ textarea{
 
     <div class="field">
       <label>Reason for Change</label>
-      <textarea id="reasonForChange" placeholder="Explain the reason for the change: safety improvement, customer requirement, process gap, audit finding, regulatory requirement, operational need, etc."></textarea>
+      <textarea id="reasonForChange" placeholder="Explain the reason for the change."></textarea>
     </div>
 
   </div>
@@ -380,79 +547,12 @@ textarea{
   <div class="section-title">4. Action Plan / Required Controls</div>
   <div class="section-body">
 
-    <div class="action-row">
-      <div class="action-number">1</div>
-      <div class="field">
-        <label>Action / Control</label>
-        <textarea id="action1"></textarea>
-      </div>
-      <div class="field">
-        <label>Responsible Person</label>
-        <input id="responsible1">
-      </div>
-      <div class="field">
-        <label>Due Date</label>
-        <input type="date" id="dueDate1">
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <select id="actionStatus1">
-          <option>Open</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-          <option>Verified</option>
-        </select>
-      </div>
-    </div>
+    <div id="actionsContainer"></div>
 
-    <div class="action-row">
-      <div class="action-number">2</div>
-      <div class="field">
-        <label>Action / Control</label>
-        <textarea id="action2"></textarea>
-      </div>
-      <div class="field">
-        <label>Responsible Person</label>
-        <input id="responsible2">
-      </div>
-      <div class="field">
-        <label>Due Date</label>
-        <input type="date" id="dueDate2">
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <select id="actionStatus2">
-          <option>Open</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-          <option>Verified</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="action-row">
-      <div class="action-number">3</div>
-      <div class="field">
-        <label>Action / Control</label>
-        <textarea id="action3"></textarea>
-      </div>
-      <div class="field">
-        <label>Responsible Person</label>
-        <input id="responsible3">
-      </div>
-      <div class="field">
-        <label>Due Date</label>
-        <input type="date" id="dueDate3">
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <select id="actionStatus3">
-          <option>Open</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-          <option>Verified</option>
-        </select>
-      </div>
+    <div class="add-action-area">
+      <button class="add-action-btn" type="button" onclick="addActionRow()">
+        ➕ Add CPA / Control
+      </button>
     </div>
 
   </div>
@@ -545,6 +645,11 @@ textarea{
   MOC Report saved successfully.
 </div>
 
+<div class="footer">
+  371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+</div>
+
+</div>
 </div>
 
 <script type="module">
@@ -552,13 +657,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB2syFrb8S3cxt1Sor1wXrgJcdSZAg1Pq4",
-  authDomain: "aviation-sms.firebaseapp.com",
-  databaseURL: "https://aviation-sms-default-rtdb.firebaseio.com",
-  projectId: "aviation-sms",
-  storageBucket: "aviation-sms.firebasestorage.app",
-  messagingSenderId: "147000937860",
-  appId: "1:147000937860:web:90049a1f5269ef107ca1d1"
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -573,51 +678,22 @@ window.dbSet = set;
 <script>
 let initialRisk = null;
 let residualRisk = null;
+let actionCounter = 0;
 
 const severityDefinitions = {
-  5:{
-    name:"Catastrophic",
-    definition:"According to ICAO SMS guidance, this may involve equipment destroyed and/or multiple fatalities."
-  },
-  4:{
-    name:"Hazardous",
-    definition:"According to ICAO SMS guidance, this may involve a large reduction in safety margins, serious injury, major equipment damage, or major operational disruption."
-  },
-  3:{
-    name:"Major",
-    definition:"According to ICAO SMS guidance, this may involve a significant reduction in safety margins, injury, increased workload, or serious incident potential."
-  },
-  2:{
-    name:"Minor",
-    definition:"According to ICAO SMS guidance, this may involve nuisance, operating limitations, minor incident, or use of emergency procedures."
-  },
-  1:{
-    name:"Negligible",
-    definition:"According to ICAO SMS guidance, this means consequences are less than minor, with little or no safety impact."
-  }
+  5:{name:"Catastrophic",definition:"Equipment destroyed and/or multiple fatalities."},
+  4:{name:"Hazardous",definition:"Large reduction in safety margins, serious injury, major equipment damage, or major operational disruption."},
+  3:{name:"Major",definition:"Significant reduction in safety margins, injury, increased workload, or serious incident potential."},
+  2:{name:"Minor",definition:"Nuisance, operating limitations, minor incident, or use of emergency procedures."},
+  1:{name:"Negligible",definition:"Consequences are less than minor, with little or no safety impact."}
 };
 
 const probabilityDefinitions = {
-  5:{
-    name:"Frequent",
-    definition:"According to ICAO SMS guidance, this is likely to occur many times or has occurred frequently."
-  },
-  4:{
-    name:"Likely",
-    definition:"According to ICAO SMS guidance, this is likely to occur sometimes or has occurred several times."
-  },
-  3:{
-    name:"Occasional",
-    definition:"According to ICAO SMS guidance, this is likely to occur at some time or has occurred infrequently."
-  },
-  2:{
-    name:"Remote",
-    definition:"According to ICAO SMS guidance, this is unlikely to occur, but possible."
-  },
-  1:{
-    name:"Extremely Remote",
-    definition:"According to ICAO SMS guidance, this is very unlikely to occur."
-  }
+  5:{name:"Frequent",definition:"Likely to occur many times or has occurred frequently."},
+  4:{name:"Likely",definition:"Likely to occur sometimes or has occurred several times."},
+  3:{name:"Occasional",definition:"Likely to occur at some time or has occurred infrequently."},
+  2:{name:"Remote",definition:"Unlikely to occur, but possible."},
+  1:{name:"Extremely Remote",definition:"Very unlikely to occur."}
 };
 
 function riskLevel(score){
@@ -628,24 +704,14 @@ function riskLevel(score){
 }
 
 function riskAssessmentText(level){
-  if(level === "Low"){
-    return "Acceptable risk level. Risk may be managed through normal operational controls.";
-  }
-
-  if(level === "Medium"){
-    return "Tolerable risk level with controls. Additional mitigation or monitoring should be applied before implementation.";
-  }
-
-  if(level === "High"){
-    return "Significant risk level. Management review and mitigation actions are required before implementation.";
-  }
-
+  if(level === "Low") return "Acceptable risk level. Risk may be managed through normal operational controls.";
+  if(level === "Medium") return "Tolerable risk level with controls. Additional mitigation or monitoring should be applied before implementation.";
+  if(level === "High") return "Significant risk level. Management review and mitigation actions are required before implementation.";
   return "Unacceptable risk level. Immediate mitigation actions are required before implementation.";
 }
 
 function riskColorClass(score){
   const level = riskLevel(score);
-
   if(level === "Low") return "low";
   if(level === "Medium") return "medium";
   if(level === "High") return "high";
@@ -658,24 +724,17 @@ function buildMatrix(matrixId,type){
   let html = `
     <tr>
       <th>Severity ↓ / Probability →</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
+      <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
     </tr>
   `;
 
   for(let severity = 5; severity >= 1; severity--){
-
     html += `<tr><th>${severity}</th>`;
 
     for(let probability = 1; probability <= 5; probability++){
       const score = severity * probability;
-      const color = riskColorClass(score);
-
       html += `
-        <td class="${color}" onclick="selectRisk('${type}',${severity},${probability},this)">
+        <td class="${riskColorClass(score)}" onclick="selectRisk('${type}',${severity},${probability},this)">
           ${score}
         </td>
       `;
@@ -690,20 +749,19 @@ function buildMatrix(matrixId,type){
 function selectRisk(type,severity,probability,cell){
   const score = severity * probability;
   const level = riskLevel(score);
-
   const severityInfo = severityDefinitions[severity];
   const probabilityInfo = probabilityDefinitions[probability];
   const assessment = riskAssessmentText(level);
 
   const riskData = {
-    severity:severity,
+    severity,
     severityName:severityInfo.name,
     severityDefinition:severityInfo.definition,
-    probability:probability,
+    probability,
     probabilityName:probabilityInfo.name,
     probabilityDefinition:probabilityInfo.definition,
-    score:score,
-    level:level,
+    score,
+    level,
     riskAssessment:assessment
   };
 
@@ -727,50 +785,94 @@ function selectRisk(type,severity,probability,cell){
 
   if(type === "initial"){
     initialRisk = riskData;
-
     document.getElementById("initialRiskResult").innerHTML = html;
-
-    document.querySelectorAll("#initialMatrix td").forEach(td => {
-      td.classList.remove("selected-risk");
-    });
-
+    document.querySelectorAll("#initialMatrix td").forEach(td => td.classList.remove("selected-risk"));
     cell.classList.add("selected-risk");
   }
 
   if(type === "residual"){
     residualRisk = riskData;
-
     document.getElementById("residualRiskResult").innerHTML = html;
-
-    document.querySelectorAll("#residualMatrix td").forEach(td => {
-      td.classList.remove("selected-risk");
-    });
-
+    document.querySelectorAll("#residualMatrix td").forEach(td => td.classList.remove("selected-risk"));
     cell.classList.add("selected-risk");
   }
 }
 
+function addActionRow(){
+  actionCounter++;
+
+  const container = document.getElementById("actionsContainer");
+
+  const row = document.createElement("div");
+  row.className = "action-row";
+  row.setAttribute("data-action-id", actionCounter);
+
+  row.innerHTML = `
+    <div class="action-number">${actionCounter}</div>
+
+    <div class="field">
+      <label>Action / Control</label>
+      <textarea class="actionText"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Responsible Person</label>
+      <input class="actionResponsible">
+    </div>
+
+    <div class="field">
+      <label>Due Date</label>
+      <input type="date" class="actionDueDate">
+    </div>
+
+    <div class="field">
+      <label>Status</label>
+      <select class="actionStatus">
+        <option>Open</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+        <option>Verified</option>
+      </select>
+    </div>
+
+    <button type="button" class="remove-action-btn" onclick="removeActionRow(this)">🗑</button>
+  `;
+
+  container.appendChild(row);
+  renumberActions();
+}
+
+function removeActionRow(button){
+  const row = button.closest(".action-row");
+
+  if(document.querySelectorAll(".action-row").length <= 1){
+    alert("At least one CPA / Control is required.");
+    return;
+  }
+
+  row.remove();
+  renumberActions();
+}
+
+function renumberActions(){
+  document.querySelectorAll(".action-row").forEach((row,index)=>{
+    row.querySelector(".action-number").innerText = index + 1;
+  });
+}
+
 function collectActions(){
-  return [
-    {
-      action:document.getElementById("action1").value.trim(),
-      responsible:document.getElementById("responsible1").value.trim(),
-      dueDate:document.getElementById("dueDate1").value,
-      status:document.getElementById("actionStatus1").value
-    },
-    {
-      action:document.getElementById("action2").value.trim(),
-      responsible:document.getElementById("responsible2").value.trim(),
-      dueDate:document.getElementById("dueDate2").value,
-      status:document.getElementById("actionStatus2").value
-    },
-    {
-      action:document.getElementById("action3").value.trim(),
-      responsible:document.getElementById("responsible3").value.trim(),
-      dueDate:document.getElementById("dueDate3").value,
-      status:document.getElementById("actionStatus3").value
-    }
-  ];
+  const actions = [];
+
+  document.querySelectorAll(".action-row").forEach(row => {
+    actions.push({
+      action:row.querySelector(".actionText").value.trim(),
+      responsible:row.querySelector(".actionResponsible").value.trim(),
+      dueDate:row.querySelector(".actionDueDate").value,
+      status:row.querySelector(".actionStatus").value
+    });
+  });
+
+  return actions;
 }
 
 function saveMOC(){
@@ -815,7 +917,9 @@ function saveMOC(){
     finalDecision:document.getElementById("finalDecision").value,
     approvalComments:document.getElementById("approvalComments").value.trim(),
 
-    createdAt:new Date().toLocaleString()
+    company:"Air Accessories & Avionics",
+    createdAt:new Date().toISOString(),
+    updatedAt:new Date().toISOString()
   };
 
   const newRef = window.dbPush(window.dbRef(window.database,"mocReports"));
@@ -837,6 +941,13 @@ function resetForm(){
 
     initialRisk = null;
     residualRisk = null;
+    actionCounter = 0;
+
+    document.getElementById("actionsContainer").innerHTML = "";
+
+    addActionRow();
+    addActionRow();
+    addActionRow();
 
     document.getElementById("initialRiskResult").innerHTML =
       `<div class="risk-result-title">Initial Risk: Not selected</div>`;
@@ -854,6 +965,10 @@ function resetForm(){
 
 buildMatrix("initialMatrix","initial");
 buildMatrix("residualMatrix","residual");
+
+addActionRow();
+addActionRow();
+addActionRow();
 </script>
 
 </body>
