@@ -16,9 +16,9 @@ body{
   font-family:'Segoe UI', Arial, sans-serif;
   min-height:100vh;
   background:
-    radial-gradient(circle at top left, rgba(255,152,0,0.30), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(28,99,219,0.45), transparent 38%),
-    linear-gradient(rgba(5,20,55,0.86), rgba(5,20,55,0.94)),
+    radial-gradient(circle at top left, rgba(0,174,239,0.25), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,0.35), transparent 35%),
+    linear-gradient(rgba(2,23,48,0.88), rgba(2,23,48,0.94)),
     url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
   background-size:cover;
   background-position:center;
@@ -42,7 +42,7 @@ body{
   position:absolute;
   width:420px;
   height:420px;
-  background:radial-gradient(circle,rgba(20,80,184,0.16),transparent 70%);
+  background:radial-gradient(circle,rgba(0,174,239,0.16),transparent 70%);
   top:-170px;
   right:-120px;
 }
@@ -52,7 +52,7 @@ body{
   position:absolute;
   width:350px;
   height:350px;
-  background:radial-gradient(circle,rgba(255,152,0,0.18),transparent 70%);
+  background:radial-gradient(circle,rgba(0,59,102,0.14),transparent 70%);
   bottom:-150px;
   left:-120px;
 }
@@ -76,7 +76,7 @@ body{
   height:96px;
   margin:0 auto 20px;
   border-radius:28px;
-  background:linear-gradient(135deg,#071f47,#1450b8,#ff9800);
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
   display:flex;
   align-items:center;
@@ -86,7 +86,7 @@ body{
 }
 
 .company{
-  color:#1450b8;
+  color:#00aeef;
   font-size:16px;
   font-weight:900;
   letter-spacing:4px;
@@ -95,8 +95,8 @@ body{
 
 .header-badge{
   display:inline-block;
-  background:#eff6ff;
-  color:#071f47;
+  background:#ecfeff;
+  color:#003b66;
   padding:10px 24px;
   border-radius:999px;
   font-size:14px;
@@ -106,7 +106,7 @@ body{
 }
 
 h1{
-  color:#071f47;
+  color:#003b66;
   font-size:56px;
   margin:0;
   font-weight:900;
@@ -125,17 +125,17 @@ h1{
   height:6px;
   margin:25px auto 0;
   border-radius:999px;
-  background:linear-gradient(90deg,transparent,#ff9800,#1450b8,transparent);
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
 }
 
 .toolbar{
-  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
   padding:26px;
   border-radius:28px;
   box-shadow:0 14px 30px rgba(0,0,0,0.11);
   margin-bottom:28px;
   border:1px solid #e6eef5;
-  border-top:9px solid #1450b8;
+  border-top:9px solid #00aeef;
 }
 
 .toolbar-buttons{
@@ -167,29 +167,26 @@ h1{
   filter:brightness(1.08);
 }
 
-.filter-btn{
-  background:linear-gradient(135deg,#071f47,#1450b8);
+.filter-btn,
+.home-btn{
+  background:linear-gradient(135deg,#003b66,#005f99);
 }
 
 .excel-btn{
-  background:linear-gradient(135deg,#047857,#22b573);
+  background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
 .hazard-btn{
-  background:linear-gradient(135deg,#ff6b00,#ff9800);
-}
-
-.home-btn{
-  background:linear-gradient(135deg,#071f47,#0b2a66);
+  background:linear-gradient(135deg,#00aeef,#0284c7);
 }
 
 .filter-panel{
   display:none;
   margin-top:22px;
-  background:#f8fafc;
+  background:#f8fcff;
   padding:22px;
   border-radius:22px;
-  border:1px solid #dbe3ef;
+  border:1px solid #e6eef5;
 }
 
 .filter-grid{
@@ -203,26 +200,27 @@ h1{
   width:100%;
   padding:15px;
   border-radius:14px;
-  border:1px solid #cbd5e1;
+  border:1px solid #cfd8e3;
   font-size:14px;
   outline:none;
+  background:white;
 }
 
 .filter-panel input:focus,
 .filter-panel select:focus{
-  border-color:#1450b8;
-  box-shadow:0 0 0 4px rgba(20,80,184,0.15);
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,0.14);
 }
 
 .record{
-  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
   margin-bottom:26px;
   padding:28px;
   border-radius:28px;
   box-shadow:0 14px 30px rgba(0,0,0,0.11);
   transition:0.25s;
   border:1px solid #e6eef5;
-  border-top:9px solid #ff9800;
+  border-top:9px solid #00aeef;
   position:relative;
   overflow:hidden;
 }
@@ -237,7 +235,7 @@ h1{
   position:absolute;
   width:180px;
   height:180px;
-  background:radial-gradient(circle,rgba(20,80,184,0.10),transparent 70%);
+  background:radial-gradient(circle,rgba(0,174,239,0.10),transparent 70%);
   top:-90px;
   right:-70px;
 }
@@ -261,11 +259,11 @@ h1{
 .report-id{
   font-size:23px;
   font-weight:900;
-  color:#071f47;
+  color:#003b66;
 }
 
 .report-id a{
-  color:#1450b8;
+  color:#005f99;
   text-decoration:none;
 }
 
@@ -301,7 +299,7 @@ h1{
 }
 
 .close{
-  background:linear-gradient(135deg,#047857,#22b573);
+  background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
 .manual-status-btn,
@@ -318,7 +316,7 @@ h1{
 }
 
 .manual-open{
-  background:linear-gradient(135deg,#047857,#22b573);
+  background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
 .manual-closed{
@@ -326,11 +324,11 @@ h1{
 }
 
 .edit-btn{
-  background:linear-gradient(135deg,#071f47,#1450b8);
+  background:linear-gradient(135deg,#003b66,#005f99);
 }
 
 .save-btn{
-  background:linear-gradient(135deg,#047857,#22b573);
+  background:linear-gradient(135deg,#16a34a,#22c55e);
   margin-top:10px;
 }
 
@@ -348,12 +346,12 @@ h1{
 }
 
 .risk-green{
-  background:linear-gradient(135deg,#047857,#22b573);
+  background:linear-gradient(135deg,#16a34a,#22c55e);
   color:white;
 }
 
 .risk-yellow{
-  background:linear-gradient(135deg,#facc15,#ff9800);
+  background:linear-gradient(135deg,#facc15,#f59e0b);
   color:#111827;
 }
 
@@ -364,7 +362,7 @@ h1{
 
 .risk-empty{
   background:linear-gradient(135deg,#e5e7eb,#cbd5e1);
-  color:#071f47;
+  color:#003b66;
 }
 
 .risk-value{
@@ -381,12 +379,12 @@ h1{
 .info{
   margin-top:14px;
   line-height:1.8;
-  color:#222;
+  color:#071f47;
   font-size:15px;
-  background:#f8fafc;
+  background:#f8fcff;
   padding:20px;
   border-radius:20px;
-  border:1px solid #e5e7eb;
+  border:1px solid #e6eef5;
 }
 
 .info-grid{
@@ -401,20 +399,20 @@ h1{
 
 .label{
   font-weight:900;
-  color:#071f47;
+  color:#003b66;
 }
 
 .edit-area{
   margin-top:18px;
   display:none;
-  background:#f8fafc;
+  background:#f8fcff;
   padding:22px;
   border-radius:22px;
-  border:1px solid #dbe3ef;
+  border:1px solid #e6eef5;
 }
 
 .edit-area label{
-  color:#071f47;
+  color:#003b66;
   font-weight:900;
 }
 
@@ -425,10 +423,19 @@ h1{
   padding:14px;
   margin-top:8px;
   margin-bottom:14px;
-  border:1px solid #cbd5e1;
+  border:1px solid #cfd8e3;
   border-radius:14px;
   font-family:'Segoe UI', Arial, sans-serif;
   font-size:14px;
+  outline:none;
+  background:white;
+}
+
+.edit-area input:focus,
+.edit-area textarea:focus,
+.edit-area select:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,0.14);
 }
 
 .edit-area textarea{
@@ -438,8 +445,8 @@ h1{
 
 .nav-between,
 .bottom-home{
-  background:rgba(255,255,255,0.50);
-  border:1px solid rgba(255,255,255,0.65);
+  background:rgba(255,255,255,0.62);
+  border:1px solid rgba(230,238,245,0.95);
   padding:18px;
   border-radius:24px;
   margin:12px 0 28px 0;
@@ -456,18 +463,20 @@ h1{
 
 .empty{
   text-align:center;
-  background:white;
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
   padding:50px;
   border-radius:26px;
   box-shadow:0 22px 55px rgba(0,0,0,0.18);
   font-size:22px;
-  color:#555;
+  color:#536172;
+  font-weight:800;
+  border:1px solid #e6eef5;
 }
 
 .footer{
   text-align:center;
   margin-top:38px;
-  color:#071f47;
+  color:#003b66;
   font-size:15px;
   font-weight:900;
   letter-spacing:2px;
@@ -578,8 +587,7 @@ h1{
 </div>
 
 </div>
-
-<script type="module">
+  <script type="module">
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
