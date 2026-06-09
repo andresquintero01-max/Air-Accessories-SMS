@@ -2,57 +2,149 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>MOC Details</title>
+<title>Air Accessories MOC Details</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
-  color:#111;
-  padding:25px;
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  padding:40px;
+  background:
+    radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
+    linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.94)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
 }
 
 .container{
   max-width:1350px;
   margin:auto;
-  background:white;
-  border-radius:24px;
-  padding:30px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);
+  padding:45px;
+  border-radius:38px;
+  box-shadow:0 28px 70px rgba(0,0,0,.38);
+  position:relative;
+  overflow:hidden;
 }
+
+.container::before{
+  content:"";
+  position:absolute;
+  width:480px;
+  height:480px;
+  background:radial-gradient(circle,rgba(0,174,239,.16),transparent 70%);
+  top:-200px;
+  right:-160px;
+}
+
+.container::after{
+  content:"";
+  position:absolute;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,rgba(0,59,102,.14),transparent 70%);
+  bottom:-150px;
+  left:-120px;
+}
+
+.content{position:relative;z-index:2;}
 
 .header{
-  background:linear-gradient(135deg,#071f47,#1450b8);
-  color:white;
-  padding:35px;
-  border-radius:22px;
   text-align:center;
-  margin-bottom:25px;
+  margin-bottom:30px;
 }
 
-.header h1{font-size:42px;margin-bottom:8px;}
-.header p{font-size:17px;color:#dbeafe;}
+.logo{
+  width:100px;
+  height:100px;
+  margin:0 auto 18px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:46px;
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
+}
+
+.company-label{
+  color:#00aeef;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:10px;
+}
+
+.badge{
+  display:inline-block;
+  background:#ecfeff;
+  color:#003b66;
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+  margin-bottom:16px;
+}
+
+.header h1{
+  font-size:44px;
+  color:#003b66;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.header p{
+  color:#536172;
+  font-size:18px;
+  font-weight:600;
+}
+
+.title-line{
+  width:260px;
+  height:6px;
+  margin:25px auto 0;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
+}
+
+.loading{
+  text-align:center;
+  padding:35px;
+  font-size:20px;
+  font-weight:900;
+  color:#003b66;
+}
 
 .section{
   margin-top:25px;
-  border:1px solid #d8e1ef;
-  border-radius:18px;
+  border:1px solid #e6eef5;
+  border-radius:24px;
   overflow:hidden;
   background:white;
+  box-shadow:0 14px 30px rgba(0,0,0,.09);
 }
 
 .section-title{
-  background:#004080;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
-  padding:14px 18px;
+  padding:17px 22px;
   font-size:21px;
-  font-weight:bold;
+  font-weight:900;
 }
 
-.section-body{padding:22px;}
+.section-body{
+  padding:25px;
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+}
 
 .grid{
   display:grid;
@@ -62,28 +154,42 @@ body{
 
 .field label{
   display:block;
-  color:#004080;
-  font-weight:bold;
-  margin-bottom:6px;
+  color:#003b66;
+  font-weight:900;
+  margin-bottom:7px;
+  font-size:14px;
 }
 
 input,select,textarea{
   width:100%;
-  padding:11px;
-  border:1px solid #b8c7da;
-  border-radius:10px;
+  padding:13px;
+  border:1px solid #cfd8e3;
+  border-radius:15px;
   font-size:15px;
-  background:white;
+  background:#f9fbfd;
+  outline:none;
+  transition:.25s;
 }
 
-textarea{min-height:95px;resize:vertical;}
+textarea{
+  min-height:95px;
+  resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+  background:white;
+}
 
 input:disabled,
 select:disabled,
 textarea:disabled{
-  background:#f8fbff;
-  color:#111;
-  font-weight:600;
+  background:#f8fcff;
+  color:#071f47;
+  font-weight:700;
 }
 
 .risk-area{
@@ -93,66 +199,69 @@ textarea:disabled{
 }
 
 .matrix-box{
-  background:#f8fbff;
-  border:1px solid #d8e1ef;
-  border-radius:18px;
-  padding:18px;
+  background:#f8fcff;
+  border:1px solid #e6eef5;
+  border-radius:22px;
+  padding:20px;
 }
 
 .matrix-box h3{
-  color:#071f47;
+  color:#003b66;
   margin-bottom:12px;
   font-size:22px;
+  font-weight:900;
 }
 
 .matrix{
   width:100%;
   border-collapse:collapse;
   text-align:center;
+  overflow:hidden;
+  border-radius:14px;
 }
 
 .matrix th,
 .matrix td{
-  border:1px solid #d8e1ef;
+  border:1px solid #dbe5ef;
   padding:12px;
-  font-weight:bold;
+  font-weight:900;
 }
 
 .matrix th{
-  background:#071f47;
+  background:linear-gradient(135deg,#003b66,#005f99);
   color:white;
 }
 
 .matrix td{
   cursor:pointer;
-  transition:0.2s;
+  transition:.2s;
 }
 
 .matrix td:hover{
   transform:scale(1.05);
-  outline:3px solid #071f47;
+  outline:3px solid #003b66;
 }
 
-.low{background:#2f9144;color:white;}
-.medium{background:#ffd966;color:#111;}
-.high{background:#ff9800;color:#111;}
-.extreme{background:#ff1a0a;color:white;}
+.low{background:#22c55e;color:white;}
+.medium{background:#facc15;color:#111;}
+.high{background:#f97316;color:white;}
+.extreme{background:#ef4444;color:white;}
 
 .selected-risk{
-  outline:4px solid #071f47 !important;
+  outline:4px solid #003b66 !important;
   transform:scale(1.06);
 }
 
 .risk-result{
   margin-top:15px;
   padding:18px;
-  border-radius:14px;
+  border-radius:16px;
   text-align:left;
   font-size:15px;
-  font-weight:bold;
-  background:#eef4ff;
-  color:#071f47;
-  border:1px solid #c8d8f0;
+  font-weight:800;
+  background:#ecfeff;
+  color:#003b66;
+  border:1px solid #bae6fd;
   line-height:1.6;
 }
 
@@ -160,7 +269,8 @@ textarea:disabled{
   text-align:center;
   font-size:19px;
   margin-bottom:10px;
-  color:#071f47;
+  color:#003b66;
+  font-weight:900;
 }
 
 .action-row{
@@ -168,20 +278,21 @@ textarea:disabled{
   grid-template-columns:70px 2fr 1fr 1fr 1fr;
   gap:14px;
   align-items:start;
-  background:#f8fbff;
-  border:1px solid #d8e1ef;
-  border-radius:16px;
+  background:#f8fcff;
+  border:1px solid #e6eef5;
+  border-radius:18px;
   padding:16px;
   margin-bottom:16px;
 }
 
 .action-number{
-  background:#004080;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
   color:white;
-  font-weight:bold;
-  border-radius:12px;
+  font-weight:900;
+  border-radius:14px;
   padding:14px;
   text-align:center;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
 }
 
 .status-box{
@@ -190,72 +301,76 @@ textarea:disabled{
   border-radius:18px;
   text-align:center;
   font-size:20px;
-  font-weight:bold;
-  border:2px solid #d8e1ef;
+  font-weight:900;
+  border:2px solid #e6eef5;
 }
 
 .status-open{
-  background:#fff7ed;
-  color:#c2410c;
-  border-color:#fb923c;
+  background:#fee2e2;
+  color:#991b1b;
+  border-color:#ef4444;
 }
 
 .status-closed{
-  background:#e8f5e9;
+  background:#dcfce7;
   color:#14532d;
-  border-color:#2f9144;
+  border-color:#22c55e;
 }
 
 .btn-area{
   text-align:center;
   margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
 }
 
 .btn{
   border:none;
   padding:15px 28px;
-  border-radius:12px;
+  border-radius:16px;
   color:white;
   font-size:16px;
-  font-weight:bold;
+  font-weight:900;
   cursor:pointer;
-  margin:6px;
+  transition:.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,.20);
 }
 
-.edit-btn{background:#9333ea;}
-.save-btn{background:#2f9144;display:none;}
-.print-btn{background:#004aad;}
-.back-btn{background:#c40000;}
-.moc-btn{background:#004080;}
-.home-btn{background:#0b2a66;}
+.btn:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
+
+.edit-btn{background:linear-gradient(135deg,#f59e0b,#f97316);}
+.save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);display:none;}
+.add-btn{background:linear-gradient(135deg,#00aeef,#0284c7);display:none;}
+.print-btn{background:linear-gradient(135deg,#047857,#22c55e);}
+.back-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.moc-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.remove-btn{background:linear-gradient(135deg,#dc2626,#ef4444);}
 
 .saved-box{
   margin-top:25px;
-  background:#e8f5e9;
+  background:#dcfce7;
   color:#14532d;
-  border:1px solid #2f9144;
+  border:1px solid #22c55e;
   padding:16px;
   border-radius:14px;
   display:none;
-  font-weight:bold;
+  font-weight:900;
   text-align:center;
 }
 
-.loading{
+.footer{
   text-align:center;
-  padding:30px;
-  color:#666;
-  font-size:18px;
-  font-weight:bold;
-}
-
-@media(max-width:1000px){
-  .risk-area,
-  .action-row{
-    grid-template-columns:1fr;
-  }
-
-  .header h1{font-size:32px;}
+  margin-top:32px;
+  color:#003b66;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:2px;
 }
 
 @media print{
@@ -263,16 +378,30 @@ textarea:disabled{
   .container{box-shadow:none;border-radius:0;}
   .btn-area,.saved-box{display:none!important;}
 }
+
+@media(max-width:1000px){
+  body{padding:25px;}
+  .container{padding:30px 22px;border-radius:28px;}
+  .risk-area,
+  .action-row{grid-template-columns:1fr;}
+  .header h1{font-size:34px;}
+  .btn{width:100%;}
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+<div class="content">
 
 <div class="header">
-  <h1>Safety Assurance - Management of Change</h1>
-  <p>Full Management of Change report details with ICAO severity and probability definitions.</p>
+  <div class="logo">📋</div>
+  <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
+  <div class="badge">MANAGEMENT OF CHANGE</div>
+  <h1>Management of Change Details</h1>
+  <p>Full MOC report details with risk assessment, controls, action plan and approval tracking.</p>
+  <div class="title-line"></div>
 </div>
 
 <div id="loadingBox" class="loading">Loading MOC Report...</div>
@@ -419,82 +548,7 @@ textarea:disabled{
 <div class="section">
   <div class="section-title">4. Action Plan / Required Controls</div>
   <div class="section-body">
-
-    <div class="action-row">
-      <div class="action-number">1</div>
-      <div class="field">
-        <label>Action / Control</label>
-        <textarea id="action1"></textarea>
-      </div>
-      <div class="field">
-        <label>Responsible Person</label>
-        <input id="responsible1">
-      </div>
-      <div class="field">
-        <label>Due Date</label>
-        <input type="date" id="dueDate1">
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <select id="actionStatus1">
-          <option>Open</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-          <option>Verified</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="action-row">
-      <div class="action-number">2</div>
-      <div class="field">
-        <label>Action / Control</label>
-        <textarea id="action2"></textarea>
-      </div>
-      <div class="field">
-        <label>Responsible Person</label>
-        <input id="responsible2">
-      </div>
-      <div class="field">
-        <label>Due Date</label>
-        <input type="date" id="dueDate2">
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <select id="actionStatus2">
-          <option>Open</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-          <option>Verified</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="action-row">
-      <div class="action-number">3</div>
-      <div class="field">
-        <label>Action / Control</label>
-        <textarea id="action3"></textarea>
-      </div>
-      <div class="field">
-        <label>Responsible Person</label>
-        <input id="responsible3">
-      </div>
-      <div class="field">
-        <label>Due Date</label>
-        <input type="date" id="dueDate3">
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <select id="actionStatus3">
-          <option>Open</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-          <option>Verified</option>
-        </select>
-      </div>
-    </div>
-
+    <div id="actionsContainer"></div>
   </div>
 </div>
 
@@ -576,20 +630,26 @@ textarea:disabled{
 </div>
 
 <div class="btn-area">
-  <button id="editBtn" class="btn edit-btn" onclick="enableEdit()">Edit Report</button>
-  <button id="saveBtn" class="btn save-btn" onclick="saveChanges()">Save Changes</button>
-  <button class="btn print-btn" onclick="window.print()">Print</button>
-  <button class="btn back-btn" onclick="window.location.href='Safety-Assurance-Management-of-Change-Database.html'">Back to MOC Database</button>
-  <button class="btn moc-btn" onclick="window.location.href='Safety-Assurance-Management-of-Change.html'">Back to MOC</button>
-  <button class="btn home-btn" onclick="window.location.href='index.html'">Home</button>
+  <button id="editBtn" class="btn edit-btn" onclick="enableEdit()">✏️ Edit Report</button>
+  <button id="addCpaBtn" class="btn add-btn" onclick="addCPA()">➕ Add CPA</button>
+  <button id="saveBtn" class="btn save-btn" onclick="saveChanges()">💾 Save Changes</button>
+  <button class="btn print-btn" onclick="window.print()">🖨️ Print</button>
+  <button class="btn back-btn" onclick="window.location.href='Safety-Assurance-Management-of-Change-Database.html'">📊 MOC Database</button>
+  <button class="btn moc-btn" onclick="window.location.href='Safety-Assurance-Management-of-Change.html'">📋 Back to MOC</button>
+  <button class="btn home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
 </div>
 
 <div id="savedBox" class="saved-box">
   MOC Report updated successfully.
 </div>
 
+<div class="footer">
+  371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
 </div>
 
+</div>
+
+</div>
 </div>
 
 <script type="module">
@@ -604,13 +664,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB2syFrb8S3cxt1Sor1wXrgJcdSZAg1Pq4",
-  authDomain: "aviation-sms.firebaseapp.com",
-  databaseURL: "https://aviation-sms-default-rtdb.firebaseio.com",
-  projectId: "aviation-sms",
-  storageBucket: "aviation-sms.firebasestorage.app",
-  messagingSenderId: "147000937860",
-  appId: "1:147000937860:web:90049a1f5269ef107ca1d1"
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -622,51 +682,23 @@ const reportId = params.get("id");
 let currentData = {};
 let initialRisk = null;
 let residualRisk = null;
+let actionPlan = [];
+let editMode = false;
 
 const severityDefinitions = {
-  5:{
-    name:"Catastrophic",
-    definition:"According to ICAO SMS guidance, this may involve equipment destroyed and/or multiple fatalities."
-  },
-  4:{
-    name:"Hazardous",
-    definition:"According to ICAO SMS guidance, this may involve a large reduction in safety margins, serious injury, major equipment damage, or major operational disruption."
-  },
-  3:{
-    name:"Major",
-    definition:"According to ICAO SMS guidance, this may involve a significant reduction in safety margins, injury, increased workload, or serious incident potential."
-  },
-  2:{
-    name:"Minor",
-    definition:"According to ICAO SMS guidance, this may involve nuisance, operating limitations, minor incident, or use of emergency procedures."
-  },
-  1:{
-    name:"Negligible",
-    definition:"According to ICAO SMS guidance, this means consequences are less than minor, with little or no safety impact."
-  }
+  5:{name:"Catastrophic",definition:"According to ICAO SMS guidance, this may involve equipment destroyed and/or multiple fatalities."},
+  4:{name:"Hazardous",definition:"According to ICAO SMS guidance, this may involve a large reduction in safety margins, serious injury, major equipment damage, or major operational disruption."},
+  3:{name:"Major",definition:"According to ICAO SMS guidance, this may involve a significant reduction in safety margins, injury, increased workload, or serious incident potential."},
+  2:{name:"Minor",definition:"According to ICAO SMS guidance, this may involve nuisance, operating limitations, minor incident, or use of emergency procedures."},
+  1:{name:"Negligible",definition:"According to ICAO SMS guidance, this means consequences are less than minor, with little or no safety impact."}
 };
 
 const probabilityDefinitions = {
-  5:{
-    name:"Frequent",
-    definition:"According to ICAO SMS guidance, this is likely to occur many times or has occurred frequently."
-  },
-  4:{
-    name:"Likely",
-    definition:"According to ICAO SMS guidance, this is likely to occur sometimes or has occurred several times."
-  },
-  3:{
-    name:"Occasional",
-    definition:"According to ICAO SMS guidance, this is likely to occur at some time or has occurred infrequently."
-  },
-  2:{
-    name:"Remote",
-    definition:"According to ICAO SMS guidance, this is unlikely to occur, but possible."
-  },
-  1:{
-    name:"Extremely Remote",
-    definition:"According to ICAO SMS guidance, this is very unlikely to occur."
-  }
+  5:{name:"Frequent",definition:"According to ICAO SMS guidance, this is likely to occur many times or has occurred frequently."},
+  4:{name:"Likely",definition:"According to ICAO SMS guidance, this is likely to occur sometimes or has occurred several times."},
+  3:{name:"Occasional",definition:"According to ICAO SMS guidance, this is likely to occur at some time or has occurred infrequently."},
+  2:{name:"Remote",definition:"According to ICAO SMS guidance, this is unlikely to occur, but possible."},
+  1:{name:"Extremely Remote",definition:"According to ICAO SMS guidance, this is very unlikely to occur."}
 };
 
 function riskLevel(score){
@@ -677,24 +709,14 @@ function riskLevel(score){
 }
 
 function riskAssessmentText(level){
-  if(level === "Low"){
-    return "Acceptable risk level. Risk may be managed through normal operational controls.";
-  }
-
-  if(level === "Medium"){
-    return "Tolerable risk level with controls. Additional mitigation or monitoring should be applied before implementation.";
-  }
-
-  if(level === "High"){
-    return "Significant risk level. Management review and mitigation actions are required before implementation.";
-  }
-
+  if(level === "Low") return "Acceptable risk level. Risk may be managed through normal operational controls.";
+  if(level === "Medium") return "Tolerable risk level with controls. Additional mitigation or monitoring should be applied before implementation.";
+  if(level === "High") return "Significant risk level. Management review and mitigation actions are required before implementation.";
   return "Unacceptable risk level. Immediate mitigation actions are required before implementation.";
 }
 
 function riskColorClass(score){
   const level = riskLevel(score);
-
   if(level === "Low") return "low";
   if(level === "Medium") return "medium";
   if(level === "High") return "high";
@@ -716,7 +738,6 @@ function buildMatrix(matrixId,type){
   `;
 
   for(let severity = 5; severity >= 1; severity--){
-
     html += `<tr><th>${severity}</th>`;
 
     for(let probability = 1; probability <= 5; probability++){
@@ -729,8 +750,7 @@ function buildMatrix(matrixId,type){
           data-type="${type}" 
           data-severity="${severity}" 
           data-probability="${probability}" 
-          onclick="selectRisk('${type}',${severity},${probability},this)"
-        >
+          onclick="selectRisk('${type}',${severity},${probability},this)">
           ${score}
         </td>
       `;
@@ -756,9 +776,7 @@ function renderRiskResult(type,risk){
     : "RESIDUAL RISK";
 
   resultBox.innerHTML = `
-    <div class="risk-result-title">
-      ${label}: ${risk.level.toUpperCase()}
-    </div>
+    <div class="risk-result-title">${label}: ${risk.level.toUpperCase()}</div>
 
     <strong>Severity:</strong> ${risk.severity} - ${risk.severityName}<br>
     ${risk.severityDefinition}<br><br>
@@ -775,9 +793,10 @@ function renderRiskResult(type,risk){
 }
 
 window.selectRisk = function(type,severity,probability,cell){
+  if(!editMode) return;
+
   const score = severity * probability;
   const level = riskLevel(score);
-
   const severityInfo = severityDefinitions[severity];
   const probabilityInfo = probabilityDefinitions[probability];
   const assessment = riskAssessmentText(level);
@@ -798,10 +817,7 @@ window.selectRisk = function(type,severity,probability,cell){
     initialRisk = riskData;
     renderRiskResult("initial", riskData);
 
-    document.querySelectorAll("#initialMatrix td").forEach(td => {
-      td.classList.remove("selected-risk");
-    });
-
+    document.querySelectorAll("#initialMatrix td").forEach(td => td.classList.remove("selected-risk"));
     cell.classList.add("selected-risk");
   }
 
@@ -809,10 +825,7 @@ window.selectRisk = function(type,severity,probability,cell){
     residualRisk = riskData;
     renderRiskResult("residual", riskData);
 
-    document.querySelectorAll("#residualMatrix td").forEach(td => {
-      td.classList.remove("selected-risk");
-    });
-
+    document.querySelectorAll("#residualMatrix td").forEach(td => td.classList.remove("selected-risk"));
     cell.classList.add("selected-risk");
   }
 };
@@ -838,6 +851,11 @@ function selectSavedRisk(type,risk){
     };
   }
 
+  if(type === "initial") initialRisk = risk;
+  if(type === "residual") residualRisk = risk;
+
+  renderRiskResult(type,risk);
+
   const selector =
     type === "initial"
     ? "#initialMatrix td"
@@ -848,40 +866,117 @@ function selectSavedRisk(type,risk){
       Number(td.dataset.severity) === Number(risk.severity) &&
       Number(td.dataset.probability) === Number(risk.probability)
     ){
-      window.selectRisk(type, risk.severity, risk.probability, td);
+      td.classList.add("selected-risk");
     }
   });
 }
 
 function setValue(id,value){
   const el = document.getElementById(id);
-  if(el){
-    el.value = value || "";
-  }
+  if(el) el.value = value || "";
 }
 
-function collectActions(){
-  return [
-    {
-      action:document.getElementById("action1").value.trim(),
-      responsible:document.getElementById("responsible1").value.trim(),
-      dueDate:document.getElementById("dueDate1").value,
-      status:document.getElementById("actionStatus1").value
-    },
-    {
-      action:document.getElementById("action2").value.trim(),
-      responsible:document.getElementById("responsible2").value.trim(),
-      dueDate:document.getElementById("dueDate2").value,
-      status:document.getElementById("actionStatus2").value
-    },
-    {
-      action:document.getElementById("action3").value.trim(),
-      responsible:document.getElementById("responsible3").value.trim(),
-      dueDate:document.getElementById("dueDate3").value,
-      status:document.getElementById("actionStatus3").value
-    }
-  ];
+function updateActionPlanFromInputs(){
+  actionPlan = actionPlan.map((item,index) => {
+    const number = index + 1;
+
+    return {
+      action:document.getElementById("action" + number)?.value.trim() || "",
+      responsible:document.getElementById("responsible" + number)?.value.trim() || "",
+      dueDate:document.getElementById("dueDate" + number)?.value || "",
+      status:document.getElementById("actionStatus" + number)?.value || "Open"
+    };
+  });
 }
+
+function renderActions(){
+  const container = document.getElementById("actionsContainer");
+  container.innerHTML = "";
+
+  if(!Array.isArray(actionPlan) || actionPlan.length === 0){
+    actionPlan = [
+      {action:"",responsible:"",dueDate:"",status:"Open"},
+      {action:"",responsible:"",dueDate:"",status:"Open"},
+      {action:"",responsible:"",dueDate:"",status:"Open"}
+    ];
+  }
+
+  actionPlan.forEach((item,index) => {
+    const number = index + 1;
+
+    const row = document.createElement("div");
+    row.className = "action-row";
+
+    row.innerHTML = `
+      <div class="action-number">${number}</div>
+
+      <div class="field">
+        <label>Action / Control</label>
+        <textarea id="action${number}">${item.action || ""}</textarea>
+      </div>
+
+      <div class="field">
+        <label>Responsible Person</label>
+        <input id="responsible${number}" value="${item.responsible || ""}">
+      </div>
+
+      <div class="field">
+        <label>Due Date</label>
+        <input type="date" id="dueDate${number}" value="${item.dueDate || ""}">
+      </div>
+
+      <div class="field">
+        <label>Status</label>
+        <select id="actionStatus${number}">
+          <option ${item.status === "Open" ? "selected" : ""}>Open</option>
+          <option ${item.status === "In Progress" ? "selected" : ""}>In Progress</option>
+          <option ${item.status === "Completed" ? "selected" : ""}>Completed</option>
+          <option ${item.status === "Verified" ? "selected" : ""}>Verified</option>
+        </select>
+
+        ${
+          editMode && actionPlan.length > 1
+          ? `<button class="btn remove-btn" style="margin-top:10px;width:100%;" onclick="removeCPA(${index})">Remove</button>`
+          : ``
+        }
+      </div>
+    `;
+
+    container.appendChild(row);
+  });
+
+  if(!editMode) lockActionInputs();
+}
+
+function lockActionInputs(){
+  document.querySelectorAll("#actionsContainer input, #actionsContainer select, #actionsContainer textarea").forEach(el => {
+    el.disabled = true;
+  });
+}
+
+window.addCPA = function(){
+  updateActionPlanFromInputs();
+
+  actionPlan.push({
+    action:"",
+    responsible:"",
+    dueDate:"",
+    status:"Open"
+  });
+
+  renderActions();
+  enableInputsOnly();
+};
+
+window.removeCPA = function(index){
+  if(!confirm("Are you sure you want to remove this CPA?")) return;
+
+  updateActionPlanFromInputs();
+  actionPlan.splice(index,1);
+
+  renderActions();
+  enableInputsOnly();
+};
 
 function updateStatusBox(){
   const box = document.getElementById("reportStatusBox");
@@ -921,15 +1016,11 @@ function populateForm(){
   setValue("initialRiskDescription", currentData.initialRiskDescription);
   setValue("existingControls", currentData.existingControls);
 
-  const actions = currentData.actionPlan || [];
+  actionPlan = Array.isArray(currentData.actionPlan)
+    ? currentData.actionPlan
+    : [];
 
-  for(let i = 1; i <= 3; i++){
-    const action = actions[i - 1] || {};
-    setValue("action" + i, action.action);
-    setValue("responsible" + i, action.responsible);
-    setValue("dueDate" + i, action.dueDate);
-    setValue("actionStatus" + i, action.status);
-  }
+  renderActions();
 
   setValue("residualRiskJustification", currentData.residualRiskJustification);
   setValue("verificationMethod", currentData.verificationMethod);
@@ -947,6 +1038,8 @@ function populateForm(){
 }
 
 function lockForm(){
+  editMode = false;
+
   document.querySelectorAll("input, select, textarea").forEach(el => {
     el.disabled = true;
   });
@@ -958,9 +1051,12 @@ function lockForm(){
   document.getElementById("firebaseId").disabled = true;
   document.getElementById("editBtn").style.display = "inline-block";
   document.getElementById("saveBtn").style.display = "none";
+  document.getElementById("addCpaBtn").style.display = "none";
+
+  renderActions();
 }
 
-window.enableEdit = function(){
+function enableInputsOnly(){
   document.querySelectorAll("input, select, textarea").forEach(el => {
     el.disabled = false;
   });
@@ -970,8 +1066,18 @@ window.enableEdit = function(){
   });
 
   document.getElementById("firebaseId").disabled = true;
+}
+
+window.enableEdit = function(){
+  editMode = true;
+
+  enableInputsOnly();
+
   document.getElementById("editBtn").style.display = "none";
   document.getElementById("saveBtn").style.display = "inline-block";
+  document.getElementById("addCpaBtn").style.display = "inline-block";
+
+  renderActions();
 };
 
 window.saveChanges = function(){
@@ -981,6 +1087,8 @@ window.saveChanges = function(){
     alert("Change Title is required.");
     return;
   }
+
+  updateActionPlanFromInputs();
 
   const updatedData = {
     mocId:document.getElementById("mocId").value.trim(),
@@ -1005,7 +1113,7 @@ window.saveChanges = function(){
     initialRiskDescription:document.getElementById("initialRiskDescription").value.trim(),
     existingControls:document.getElementById("existingControls").value.trim(),
 
-    actionPlan:collectActions(),
+    actionPlan:actionPlan,
 
     residualRisk:residualRisk,
     residualRiskJustification:document.getElementById("residualRiskJustification").value.trim(),
@@ -1017,9 +1125,9 @@ window.saveChanges = function(){
     finalDecision:document.getElementById("finalDecision").value,
     approvalComments:document.getElementById("approvalComments").value.trim(),
 
-    status: currentData.status || "Open",
-    createdAt: currentData.createdAt || "",
-    updatedAt:new Date().toLocaleString()
+    status:currentData.status || "Open",
+    createdAt:currentData.createdAt || "",
+    updatedAt:new Date().toISOString()
   };
 
   update(ref(database,"mocReports/" + reportId), updatedData)
@@ -1067,5 +1175,6 @@ loadReport();
 
 </script>
 
+</div>
 </body>
 </html>
