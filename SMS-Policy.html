@@ -60,6 +60,7 @@ body{
 
 .header,
 .documents,
+.policy-tools,
 .bottom-buttons,
 .footer{
   position:relative;
@@ -115,10 +116,15 @@ body{
   background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
 }
 
+.policy-tools,
 .documents{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:30px;
+}
+
+.policy-tools{
+  margin-bottom:35px;
 }
 
 .card{
@@ -262,6 +268,16 @@ body{
   border-left:5px solid #005f99;
 }
 
+.section-title{
+  position:relative;
+  z-index:2;
+  color:#003b66;
+  font-size:28px;
+  font-weight:900;
+  margin:10px 0 24px;
+  text-align:center;
+}
+
 .bottom-buttons{
   display:flex;
   justify-content:center;
@@ -321,7 +337,8 @@ body{
     font-size:16px;
   }
 
-  .documents{
+  .documents,
+  .policy-tools{
     grid-template-columns:1fr;
   }
 
@@ -343,6 +360,39 @@ body{
     <p>Safety Management System Documentation Portal</p>
     <div class="title-line"></div>
   </div>
+
+  <div class="policy-tools">
+
+    <div class="card">
+      <div class="icon">📊</div>
+      <h2>SMS Policy Gap Analysis</h2>
+      <p>Open the SMS policy gap analysis module.</p>
+      <button class="open-btn" onclick="window.location.href='SMS-Policy-GapAnalysis.html'">
+        Open Module
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🗂️</div>
+      <h2>SMS Policy Documentation</h2>
+      <p>Open the SMS policy documentation module.</p>
+      <button class="open-btn" onclick="window.location.href='SMS-Policy-Documentation.html'">
+        Open Module
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🏢</div>
+      <h2>Organizational Chart</h2>
+      <p>Open the SMS organizational chart module.</p>
+      <button class="open-btn" onclick="window.location.href='SMS-Policy-Organizational chart.html'">
+        Open Module
+      </button>
+    </div>
+
+  </div>
+
+  <div class="section-title">SMS Documents</div>
 
   <div class="documents" id="documentsContainer"></div>
 
