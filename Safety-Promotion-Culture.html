@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Safety Promotion Culture</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Segoe UI', Arial, sans-serif;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(0,174,239,0.30), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,59,102,0.45), transparent 38%),
+    linear-gradient(rgba(0,35,70,0.86), rgba(0,35,70,0.94)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1400&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  padding:35px;
+}
+
+.container{
+  max-width:1250px;
+  margin:auto;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+  border-radius:40px;
+  padding:55px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.45);
+  position:relative;
+  overflow:hidden;
+  animation:fadeIn 0.8s ease;
+}
+
+.container::before{
+  content:"";
+  position:absolute;
+  width:470px;
+  height:470px;
+  background:radial-gradient(circle,rgba(0,174,239,0.20),transparent 70%);
+  top:-190px;
+  right:-150px;
+}
+
+.container::after{
+  content:"";
+  position:absolute;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,rgba(0,59,102,0.18),transparent 70%);
+  bottom:-150px;
+  left:-120px;
+}
+
+.content{
+  position:relative;
+  z-index:2;
+}
+
+.logo{
+  width:112px;
+  height:112px;
+  margin:auto;
+  border-radius:32px;
+  background:linear-gradient(135deg,#003B66,#00AEF0);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:50px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.30);
+  margin-bottom:22px;
+}
+
+.badge{
+  display:block;
+  width:max-content;
+  margin:0 auto 16px auto;
+  background:#e8f8ff;
+  color:#003B66;
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+
+h1{
+  text-align:center;
+  color:#003B66;
+  font-size:64px;
+  margin-bottom:12px;
+  font-weight:900;
+}
+
+.subtitle{
+  text-align:center;
+  color:#56657d;
+  font-size:21px;
+  margin-bottom:22px;
+  font-weight:500;
+}
+
+.title-line{
+  width:230px;
+  height:6px;
+  margin:0 auto 45px;
+  border-radius:10px;
+  background:linear-gradient(90deg,transparent,#003B66,#00AEF0,transparent);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:28px;
+}
+
+.card{
+  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  border-radius:32px;
+  padding:32px;
+  box-shadow:0 16px 35px rgba(0,0,0,0.12);
+  position:relative;
+  overflow:hidden;
+  transition:0.35s;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:335px;
+  border:1px solid #eef2f7;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  box-shadow:0 24px 48px rgba(0,0,0,0.18);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:10px;
+  height:100%;
+  background:linear-gradient(180deg,#003B66,#00AEF0);
+}
+
+.icon{
+  width:88px;
+  height:88px;
+  border-radius:28px;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+  box-shadow:0 14px 28px rgba(0,0,0,0.24);
+  margin-bottom:22px;
+  background:linear-gradient(135deg,#003B66,#00AEF0);
+}
+
+.card h2{
+  color:#003B66;
+  font-size:29px;
+  margin-bottom:14px;
+  font-weight:900;
+}
+
+.card p{
+  color:#56657d;
+  font-size:17px;
+  line-height:1.55;
+  margin-bottom:25px;
+}
+
+.card button{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,#003B66,#00AEF0);
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,0.22);
+}
+
+.card button:hover{
+  transform:translateY(-4px);
+  background:linear-gradient(135deg,#002b4d,#00AEF0);
+}
+
+.bottom-buttons{
+  margin-top:45px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.home-btn,
+.promotion-btn{
+  min-height:64px;
+  border:none;
+  border-radius:18px;
+  color:white;
+  text-decoration:none;
+  font-size:21px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,0.26);
+  background:linear-gradient(135deg,#003B66,#00AEF0);
+}
+
+.home-btn:hover,
+.promotion-btn:hover{
+  transform:translateY(-4px);
+  background:linear-gradient(135deg,#002b4d,#00AEF0);
+}
+
+.footer{
+  margin-top:35px;
+  text-align:center;
+  color:#51617b;
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@media(max-width:800px){
+  body{
+    padding:20px;
+  }
+
+  .container{
+    padding:35px 22px;
+  }
+
+  h1{
+    font-size:42px;
+  }
+
+  .subtitle{
+    font-size:18px;
+  }
+
+  .grid,
+  .bottom-buttons{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="content">
+
+  <div class="logo">👥</div>
+
+  <div class="badge">SAFETY PROMOTION</div>
+
+  <h1>Safety Promotion Culture</h1>
+
+  <p class="subtitle">
+    Safety communication, awareness, learning, and operational culture modules
+  </p>
+
+  <div class="title-line"></div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div>
+        <div class="icon">📢</div>
+        <h2>Safety Bulletins and Alerts</h2>
+        <p>
+          Publish operational safety alerts, immediate warnings, recent events,
+          aircraft damage notifications, FOD alerts, LOTO alerts, and important SMS communications.
+        </p>
+      </div>
+      <button onclick="location.href='Safety-Promotion-Culture-Safety-Bulletins-Alerts.html'">
+        Open Module ›
+      </button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">💡</div>
+        <h2>Lessons Learned</h2>
+        <p>
+          Document lessons learned from SMS reports, investigations,
+          root cause analysis, corrective actions, and operational events to prevent recurrence.
+        </p>
+      </div>
+      <button onclick="location.href='Lessons-Learned.html'">
+        Open Module ›
+      </button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">🎯</div>
+        <h2>Safety Campaigns</h2>
+        <p>
+          Create and manage safety campaigns such as FOD prevention,
+          ramp safety, LOTO awareness, tool control, towing safety, and PPE compliance.
+        </p>
+      </div>
+      <button onclick="location.href='Safety-Campaigns.html'">
+        Open Module ›
+      </button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">🗓️</div>
+        <h2>Safety Meetings</h2>
+        <p>
+          Register toolbox talks, safety meetings, attendance records,
+          discussed topics, follow-up actions, and meeting minutes.
+        </p>
+      </div>
+      <button onclick="location.href='Safety-Meetings.html'">
+        Open Module ›
+      </button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">📰</div>
+        <h2>Safety Newsletter</h2>
+        <p>
+          Create monthly safety newsletters with KPIs, SPIs, FRAT trends,
+          risk distribution, aircraft damages, recurrent events, and safety highlights.
+        </p>
+      </div>
+      <button onclick="location.href='Safety-Newsletter.html'">
+        Open Module ›
+      </button>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">🏆</div>
+        <h2>Employee Recognition</h2>
+        <p>
+          Recognize employees for proactive safety reporting,
+          hazard identification, prevention actions, operational discipline, and positive safety behavior.
+        </p>
+      </div>
+      <button onclick="location.href='Employee-Recognition.html'">
+        Open Module ›
+      </button>
+    </div>
+
+  </div>
+
+  <div class="bottom-buttons">
+    <a class="home-btn" href="index.html">
+      🏠 Home
+    </a>
+
+    <a class="promotion-btn" href="Safety-Promotion.html">
+      👥 Safety Promotion
+    </a>
+  </div>
+
+  <div class="footer">
+    371Q SMS SOFTWARE • ACCIDENT PREVENTION TOOL
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>
