@@ -302,6 +302,25 @@ h1{
   background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
+.type-toggle-btn{
+  color:white;
+  border:none;
+  border-radius:15px;
+  padding:13px 21px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:14px;
+  box-shadow:0 9px 20px rgba(0,0,0,0.22);
+}
+
+.type-vor{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+}
+
+.type-mor{
+  background:linear-gradient(135deg,#dc2626,#ef4444);
+}
+  
 .manual-status-btn,
 .edit-btn,
 .save-btn{
@@ -704,6 +723,19 @@ location.reload();
 
 };
 
+window.toggleReportType = function(key,currentType){
+
+const newType =
+currentType === "VOR" ? "MOR" : "VOR";
+
+update(ref(db,"smsReports/"+key),{
+reportType:newType,
+updatedAt:new Date().toLocaleString()
+}).then(()=>{
+location.reload();
+});
+
+};    
 function getRiskClass(value){
 
 if(value === undefined || value === null || value === ""){
@@ -797,6 +829,12 @@ div.className = "record";
 div.id = "record-"+key;
 
 const manualStatus = item.status || "OPEN";
+const reportType = item.reportType || "N/A";
+
+const reportTypeClass =
+reportType === "MOR" ? "type-mor" :
+reportType === "VOR" ? "type-vor" :
+"type-mor";
 
 const manualStatusClass =
 manualStatus === "CLOSED" ? "manual-closed" : "manual-open";
@@ -879,7 +917,9 @@ ${residualText}
 </div>
 
 </div>
-
+<button class="type-toggle-btn ${reportTypeClass}" onclick="toggleReportType('${key}','${reportType}')">
+${reportType}
+</button>
 <button class="manual-status-btn ${manualStatusClass}" onclick="toggleReportStatus('${key}','${manualStatus}')">
 ${manualStatus}
 </button>
