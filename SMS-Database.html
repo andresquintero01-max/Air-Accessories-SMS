@@ -299,7 +299,7 @@ h1{
 }
 
 .close{
-  background:linear-gradient(135deg,#16a34a,#22c55e);
+  background:linear-gradient(135deg,#475569,#64748b);
 }
 
 .type-toggle-btn{
@@ -335,11 +335,11 @@ h1{
 }
 
 .manual-open{
-  background:linear-gradient(135deg,#16a34a,#22c55e);
+  background:linear-gradient(135deg,#dc2626,#ef4444);
 }
 
 .manual-closed{
-  background:linear-gradient(135deg,#475569,#64748b);
+  background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
 .edit-btn{
@@ -584,11 +584,10 @@ h1{
       </select>
 
       <select id="statusFilter" onchange="applyFilters()">
-        <option value="">All Status</option>
-        <option value="OPEN">Open</option>
-        <option value="IN PROGRESS">In Progress</option>
-        <option value="CLOSED">Closed</option>
-      </select>
+    <option value="">All Status</option>
+    <option value="OPEN">Open</option>
+    <option value="CLOSED">Closed</option>
+    </select>
 
     </div>
 
@@ -839,7 +838,9 @@ reportType === "VOR" ? "type-vor" :
 "type-mor";
 
 const manualStatusClass =
-manualStatus === "CLOSED" ? "manual-closed" : "manual-open";
+manualStatus === "CLOSED"
+? "manual-closed"
+: "manual-open";
 
 const riskAssessmentStatus =
 item.riskClosed === true
