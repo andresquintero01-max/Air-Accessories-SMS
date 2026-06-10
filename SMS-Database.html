@@ -573,7 +573,9 @@ h1{
 
       <input type="text" id="searchInput" placeholder="Search title, name, aircraft, airport..." oninput="applyFilters()">
 
-      <input type="date" id="dateFilter" onchange="applyFilters()">
+      <input type="date" id="dateFromFilter" onchange="applyFilters()" title="Date From">
+
+      <input type="date" id="dateToFilter" onchange="applyFilters()" title="Date To">
 
       <select id="typeFilter" onchange="applyFilters()">
         <option value="">All Report Types</option>
@@ -1066,8 +1068,11 @@ window.applyFilters = function(){
 const searchText =
 document.getElementById("searchInput").value.toLowerCase();
 
-const dateValue =
-document.getElementById("dateFilter").value;
+cconst dateFrom =
+document.getElementById("dateFromFilter").value;
+
+const dateTo =
+document.getElementById("dateToFilter").value;
 
 const typeFilter =
 document.getElementById("typeFilter").value;
@@ -1098,8 +1103,11 @@ ${item.residualRisk || ""}
 const matchSearch =
 generalText.includes(searchText);
 
+const reportDate = item.date || "";
+
 const matchDate =
-dateValue === "" || item.date === dateValue;
+(dateFrom === "" || reportDate >= dateFrom) &&
+(dateTo === "" || reportDate <= dateTo);
 
 const matchType =
 typeFilter === "" || item.reportType === typeFilter;
