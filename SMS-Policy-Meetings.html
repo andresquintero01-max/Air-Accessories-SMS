@@ -189,7 +189,7 @@ select:focus,input:focus,textarea:focus{
 
 .activity-row{
   display:grid;
-  grid-template-columns:2fr 1fr 1fr 130px;
+  grid-template-columns:2fr 1fr 1fr 130px 120px;
   gap:14px;
   align-items:end;
   margin-bottom:14px;
@@ -209,6 +209,40 @@ select:focus,input:focus,textarea:focus{
   border-radius:18px;
   background:#f8fcff;
   border:1px solid #e6eef5;
+}
+
+.saved-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+}
+
+.saved-item{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border-radius:22px;
+  padding:20px;
+  border:1px solid #e6eef5;
+  border-top:7px solid #00aeef;
+  box-shadow:0 10px 24px rgba(0,0,0,.10);
+  cursor:pointer;
+}
+
+.saved-item:hover{
+  transform:translateY(-3px);
+  transition:.25s;
+}
+
+.saved-item h3{
+  color:#003b66;
+  font-size:20px;
+  margin-bottom:8px;
+}
+
+.saved-item p{
+  color:#536172;
+  font-weight:800;
+  font-size:14px;
+  margin-bottom:5px;
 }
 
 .buttons{
@@ -239,12 +273,11 @@ button:hover{
 .save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
 .print-btn{background:linear-gradient(135deg,#111827,#374151);}
 .reset-btn{background:linear-gradient(135deg,#64748b,#334155);}
-.database-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
 .back-btn{background:linear-gradient(135deg,#f59e0b,#d97706);}
 .home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
 .add-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
 .remove-btn{background:linear-gradient(135deg,#dc2626,#991b1b);}
-.close-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.edit-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
 
 .footer{
   text-align:center;
@@ -265,7 +298,7 @@ button:hover{
 
 @media print{
   body{background:white;padding:10px;}
-  .buttons,.remove-btn,.add-btn{display:none;}
+  .buttons,.remove-btn,.add-btn,.saved-section{display:none;}
   .container{box-shadow:none;padding:15px;}
   .meeting-card,.card{break-inside:avoid;}
 }
@@ -286,41 +319,42 @@ button:hover{
 
 <div class="summary">
   <div class="summary-card">
-    <h2 id="meetingCount">1</h2>
-    <p>MEETINGS</p>
+    <h2 id="meetingNumber">1</h2>
+    <p>CURRENT MEETING</p>
   </div>
   <div class="summary-card">
     <h2 id="activityCount">1</h2>
     <p>ACTIVITIES</p>
   </div>
   <div class="summary-card">
+    <h2 id="savedCount">0</h2>
+    <p>SAVED MEETINGS</p>
+  </div>
+  <div class="summary-card">
     <h2>5.93</h2>
     <p>SAFETY COMMUNICATION</p>
   </div>
-  <div class="summary-card">
-    <h2>SMS</h2>
-    <p>MEETING MINUTES</p>
-  </div>
 </div>
 
-<form id="meetingsForm">
+<form id="meetingForm">
 
-<div id="meetingsContainer"></div>
-
-<div class="buttons">
-  <button type="button" class="add-btn" onclick="addMeeting()">➕ Add New Meeting</button>
-</div>
+<div id="meetingContainer"></div>
 
 <div class="buttons">
-  <button type="submit" class="save-btn">💾 Save Meetings</button>
+  <button type="submit" class="save-btn">💾 Save Meeting</button>
+  <button type="button" class="add-btn" onclick="newMeeting()">➕ New Meeting</button>
   <button type="button" class="print-btn" onclick="window.print()">🖨️ Print</button>
-  <button type="button" class="database-btn" onclick="window.location.href='SMS-Policy-Meetings-Database.html'">📂 Database</button>
-  <button type="button" class="reset-btn" onclick="resetForm()">🔄 Reset</button>
+  <button type="button" class="reset-btn" onclick="clearCurrentForm()">🔄 Clear Current</button>
   <button type="button" class="back-btn" onclick="window.location.href='SMS-Policy.html'">← Back</button>
   <button type="button" class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
 </div>
 
 </form>
+
+<div class="section saved-section">
+  <div class="section-title">SAVED MEETINGS - CLICK TO EDIT</div>
+  <div id="savedMeetingsList" class="saved-list"></div>
+</div>
 
 <div class="footer">
   371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
@@ -328,279 +362,326 @@ button:hover{
 
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
-  authDomain: "air-accessories-sms.firebaseapp.com",
-  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
-  projectId: "air-accessories-sms",
-  storageBucket: "air-accessories-sms.firebasestorage.app",
-  messagingSenderId: "1051190584016",
-  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const meetingsPath = "smsPolicyMeetings";
-
-let meetingCounter = 0;
+<script>
+const storageKey = "smsPolicyMeetingsLocal";
+let currentEditIndex = null;
 
 function today(){
   return new Date().toISOString().split("T")[0];
 }
 
-function updateCounters(){
-  document.getElementById("meetingCount").innerText = document.querySelectorAll(".meeting-card").length;
-  document.getElementById("activityCount").innerText = document.querySelectorAll(".activity-row").length;
+function getSavedMeetings(){
+  return JSON.parse(localStorage.getItem(storageKey)) || [];
 }
 
-window.addMeeting = function(){
-  meetingCounter++;
+function saveMeetingsToStorage(meetings){
+  localStorage.setItem(storageKey, JSON.stringify(meetings));
+}
 
-  const meetingDiv = document.createElement("div");
-  meetingDiv.className = "meeting-card";
-  meetingDiv.dataset.meeting = meetingCounter;
+function updateCounters(){
+  const saved = getSavedMeetings();
+  document.getElementById("savedCount").innerText = saved.length;
+  document.getElementById("activityCount").innerText = document.querySelectorAll(".activity-row").length;
 
-  meetingDiv.innerHTML = `
-    <div class="meeting-head">
-      <div class="meeting-title">Meeting ${meetingCounter}</div>
-      <button type="button" class="remove-btn" onclick="removeMeeting(this)">🗑 Remove Meeting</button>
-    </div>
+  if(currentEditIndex !== null){
+    document.getElementById("meetingNumber").innerText = currentEditIndex + 1;
+  }else{
+    document.getElementById("meetingNumber").innerText = saved.length + 1;
+  }
+}
 
-    <div class="section">
-      <div class="section-title">MEETING INFORMATION</div>
+function createBlankMeeting(){
+  currentEditIndex = null;
 
-      <div class="card">
-        <div class="grid">
-          <div>
-            <label>Meeting Name *</label>
-            <input class="meetingName" placeholder="Example: Operational Safety Meeting - Ladder Safety" required>
-          </div>
+  document.getElementById("meetingContainer").innerHTML = `
+    <div class="meeting-card">
+      <div class="meeting-head">
+        <div class="meeting-title" id="formTitle">New Meeting</div>
+      </div>
 
-          <div>
-            <label>Status</label>
-            <select class="meetingStatus">
-              <option value="Open">Open</option>
-              <option value="Closed">Closed</option>
-            </select>
-          </div>
+      <div class="section">
+        <div class="section-title">MEETING INFORMATION</div>
 
-          <div>
-            <label>Date *</label>
-            <input type="date" class="meetingDate" value="${today()}" required>
-          </div>
+        <div class="card">
+          <div class="grid">
+            <div>
+              <label>Meeting Name *</label>
+              <input id="meetingName" placeholder="Example: Operational Safety Meeting - Ladder Safety" required>
+            </div>
 
-          <div>
-            <label>Time</label>
-            <input type="time" class="meetingTime">
-          </div>
+            <div>
+              <label>Status</label>
+              <select id="meetingStatus">
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
 
-          <div>
-            <label>Meeting Leader</label>
-            <input class="meetingLeader" placeholder="Meeting leader">
-          </div>
+            <div>
+              <label>Date *</label>
+              <input type="date" id="meetingDate" value="${today()}" required>
+            </div>
 
-          <div>
-            <label>Location</label>
-            <input class="meetingLocation" placeholder="OPF Hangar / Shop / Office">
+            <div>
+              <label>Time</label>
+              <input type="time" id="meetingTime">
+            </div>
+
+            <div>
+              <label>Meeting Leader</label>
+              <input id="meetingLeader" placeholder="Meeting leader">
+            </div>
+
+            <div>
+              <label>Location</label>
+              <input id="meetingLocation" placeholder="OPF Hangar / Shop / Office">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-title">PENDING TASKS FROM PREVIOUS MEETING</div>
-
-      <div class="card">
-        <label>Pending Tasks</label>
-        <textarea class="pendingTasks" placeholder="Write pending tasks from the previous meeting."></textarea>
+      <div class="section">
+        <div class="section-title">PENDING TASKS FROM PREVIOUS MEETING</div>
+        <div class="card">
+          <label>Pending Tasks</label>
+          <textarea id="pendingTasks" placeholder="Write pending tasks from the previous meeting."></textarea>
+        </div>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-title">TASKS / ACTIVITIES</div>
-
-      <div class="activitiesContainer"></div>
-
-      <button type="button" class="add-btn" onclick="addActivity(this)">➕ Add Activity</button>
-    </div>
-
-    <div class="section">
-      <div class="section-title">CONCLUSION</div>
-
-      <div class="card">
-        <label>Meeting Conclusion</label>
-        <textarea class="meetingConclusion" placeholder="Write the final conclusion, agreements, or next steps."></textarea>
+      <div class="section">
+        <div class="section-title">TASKS / ACTIVITIES</div>
+        <div id="activitiesContainer"></div>
+        <button type="button" class="add-btn" onclick="addActivity()">➕ Add Activity</button>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-title">ATTENDEES / SIGNATURES</div>
+      <div class="section">
+        <div class="section-title">CONCLUSION</div>
+        <div class="card">
+          <label>Meeting Conclusion</label>
+          <textarea id="meetingConclusion" placeholder="Write final conclusion, agreements, or next steps."></textarea>
+        </div>
+      </div>
 
-      <div class="signaturesContainer"></div>
-
-      <button type="button" class="add-btn" onclick="addSignature(this)">➕ Add Signature</button>
+      <div class="section">
+        <div class="section-title">ATTENDEES / SIGNATURES</div>
+        <div id="signaturesContainer"></div>
+        <button type="button" class="add-btn" onclick="addSignature()">➕ Add Signature</button>
+      </div>
     </div>
   `;
 
-  document.getElementById("meetingsContainer").appendChild(meetingDiv);
-  addActivity(meetingDiv.querySelector(".add-btn"));
-  addSignature(meetingDiv.querySelectorAll(".add-btn")[1]);
+  addActivity();
+  addSignature();
   updateCounters();
-};
+}
 
-window.addActivity = function(button){
-  const meeting = button.closest(".meeting-card");
-  const container = meeting.querySelector(".activitiesContainer");
-
+function addActivity(data = {}){
   const activityDiv = document.createElement("div");
   activityDiv.className = "activity-row";
 
   activityDiv.innerHTML = `
     <div>
       <label>Task / Activity *</label>
-      <textarea class="activityText" placeholder="Write activity or task" required></textarea>
+      <textarea class="activityText" placeholder="Write activity or task" required>${data.task || ""}</textarea>
     </div>
 
     <div>
       <label>Responsible</label>
-      <input class="activityResponsible" placeholder="Responsible person">
+      <input class="activityResponsible" placeholder="Responsible person" value="${data.responsible || ""}">
     </div>
 
     <div>
       <label>Due Date</label>
-      <input type="date" class="activityDueDate">
+      <input type="date" class="activityDueDate" value="${data.dueDate || ""}">
     </div>
 
     <div>
       <label>Status</label>
       <select class="activityStatus">
-        <option value="Open">Open</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Closed">Closed</option>
+        <option value="Open" ${data.status==="Open"?"selected":""}>Open</option>
+        <option value="In Progress" ${data.status==="In Progress"?"selected":""}>In Progress</option>
+        <option value="Closed" ${data.status==="Closed"?"selected":""}>Closed</option>
       </select>
     </div>
 
     <button type="button" class="remove-btn" onclick="removeActivity(this)">🗑 Remove</button>
   `;
 
-  container.appendChild(activityDiv);
+  document.getElementById("activitiesContainer").appendChild(activityDiv);
   updateCounters();
-};
+}
 
-window.removeActivity = function(button){
+function removeActivity(button){
   button.closest(".activity-row").remove();
   updateCounters();
-};
+}
 
-window.addSignature = function(button){
-  const meeting = button.closest(".meeting-card");
-  const container = meeting.querySelector(".signaturesContainer");
-
+function addSignature(data = {}){
   const signatureDiv = document.createElement("div");
   signatureDiv.className = "signature-row";
 
   signatureDiv.innerHTML = `
     <div>
       <label>Name</label>
-      <input class="signatureName" placeholder="Attendee name">
+      <input class="signatureName" placeholder="Attendee name" value="${data.name || ""}">
     </div>
 
     <div>
       <label>Signature / Initials</label>
-      <input class="signatureValue" placeholder="Signature or initials">
+      <input class="signatureValue" placeholder="Signature or initials" value="${data.signature || ""}">
     </div>
 
     <button type="button" class="remove-btn" onclick="removeSignature(this)">🗑 Remove</button>
   `;
 
-  container.appendChild(signatureDiv);
-};
+  document.getElementById("signaturesContainer").appendChild(signatureDiv);
+}
 
-window.removeSignature = function(button){
+function removeSignature(button){
   button.closest(".signature-row").remove();
-};
+}
 
-window.removeMeeting = function(button){
-  if(confirm("Do you want to remove this meeting?")){
-    button.closest(".meeting-card").remove();
-    updateCounters();
-  }
-};
+function collectFormData(){
+  const activities = [];
+  const signatures = [];
 
-document.getElementById("meetingsForm").addEventListener("submit", async function(e){
-  e.preventDefault();
-
-  const meetings = [];
-
-  document.querySelectorAll(".meeting-card").forEach((meeting,index)=>{
-    const activities = [];
-    const signatures = [];
-
-    meeting.querySelectorAll(".activity-row").forEach(activity=>{
-      activities.push({
-        task:activity.querySelector(".activityText").value.trim(),
-        responsible:activity.querySelector(".activityResponsible").value.trim(),
-        dueDate:activity.querySelector(".activityDueDate").value,
-        status:activity.querySelector(".activityStatus").value
-      });
-    });
-
-    meeting.querySelectorAll(".signature-row").forEach(signature=>{
-      signatures.push({
-        name:signature.querySelector(".signatureName").value.trim(),
-        signature:signature.querySelector(".signatureValue").value.trim()
-      });
-    });
-
-    meetings.push({
-      number:index + 1,
-      meetingName:meeting.querySelector(".meetingName").value.trim(),
-      status:meeting.querySelector(".meetingStatus").value,
-      date:meeting.querySelector(".meetingDate").value,
-      time:meeting.querySelector(".meetingTime").value,
-      leader:meeting.querySelector(".meetingLeader").value.trim(),
-      location:meeting.querySelector(".meetingLocation").value.trim(),
-      pendingTasks:meeting.querySelector(".pendingTasks").value.trim(),
-      activities:activities,
-      conclusion:meeting.querySelector(".meetingConclusion").value.trim(),
-      signatures:signatures
+  document.querySelectorAll(".activity-row").forEach(activity=>{
+    activities.push({
+      task:activity.querySelector(".activityText").value.trim(),
+      responsible:activity.querySelector(".activityResponsible").value.trim(),
+      dueDate:activity.querySelector(".activityDueDate").value,
+      status:activity.querySelector(".activityStatus").value
     });
   });
 
-  const mainName = meetings[0]?.meetingName || "SMS Policy Meeting";
+  document.querySelectorAll(".signature-row").forEach(signature=>{
+    signatures.push({
+      name:signature.querySelector(".signatureName").value.trim(),
+      signature:signature.querySelector(".signatureValue").value.trim()
+    });
+  });
 
-  const data = {
-    recordName:mainName,
-    meetings:meetings,
-    totalMeetings:meetings.length,
-    totalActivities:document.querySelectorAll(".activity-row").length,
-    createdAt:Date.now(),
+  return {
+    meetingName:document.getElementById("meetingName").value.trim(),
+    status:document.getElementById("meetingStatus").value,
+    date:document.getElementById("meetingDate").value,
+    time:document.getElementById("meetingTime").value,
+    leader:document.getElementById("meetingLeader").value.trim(),
+    location:document.getElementById("meetingLocation").value.trim(),
+    pendingTasks:document.getElementById("pendingTasks").value.trim(),
+    activities:activities,
+    conclusion:document.getElementById("meetingConclusion").value.trim(),
+    signatures:signatures,
     updatedAt:new Date().toLocaleString()
   };
+}
 
-  try{
-    const newRef = push(ref(db, meetingsPath));
-    await set(newRef, data);
+document.getElementById("meetingForm").addEventListener("submit", function(e){
+  e.preventDefault();
 
-    alert("SMS Policy Meeting saved successfully.");
-  }catch(error){
-    alert("Error saving meeting: " + error.message);
+  const data = collectFormData();
+
+  if(!data.meetingName){
+    alert("Please write the Meeting Name.");
+    return;
   }
+
+  const saved = getSavedMeetings();
+
+  if(currentEditIndex !== null){
+    saved[currentEditIndex] = data;
+    alert("Meeting updated successfully.");
+  }else{
+    data.createdAt = new Date().toLocaleString();
+    saved.push(data);
+    currentEditIndex = saved.length - 1;
+    alert("Meeting saved successfully.");
+  }
+
+  saveMeetingsToStorage(saved);
+  renderSavedMeetings();
+  loadMeeting(currentEditIndex);
 });
 
-window.resetForm = function(){
-  if(confirm("Do you want to clear all meetings?")){
-    document.getElementById("meetingsContainer").innerHTML = "";
-    meetingCounter = 0;
-    addMeeting();
-  }
-};
+function renderSavedMeetings(){
+  const list = document.getElementById("savedMeetingsList");
+  const saved = getSavedMeetings();
 
-addMeeting();
+  list.innerHTML = "";
+
+  if(saved.length === 0){
+    list.innerHTML = `
+      <div class="card">
+        <label>No meetings saved yet.</label>
+      </div>
+    `;
+    updateCounters();
+    return;
+  }
+
+  saved.forEach((meeting,index)=>{
+    const item = document.createElement("div");
+    item.className = "saved-item";
+    item.onclick = () => loadMeeting(index);
+
+    item.innerHTML = `
+      <h3>Meeting ${index + 1}: ${meeting.meetingName}</h3>
+      <p><b>Date:</b> ${meeting.date || "N/A"}</p>
+      <p><b>Status:</b> ${meeting.status || "Open"}</p>
+      <p><b>Activities:</b> ${(meeting.activities || []).length}</p>
+      <p><b>Click to open / edit</b></p>
+    `;
+
+    list.appendChild(item);
+  });
+
+  updateCounters();
+}
+
+function loadMeeting(index){
+  const saved = getSavedMeetings();
+  const meeting = saved[index];
+
+  if(!meeting) return;
+
+  currentEditIndex = index;
+  createBlankMeeting();
+
+  document.getElementById("formTitle").innerText = "Editing Meeting " + (index + 1);
+  document.getElementById("meetingName").value = meeting.meetingName || "";
+  document.getElementById("meetingStatus").value = meeting.status || "Open";
+  document.getElementById("meetingDate").value = meeting.date || today();
+  document.getElementById("meetingTime").value = meeting.time || "";
+  document.getElementById("meetingLeader").value = meeting.leader || "";
+  document.getElementById("meetingLocation").value = meeting.location || "";
+  document.getElementById("pendingTasks").value = meeting.pendingTasks || "";
+  document.getElementById("meetingConclusion").value = meeting.conclusion || "";
+
+  document.getElementById("activitiesContainer").innerHTML = "";
+  (meeting.activities || []).forEach(activity=>addActivity(activity));
+  if((meeting.activities || []).length === 0) addActivity();
+
+  document.getElementById("signaturesContainer").innerHTML = "";
+  (meeting.signatures || []).forEach(signature=>addSignature(signature));
+  if((meeting.signatures || []).length === 0) addSignature();
+
+  updateCounters();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function newMeeting(){
+  createBlankMeeting();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function clearCurrentForm(){
+  if(confirm("Do you want to clear the current meeting form?")){
+    createBlankMeeting();
+  }
+}
+
+createBlankMeeting();
+renderSavedMeetings();
 </script>
 
 </body>
