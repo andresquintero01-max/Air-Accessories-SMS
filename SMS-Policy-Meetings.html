@@ -117,14 +117,38 @@ h1{
   box-shadow:0 12px 26px rgba(0,0,0,.18);
 }
 
-.card{
+.meeting-card{
   background:linear-gradient(135deg,#ffffff,#f8fcff);
-  border-radius:26px;
-  padding:26px;
+  border-radius:30px;
+  padding:30px;
+  margin-bottom:32px;
+  border:1px solid #e6eef5;
+  border-top:10px solid #00aeef;
+  box-shadow:0 16px 34px rgba(0,0,0,.13);
+}
+
+.card{
+  background:white;
+  border-radius:24px;
+  padding:24px;
   margin-bottom:20px;
   border:1px solid #e6eef5;
-  border-top:8px solid #00aeef;
-  box-shadow:0 14px 30px rgba(0,0,0,.11);
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+
+.meeting-head{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+
+.meeting-title{
+  font-size:28px;
+  color:#003b66;
+  font-weight:900;
 }
 
 .grid{
@@ -154,7 +178,7 @@ select,input,textarea{
 }
 
 textarea{
-  min-height:95px;
+  min-height:90px;
   resize:vertical;
 }
 
@@ -163,28 +187,28 @@ select:focus,input:focus,textarea:focus{
   box-shadow:0 0 0 4px rgba(0,174,239,.14);
 }
 
-.meeting-point-title{
-  color:#003b66;
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:16px;
+.activity-row{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 130px;
+  gap:14px;
+  align-items:end;
+  margin-bottom:14px;
+  padding:16px;
+  border-radius:18px;
+  background:#f8fcff;
+  border:1px solid #e6eef5;
 }
 
-.point-actions{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:15px;
-}
-
-.remove-point{
-  background:linear-gradient(135deg,#dc2626,#991b1b);
-  padding:11px 20px;
-  font-size:14px;
-}
-
-.add-point-btn{
-  background:linear-gradient(135deg,#00aeef,#0284c7);
-  margin-top:10px;
+.signature-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 120px;
+  gap:14px;
+  align-items:end;
+  margin-bottom:14px;
+  padding:16px;
+  border-radius:18px;
+  background:#f8fcff;
+  border:1px solid #e6eef5;
 }
 
 .buttons{
@@ -198,9 +222,9 @@ select:focus,input:focus,textarea:focus{
 button{
   border:none;
   color:white;
-  padding:16px 30px;
+  padding:14px 24px;
   border-radius:16px;
-  font-size:16px;
+  font-size:15px;
   font-weight:900;
   cursor:pointer;
   transition:.25s;
@@ -218,6 +242,9 @@ button:hover{
 .database-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
 .back-btn{background:linear-gradient(135deg,#f59e0b,#d97706);}
 .home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.add-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.remove-btn{background:linear-gradient(135deg,#dc2626,#991b1b);}
+.close-btn{background:linear-gradient(135deg,#003b66,#005f99);}
 
 .footer{
   text-align:center;
@@ -228,19 +255,19 @@ button:hover{
   letter-spacing:2px;
 }
 
-@media(max-width:850px){
+@media(max-width:950px){
   body{padding:25px;}
   .container{padding:35px 22px;border-radius:28px;}
   h1{font-size:38px;}
-  .grid{grid-template-columns:1fr;}
+  .grid,.activity-row,.signature-row{grid-template-columns:1fr;}
   .full{grid-column:1;}
 }
 
 @media print{
   body{background:white;padding:10px;}
-  .buttons,.point-actions,.add-point-btn{display:none;}
+  .buttons,.remove-btn,.add-btn{display:none;}
   .container{box-shadow:none;padding:15px;}
-  .card{break-inside:avoid;}
+  .meeting-card,.card{break-inside:avoid;}
 }
 </style>
 </head>
@@ -259,12 +286,12 @@ button:hover{
 
 <div class="summary">
   <div class="summary-card">
-    <h2>ACTA</h2>
-    <p>MEETING MINUTES</p>
+    <h2 id="meetingCount">1</h2>
+    <p>MEETINGS</p>
   </div>
   <div class="summary-card">
-    <h2 id="pointCount">1</h2>
-    <p>MEETING POINTS</p>
+    <h2 id="activityCount">1</h2>
+    <p>ACTIVITIES</p>
   </div>
   <div class="summary-card">
     <h2>5.93</h2>
@@ -272,114 +299,20 @@ button:hover{
   </div>
   <div class="summary-card">
     <h2>SMS</h2>
-    <p>SAFETY POLICY</p>
+    <p>MEETING MINUTES</p>
   </div>
 </div>
 
-<form id="meetingForm">
+<form id="meetingsForm">
 
-<div class="section">
-  <div class="section-title">MEETING INFORMATION</div>
+<div id="meetingsContainer"></div>
 
-  <div class="card">
-    <div class="grid">
-      <div>
-        <label>Meeting ID *</label>
-        <input id="meetingId" placeholder="SM-2026-001" required>
-      </div>
-
-      <div>
-        <label>Status</label>
-        <select id="status">
-          <option value="Open">Open</option>
-          <option value="Closed">Closed</option>
-        </select>
-      </div>
-
-      <div>
-        <label>Date *</label>
-        <input type="date" id="meetingDate" required>
-      </div>
-
-      <div>
-        <label>Time *</label>
-        <input type="time" id="meetingTime" required>
-      </div>
-
-      <div>
-        <label>Meeting Leader *</label>
-        <input id="leader" placeholder="Meeting leader" required>
-      </div>
-
-      <div>
-        <label>Location *</label>
-        <input id="location" placeholder="OPF Hangar / Shop / Office" required>
-      </div>
-
-      <div class="full">
-        <label>General Attendees / Attendance List *</label>
-        <textarea id="generalAttendees" placeholder="Write the full attendance list for the meeting." required></textarea>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <div class="section-title">PENDING TASKS FROM PREVIOUS MEETING</div>
-
-  <div class="card">
-    <div class="grid">
-      <div class="full">
-        <label>Pending Tasks / Open Items</label>
-        <textarea id="pendingTasks" placeholder="Write pending tasks from the previous meeting, open actions, follow-ups, or items still under review."></textarea>
-      </div>
-
-      <div>
-        <label>Responsible Person</label>
-        <input id="pendingResponsible" placeholder="Person responsible for previous pending tasks">
-      </div>
-
-      <div>
-        <label>Expected Closure Date</label>
-        <input type="date" id="pendingDueDate">
-      </div>
-
-      <div class="full">
-        <label>Status / Comments</label>
-        <textarea id="pendingComments" placeholder="Describe current status, comments, or progress of pending tasks."></textarea>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <div class="section-title">MEETING POINTS / AGENDA ITEMS</div>
-
-  <div id="pointsContainer"></div>
-
-  <button type="button" class="add-point-btn" onclick="addMeetingPoint()">➕ Add Meeting Point</button>
-</div>
-
-<div class="section">
-  <div class="section-title">GENERAL CONCLUSIONS</div>
-
-  <div class="card">
-    <div class="grid">
-      <div class="full">
-        <label>Meeting Conclusions</label>
-        <textarea id="conclusions" placeholder="Write final conclusions, safety decisions, agreements, or general outcomes."></textarea>
-      </div>
-
-      <div class="full">
-        <label>Next Meeting Topics</label>
-        <textarea id="nextTopics" placeholder="Write topics to be reviewed in the next meeting."></textarea>
-      </div>
-    </div>
-  </div>
+<div class="buttons">
+  <button type="button" class="add-btn" onclick="addMeeting()">➕ Add New Meeting</button>
 </div>
 
 <div class="buttons">
-  <button type="submit" class="save-btn">💾 Save Meeting Minutes</button>
+  <button type="submit" class="save-btn">💾 Save Meetings</button>
   <button type="button" class="print-btn" onclick="window.print()">🖨️ Print</button>
   <button type="button" class="database-btn" onclick="window.location.href='SMS-Policy-Meetings-Database.html'">📂 Database</button>
   <button type="button" class="reset-btn" onclick="resetForm()">🔄 Reset</button>
@@ -413,166 +346,261 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const meetingsPath = "smsPolicyMeetings";
 
-let pointCounter = 0;
+let meetingCounter = 0;
 
-document.getElementById("meetingDate").valueAsDate = new Date();
-
-function updatePointCount(){
-  document.getElementById("pointCount").innerText = document.querySelectorAll(".meeting-point").length;
+function today(){
+  return new Date().toISOString().split("T")[0];
 }
 
-window.addMeetingPoint = function(){
-  pointCounter++;
+function updateCounters(){
+  document.getElementById("meetingCount").innerText = document.querySelectorAll(".meeting-card").length;
+  document.getElementById("activityCount").innerText = document.querySelectorAll(".activity-row").length;
+}
 
-  const pointDiv = document.createElement("div");
-  pointDiv.className = "card meeting-point";
-  pointDiv.setAttribute("data-point", pointCounter);
+window.addMeeting = function(){
+  meetingCounter++;
 
-  pointDiv.innerHTML = `
-    <div class="meeting-point-title">Meeting Point ${pointCounter}</div>
+  const meetingDiv = document.createElement("div");
+  meetingDiv.className = "meeting-card";
+  meetingDiv.dataset.meeting = meetingCounter;
 
-    <div class="grid">
-      <div class="full">
-        <label>Point / Topic *</label>
-        <input class="pointTitle" placeholder="Write meeting point or agenda topic" required>
-      </div>
+  meetingDiv.innerHTML = `
+    <div class="meeting-head">
+      <div class="meeting-title">Meeting ${meetingCounter}</div>
+      <button type="button" class="remove-btn" onclick="removeMeeting(this)">🗑 Remove Meeting</button>
+    </div>
 
-      <div class="full">
-        <label>Discussion / Description</label>
-        <textarea class="pointDiscussion" placeholder="Write what was discussed for this point."></textarea>
-      </div>
+    <div class="section">
+      <div class="section-title">MEETING INFORMATION</div>
 
-      <div class="full">
-        <label>Decision / Agreement</label>
-        <textarea class="pointDecision" placeholder="Write decision, agreement, or conclusion for this point."></textarea>
-      </div>
+      <div class="card">
+        <div class="grid">
+          <div>
+            <label>Meeting Name *</label>
+            <input class="meetingName" placeholder="Example: Operational Safety Meeting - Ladder Safety" required>
+          </div>
 
-      <div>
-        <label>Action Required</label>
-        <select class="pointActionRequired">
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-          <option value="Monitor">Monitor</option>
-        </select>
-      </div>
+          <div>
+            <label>Status</label>
+            <select class="meetingStatus">
+              <option value="Open">Open</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
 
-      <div>
-        <label>Responsible Person</label>
-        <input class="pointResponsible" placeholder="Assigned person">
-      </div>
+          <div>
+            <label>Date *</label>
+            <input type="date" class="meetingDate" value="${today()}" required>
+          </div>
 
-      <div>
-        <label>Due Date</label>
-        <input type="date" class="pointDueDate">
-      </div>
+          <div>
+            <label>Time</label>
+            <input type="time" class="meetingTime">
+          </div>
 
-      <div>
-        <label>Status</label>
-        <select class="pointStatus">
-          <option value="Open">Open</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Closed">Closed</option>
-        </select>
-      </div>
+          <div>
+            <label>Meeting Leader</label>
+            <input class="meetingLeader" placeholder="Meeting leader">
+          </div>
 
-      <div class="full">
-        <label>Attendees / Signatures for This Point</label>
-        <textarea class="pointSignatures" placeholder="Write names or signatures of attendees related to this meeting point."></textarea>
-      </div>
-
-      <div class="full">
-        <label>Notes / Evidence Reference</label>
-        <textarea class="pointNotes" placeholder="Write notes, evidence references, links, or follow-up comments."></textarea>
+          <div>
+            <label>Location</label>
+            <input class="meetingLocation" placeholder="OPF Hangar / Shop / Office">
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="point-actions">
-      <button type="button" class="remove-point" onclick="removeMeetingPoint(this)">🗑 Remove Point</button>
+    <div class="section">
+      <div class="section-title">PENDING TASKS FROM PREVIOUS MEETING</div>
+
+      <div class="card">
+        <label>Pending Tasks</label>
+        <textarea class="pendingTasks" placeholder="Write pending tasks from the previous meeting."></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">TASKS / ACTIVITIES</div>
+
+      <div class="activitiesContainer"></div>
+
+      <button type="button" class="add-btn" onclick="addActivity(this)">➕ Add Activity</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">CONCLUSION</div>
+
+      <div class="card">
+        <label>Meeting Conclusion</label>
+        <textarea class="meetingConclusion" placeholder="Write the final conclusion, agreements, or next steps."></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">ATTENDEES / SIGNATURES</div>
+
+      <div class="signaturesContainer"></div>
+
+      <button type="button" class="add-btn" onclick="addSignature(this)">➕ Add Signature</button>
     </div>
   `;
 
-  document.getElementById("pointsContainer").appendChild(pointDiv);
-  updatePointCount();
+  document.getElementById("meetingsContainer").appendChild(meetingDiv);
+  addActivity(meetingDiv.querySelector(".add-btn"));
+  addSignature(meetingDiv.querySelectorAll(".add-btn")[1]);
+  updateCounters();
 };
 
-window.removeMeetingPoint = function(button){
-  if(confirm("Do you want to remove this meeting point?")){
-    button.closest(".meeting-point").remove();
-    updatePointCount();
+window.addActivity = function(button){
+  const meeting = button.closest(".meeting-card");
+  const container = meeting.querySelector(".activitiesContainer");
+
+  const activityDiv = document.createElement("div");
+  activityDiv.className = "activity-row";
+
+  activityDiv.innerHTML = `
+    <div>
+      <label>Task / Activity *</label>
+      <textarea class="activityText" placeholder="Write activity or task" required></textarea>
+    </div>
+
+    <div>
+      <label>Responsible</label>
+      <input class="activityResponsible" placeholder="Responsible person">
+    </div>
+
+    <div>
+      <label>Due Date</label>
+      <input type="date" class="activityDueDate">
+    </div>
+
+    <div>
+      <label>Status</label>
+      <select class="activityStatus">
+        <option value="Open">Open</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Closed">Closed</option>
+      </select>
+    </div>
+
+    <button type="button" class="remove-btn" onclick="removeActivity(this)">🗑 Remove</button>
+  `;
+
+  container.appendChild(activityDiv);
+  updateCounters();
+};
+
+window.removeActivity = function(button){
+  button.closest(".activity-row").remove();
+  updateCounters();
+};
+
+window.addSignature = function(button){
+  const meeting = button.closest(".meeting-card");
+  const container = meeting.querySelector(".signaturesContainer");
+
+  const signatureDiv = document.createElement("div");
+  signatureDiv.className = "signature-row";
+
+  signatureDiv.innerHTML = `
+    <div>
+      <label>Name</label>
+      <input class="signatureName" placeholder="Attendee name">
+    </div>
+
+    <div>
+      <label>Signature / Initials</label>
+      <input class="signatureValue" placeholder="Signature or initials">
+    </div>
+
+    <button type="button" class="remove-btn" onclick="removeSignature(this)">🗑 Remove</button>
+  `;
+
+  container.appendChild(signatureDiv);
+};
+
+window.removeSignature = function(button){
+  button.closest(".signature-row").remove();
+};
+
+window.removeMeeting = function(button){
+  if(confirm("Do you want to remove this meeting?")){
+    button.closest(".meeting-card").remove();
+    updateCounters();
   }
 };
 
-document.getElementById("meetingForm").addEventListener("submit", async function(e){
+document.getElementById("meetingsForm").addEventListener("submit", async function(e){
   e.preventDefault();
 
-  const meetingPoints = [];
+  const meetings = [];
 
-  document.querySelectorAll(".meeting-point").forEach((point,index)=>{
-    meetingPoints.push({
+  document.querySelectorAll(".meeting-card").forEach((meeting,index)=>{
+    const activities = [];
+    const signatures = [];
+
+    meeting.querySelectorAll(".activity-row").forEach(activity=>{
+      activities.push({
+        task:activity.querySelector(".activityText").value.trim(),
+        responsible:activity.querySelector(".activityResponsible").value.trim(),
+        dueDate:activity.querySelector(".activityDueDate").value,
+        status:activity.querySelector(".activityStatus").value
+      });
+    });
+
+    meeting.querySelectorAll(".signature-row").forEach(signature=>{
+      signatures.push({
+        name:signature.querySelector(".signatureName").value.trim(),
+        signature:signature.querySelector(".signatureValue").value.trim()
+      });
+    });
+
+    meetings.push({
       number:index + 1,
-      title:point.querySelector(".pointTitle").value.trim(),
-      discussion:point.querySelector(".pointDiscussion").value.trim(),
-      decision:point.querySelector(".pointDecision").value.trim(),
-      actionRequired:point.querySelector(".pointActionRequired").value,
-      responsible:point.querySelector(".pointResponsible").value.trim(),
-      dueDate:point.querySelector(".pointDueDate").value,
-      status:point.querySelector(".pointStatus").value,
-      signatures:point.querySelector(".pointSignatures").value.trim(),
-      notes:point.querySelector(".pointNotes").value.trim()
+      meetingName:meeting.querySelector(".meetingName").value.trim(),
+      status:meeting.querySelector(".meetingStatus").value,
+      date:meeting.querySelector(".meetingDate").value,
+      time:meeting.querySelector(".meetingTime").value,
+      leader:meeting.querySelector(".meetingLeader").value.trim(),
+      location:meeting.querySelector(".meetingLocation").value.trim(),
+      pendingTasks:meeting.querySelector(".pendingTasks").value.trim(),
+      activities:activities,
+      conclusion:meeting.querySelector(".meetingConclusion").value.trim(),
+      signatures:signatures
     });
   });
 
-  const meetingData = {
-    meetingId:document.getElementById("meetingId").value.trim(),
-    status:document.getElementById("status").value,
-    date:document.getElementById("meetingDate").value,
-    time:document.getElementById("meetingTime").value,
-    leader:document.getElementById("leader").value.trim(),
-    location:document.getElementById("location").value.trim(),
-    generalAttendees:document.getElementById("generalAttendees").value.trim(),
+  const mainName = meetings[0]?.meetingName || "SMS Policy Meeting";
 
-    pendingTasks:document.getElementById("pendingTasks").value.trim(),
-    pendingResponsible:document.getElementById("pendingResponsible").value.trim(),
-    pendingDueDate:document.getElementById("pendingDueDate").value,
-    pendingComments:document.getElementById("pendingComments").value.trim(),
-
-    meetingPoints:meetingPoints,
-
-    conclusions:document.getElementById("conclusions").value.trim(),
-    nextTopics:document.getElementById("nextTopics").value.trim(),
-
+  const data = {
+    recordName:mainName,
+    meetings:meetings,
+    totalMeetings:meetings.length,
+    totalActivities:document.querySelectorAll(".activity-row").length,
     createdAt:Date.now(),
     updatedAt:new Date().toLocaleString()
   };
 
   try{
     const newRef = push(ref(db, meetingsPath));
-    await set(newRef, meetingData);
+    await set(newRef, data);
 
-    alert("SMS Policy Meeting Minutes saved successfully.");
-
-    document.getElementById("meetingForm").reset();
-    document.getElementById("pointsContainer").innerHTML = "";
-    pointCounter = 0;
-    document.getElementById("meetingDate").valueAsDate = new Date();
-    addMeetingPoint();
-
+    alert("SMS Policy Meeting saved successfully.");
   }catch(error){
     alert("Error saving meeting: " + error.message);
   }
 });
 
 window.resetForm = function(){
-  if(confirm("Do you want to clear the form?")){
-    document.getElementById("meetingForm").reset();
-    document.getElementById("pointsContainer").innerHTML = "";
-    pointCounter = 0;
-    document.getElementById("meetingDate").valueAsDate = new Date();
-    addMeetingPoint();
+  if(confirm("Do you want to clear all meetings?")){
+    document.getElementById("meetingsContainer").innerHTML = "";
+    meetingCounter = 0;
+    addMeeting();
   }
 };
 
-addMeetingPoint();
+addMeeting();
 </script>
 
 </body>
