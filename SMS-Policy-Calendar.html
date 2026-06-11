@@ -220,6 +220,9 @@ button:hover{
 .update-btn{
   background:linear-gradient(135deg,#003b66,#005f99);
 }
+  .edit-date-btn{
+  background:linear-gradient(135deg,#d97706,#f59e0b);
+}
 
 .reopen-btn{
   background:linear-gradient(135deg,#dc2626,#ef4444);
@@ -456,7 +459,7 @@ function renderCard(key,item){
       </div>
 
       <div class="actions">
-        <button class="update-btn" onclick="updateDate('${key}')">Update Date</button>
+        <button class="edit-date-btn" onclick="updateDate('${key}')">Update Date</button>
 
         ${
           completed
