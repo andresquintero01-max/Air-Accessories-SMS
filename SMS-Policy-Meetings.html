@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SMS Policy Meetings</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMS Policy Meetings</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -11,209 +11,235 @@
 body{
   font-family:'Segoe UI',Arial,sans-serif;
   min-height:100vh;
-  color:#003B66;
-  padding:40px;
   background:
-    radial-gradient(circle at top left, rgba(0,174,239,.28), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(0,59,102,.45), transparent 38%),
-    linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.95)),
-    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+  radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.94)),
+  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
   background-size:cover;
   background-position:center;
   background-attachment:fixed;
+  padding:40px;
 }
 
 .container{
-  max-width:1250px;
+  max-width:1450px;
   margin:auto;
-  background:rgba(255,255,255,.95);
-  border-radius:36px;
-  padding:36px;
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
-  backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.97);
+  border-radius:38px;
+  padding:55px;
+  box-shadow:0 28px 70px rgba(0,0,0,.38);
 }
 
-.header{
-  text-align:center;
-  color:white;
-  padding:42px 28px;
-  border-radius:30px;
-  background:
-    linear-gradient(135deg,rgba(0,59,102,.98),rgba(0,119,168,.95),rgba(0,174,239,.95));
-  box-shadow:0 18px 40px rgba(0,59,102,.35);
-  margin-bottom:30px;
-}
+.header{text-align:center;margin-bottom:42px;}
 
-.header h1{
-  font-size:42px;
-  letter-spacing:1px;
-  margin-bottom:10px;
-}
-
-.header p{
-  font-size:18px;
-  opacity:.95;
-}
-
-.badge{
-  display:inline-block;
-  margin-top:16px;
-  padding:10px 22px;
-  border-radius:30px;
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.35);
-  font-weight:800;
-}
-
-.section{
-  background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(232,247,253,.95));
-  border:1px solid rgba(0,174,239,.25);
-  border-left:9px solid #00AEF0;
+.logo{
+  width:96px;
+  height:96px;
+  margin:0 auto 20px;
   border-radius:28px;
-  padding:28px;
-  margin-bottom:24px;
-  box-shadow:0 12px 30px rgba(0,59,102,.12);
-}
-
-.section-title{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:#003B66;
-  font-size:25px;
-  margin-bottom:22px;
-  font-weight:900;
-}
-
-.icon{
-  width:48px;
-  height:48px;
-  border-radius:16px;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  color:white;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:44px;
+}
+
+.company-label{
+  color:#00aeef;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:10px;
+}
+
+h1{
+  font-size:54px;
+  color:#003b66;
+  font-weight:900;
+}
+
+.subtitle{
+  color:#536172;
+  font-size:19px;
+  font-weight:600;
+  margin-top:10px;
+}
+
+.title-line{
+  width:260px;
+  height:6px;
+  margin:25px auto 0;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
+}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:20px;
+  margin-bottom:35px;
+}
+
+.summary-card{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border-radius:24px;
+  padding:24px;
+  border:1px solid #e6eef5;
+  border-top:8px solid #00aeef;
+  box-shadow:0 14px 30px rgba(0,0,0,.11);
+  text-align:center;
+}
+
+.summary-card h2{
+  color:#003b66;
+  font-size:38px;
+  font-weight:900;
+}
+
+.summary-card p{
+  color:#536172;
+  font-weight:900;
+  margin-top:6px;
+}
+
+.section{
+  margin-bottom:34px;
+}
+
+.section-title{
+  background:linear-gradient(135deg,#003b66,#005f99);
   color:white;
-  background:linear-gradient(135deg,#003B66,#00AEF0);
-  box-shadow:0 8px 18px rgba(0,174,239,.35);
+  padding:18px 24px;
+  border-radius:20px;
+  font-size:24px;
+  font-weight:900;
+  margin-bottom:18px;
+  box-shadow:0 12px 26px rgba(0,0,0,.18);
+}
+
+.card{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border-radius:26px;
+  padding:26px;
+  margin-bottom:20px;
+  border:1px solid #e6eef5;
+  border-top:8px solid #00aeef;
+  box-shadow:0 14px 30px rgba(0,0,0,.11);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:18px;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
 }
+
+.full{grid-column:1/3;}
 
 label{
-  font-weight:800;
+  color:#003b66;
+  font-weight:900;
   display:block;
   margin-bottom:7px;
-  color:#003B66;
 }
 
-input,select,textarea{
+select,input,textarea{
   width:100%;
-  padding:14px 15px;
-  border-radius:16px;
-  border:1px solid #b8d3e1;
-  font-size:15px;
-  outline:none;
+  padding:14px;
+  border:1px solid #cfd8e3;
+  border-radius:14px;
+  font-size:14px;
   background:white;
-  transition:.25s;
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:#00AEF0;
-  box-shadow:0 0 0 4px rgba(0,174,239,.18);
+  font-family:'Segoe UI',Arial,sans-serif;
+  outline:none;
 }
 
 textarea{
-  min-height:115px;
+  min-height:95px;
   resize:vertical;
 }
 
-.required{color:#d62828;}
+select:focus,input:focus,textarea:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+}
 
 .topic-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
   gap:14px;
 }
 
 .topic-card{
   background:white;
-  border:1px solid rgba(0,174,239,.25);
+  border:1px solid #e6eef5;
   border-radius:18px;
   padding:14px;
-  display:flex;
-  gap:10px;
-  align-items:center;
-  font-weight:750;
-  box-shadow:0 8px 18px rgba(0,59,102,.08);
+  color:#003b66;
+  font-weight:900;
+  box-shadow:0 8px 18px rgba(0,0,0,.07);
 }
 
 .topic-card input{
   width:auto;
-  transform:scale(1.2);
+  margin-right:8px;
 }
 
-.outcome-box{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-}
-
-.outcome{
-  padding:16px;
-  border-radius:20px;
-  background:white;
-  border:1px solid rgba(0,174,239,.25);
-  font-weight:850;
-  text-align:center;
-}
-
-.btn-area{
+.buttons{
   display:flex;
-  flex-wrap:wrap;
-  gap:15px;
   justify-content:center;
-  margin-top:32px;
+  gap:18px;
+  margin-top:35px;
+  flex-wrap:wrap;
 }
 
 button{
   border:none;
-  padding:15px 25px;
-  border-radius:40px;
   color:white;
+  padding:16px 30px;
+  border-radius:16px;
+  font-size:16px;
   font-weight:900;
   cursor:pointer;
-  font-size:15px;
   transition:.25s;
-  box-shadow:0 10px 25px rgba(0,0,0,.20);
+  box-shadow:0 10px 22px rgba(0,0,0,.20);
 }
 
 button:hover{
   transform:translateY(-3px);
-  box-shadow:0 16px 32px rgba(0,0,0,.28);
+  filter:brightness(1.08);
 }
 
-.save-btn{background:linear-gradient(135deg,#00AEF0,#0077A8);}
-.print-btn{background:linear-gradient(135deg,#16a34a,#15803d);}
-.db-btn{background:linear-gradient(135deg,#003B66,#005f8f);}
+.save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
+.print-btn{background:linear-gradient(135deg,#111827,#374151);}
 .reset-btn{background:linear-gradient(135deg,#64748b,#334155);}
-.back-btn{background:linear-gradient(135deg,#ff9800,#f57c00);}
-.home-btn{background:linear-gradient(135deg,#111827,#374151);}
+.database-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.back-btn{background:linear-gradient(135deg,#f59e0b,#d97706);}
+.home-btn{background:linear-gradient(135deg,#003b66,#005f99);}
 
 .footer{
-  margin-top:26px;
   text-align:center;
+  margin-top:38px;
+  color:#003b66;
+  font-size:15px;
   font-weight:900;
-  color:#003B66;
+  letter-spacing:2px;
+}
+
+@media(max-width:850px){
+  body{padding:25px;}
+  .container{padding:35px 22px;border-radius:28px;}
+  h1{font-size:38px;}
+  .grid{grid-template-columns:1fr;}
+  .full{grid-column:1;}
 }
 
 @media print{
-  body{background:white;padding:0;}
-  .btn-area{display:none;}
-  .container{box-shadow:none;border-radius:0;}
+  body{background:white;padding:10px;}
+  .buttons{display:none;}
+  .container{box-shadow:none;padding:15px;}
+  .card{break-inside:avoid;}
 }
 </style>
 </head>
@@ -222,173 +248,207 @@ button:hover{
 
 <div class="container">
 
-  <div class="header">
-    <h1>Operational Safety Meeting</h1>
-    <p>Air Accessories SMS Policy • Safety Communication • Risk Awareness</p>
-    <div class="badge">371Q SMS Software • Accident Prevention Tool</div>
+<div class="header">
+  <div class="logo">🤝</div>
+  <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
+  <h1>SMS Policy Meetings</h1>
+  <div class="subtitle">Operational Safety Meeting Record • Safety Promotion • 14 CFR Part 5</div>
+  <div class="title-line"></div>
+</div>
+
+<div class="summary">
+  <div class="summary-card">
+    <h2>SMS</h2>
+    <p>SAFETY POLICY</p>
   </div>
-
-  <form id="meetingForm">
-
-    <div class="section">
-      <div class="section-title"><div class="icon">📋</div>Meeting Information</div>
-
-      <div class="grid">
-        <div>
-          <label>Meeting ID <span class="required">*</span></label>
-          <input id="meetingId" required placeholder="SM-2026-001">
-        </div>
-
-        <div>
-          <label>Date <span class="required">*</span></label>
-          <input type="date" id="meetingDate" required>
-        </div>
-
-        <div>
-          <label>Time <span class="required">*</span></label>
-          <input type="time" id="meetingTime" required>
-        </div>
-
-        <div>
-          <label>Meeting Leader <span class="required">*</span></label>
-          <input id="leader" required placeholder="Meeting leader">
-        </div>
-
-        <div>
-          <label>Location <span class="required">*</span></label>
-          <input id="location" required placeholder="OPF Hangar / Shop / Office">
-        </div>
-
-        <div>
-          <label>Status</label>
-          <select id="status">
-            <option>Open</option>
-            <option>Closed</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><div class="icon">👥</div>Attendance Record</div>
-
-      <label>Attendees <span class="required">*</span></label>
-      <textarea id="attendees" required placeholder="Write all attendees separated by commas or lines."></textarea>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><div class="icon">🛡️</div>Safety Topics Discussed</div>
-
-      <div class="topic-grid">
-        <label class="topic-card"><input type="checkbox" value="Human Factors">Human Factors</label>
-        <label class="topic-card"><input type="checkbox" value="Tool Control">Tool Control</label>
-        <label class="topic-card"><input type="checkbox" value="FOD Prevention">FOD Prevention</label>
-        <label class="topic-card"><input type="checkbox" value="LOTO Compliance">LOTO Compliance</label>
-        <label class="topic-card"><input type="checkbox" value="PPE Compliance">PPE Compliance</label>
-        <label class="topic-card"><input type="checkbox" value="Ladder Safety">Ladder Safety</label>
-        <label class="topic-card"><input type="checkbox" value="Hazmat / Shelf Life">Hazmat / Shelf Life</label>
-        <label class="topic-card"><input type="checkbox" value="MOR / VOR">MOR / VOR</label>
-        <label class="topic-card"><input type="checkbox" value="Internal Audit">Internal Audit</label>
-        <label class="topic-card"><input type="checkbox" value="Lessons Learned">Lessons Learned</label>
-        <label class="topic-card"><input type="checkbox" value="Recent Events">Recent Events</label>
-        <label class="topic-card"><input type="checkbox" value="Customer Requirements">Customer Requirements</label>
-      </div>
-
-      <br>
-
-      <label>Additional Topics / Meeting Summary <span class="required">*</span></label>
-      <textarea id="topics" required placeholder="Describe the main topics discussed during the operational safety meeting."></textarea>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><div class="icon">⚠️</div>Hazards / Safety Concerns</div>
-
-      <label>Safety Concerns Identified</label>
-      <textarea id="concerns" placeholder="Describe hazards, unsafe conditions, unsafe behaviors, audit findings, or operational risks identified."></textarea>
-
-      <br><br>
-
-      <label>Operational Impact</label>
-      <textarea id="impact" placeholder="Describe possible impact on personnel, aircraft, equipment, compliance, or customer requirements."></textarea>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><div class="icon">✅</div>Corrective / Preventive Actions</div>
-
-      <label>Actions Required</label>
-      <textarea id="actions" placeholder="Example: Coaching Form, Read & Sign, Operational Bulletin, Inspection, CPA, Follow-up."></textarea>
-
-      <br><br>
-
-      <div class="grid">
-        <div>
-          <label>Responsible Person</label>
-          <input id="responsible" placeholder="Assigned person">
-        </div>
-
-        <div>
-          <label>Due Date</label>
-          <input type="date" id="dueDate">
-        </div>
-
-        <div>
-          <label>Related CPA / Report</label>
-          <input id="relatedCpa" placeholder="Example: 26-117-7">
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><div class="icon">📌</div>Meeting Outcome</div>
-
-      <div class="outcome-box">
-        <label class="outcome"><input type="radio" name="outcome" value="No Action Required"> 🟢 No Action Required</label>
-        <label class="outcome"><input type="radio" name="outcome" value="Monitor"> 🟡 Monitor</label>
-        <label class="outcome"><input type="radio" name="outcome" value="Read & Sign Required"> 🟠 Read & Sign Required</label>
-        <label class="outcome"><input type="radio" name="outcome" value="CPA Required"> 🔴 CPA Required</label>
-      </div>
-
-      <br>
-
-      <label>Additional Notes</label>
-      <textarea id="notes" placeholder="Closure notes, evidence reference, or additional comments."></textarea>
-    </div>
-
-    <div class="btn-area">
-      <button type="submit" class="save-btn">💾 Save Meeting</button>
-      <button type="button" class="print-btn" onclick="window.print()">🖨 Print Minutes</button>
-      <button type="button" class="db-btn" onclick="window.location.href='SMS-Policy-Meetings-Database.html'">📂 Meetings Database</button>
-      <button type="button" class="reset-btn" onclick="resetForm()">🔄 Reset</button>
-      <button type="button" class="back-btn" onclick="window.location.href='SMS-Policy.html'">⬅ Back</button>
-      <button type="button" class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
-    </div>
-
-  </form>
-
-  <div class="footer">
-    Air Accessories SMS • Operational Safety Meeting Record
+  <div class="summary-card">
+    <h2>OPR</h2>
+    <p>OPERATIONAL MEETING</p>
   </div>
+  <div class="summary-card">
+    <h2>CPA</h2>
+    <p>ACTION TRACKING</p>
+  </div>
+  <div class="summary-card">
+    <h2>5.93</h2>
+    <p>SAFETY COMMUNICATION</p>
+  </div>
+</div>
+
+<form id="meetingForm">
+
+<div class="section">
+  <div class="section-title">MEETING INFORMATION</div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label>Meeting ID *</label>
+        <input id="meetingId" placeholder="SM-2026-001" required>
+      </div>
+
+      <div>
+        <label>Status</label>
+        <select id="status">
+          <option value="Open">Open</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Date *</label>
+        <input type="date" id="meetingDate" required>
+      </div>
+
+      <div>
+        <label>Time *</label>
+        <input type="time" id="meetingTime" required>
+      </div>
+
+      <div>
+        <label>Meeting Leader *</label>
+        <input id="leader" placeholder="Meeting leader" required>
+      </div>
+
+      <div>
+        <label>Location *</label>
+        <input id="location" placeholder="OPF Hangar / Shop / Office" required>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">ATTENDANCE RECORD</div>
+
+  <div class="card">
+    <label>Attendees *</label>
+    <textarea id="attendees" placeholder="List all attendees..." required></textarea>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">SAFETY TOPICS DISCUSSED</div>
+
+  <div class="card">
+    <div class="topic-grid">
+      <label class="topic-card"><input type="checkbox" value="Human Factors">Human Factors</label>
+      <label class="topic-card"><input type="checkbox" value="Tool Control">Tool Control</label>
+      <label class="topic-card"><input type="checkbox" value="FOD Prevention">FOD Prevention</label>
+      <label class="topic-card"><input type="checkbox" value="LOTO Compliance">LOTO Compliance</label>
+      <label class="topic-card"><input type="checkbox" value="PPE Compliance">PPE Compliance</label>
+      <label class="topic-card"><input type="checkbox" value="Ladder Safety">Ladder Safety</label>
+      <label class="topic-card"><input type="checkbox" value="Hazmat / Shelf Life">Hazmat / Shelf Life</label>
+      <label class="topic-card"><input type="checkbox" value="MOR / VOR">MOR / VOR</label>
+      <label class="topic-card"><input type="checkbox" value="Internal Audit">Internal Audit</label>
+      <label class="topic-card"><input type="checkbox" value="Lessons Learned">Lessons Learned</label>
+      <label class="topic-card"><input type="checkbox" value="Recent Events">Recent Events</label>
+      <label class="topic-card"><input type="checkbox" value="Customer Requirements">Customer Requirements</label>
+    </div>
+
+    <br>
+
+    <label>Meeting Summary *</label>
+    <textarea id="topics" placeholder="Describe the main topics discussed during the operational safety meeting." required></textarea>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">HAZARDS / SAFETY CONCERNS</div>
+
+  <div class="card">
+    <div class="grid">
+      <div class="full">
+        <label>Safety Concerns Identified</label>
+        <textarea id="concerns" placeholder="Describe hazards, unsafe conditions, unsafe behaviors, audit findings, or operational risks identified."></textarea>
+      </div>
+
+      <div class="full">
+        <label>Operational Impact</label>
+        <textarea id="impact" placeholder="Describe possible impact on personnel, aircraft, equipment, compliance, or customer requirements."></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">CORRECTIVE / PREVENTIVE ACTIONS</div>
+
+  <div class="card">
+    <div class="grid">
+      <div class="full">
+        <label>Actions Required</label>
+        <textarea id="actions" placeholder="Example: Coaching Form, Read & Sign, Operational Bulletin, Inspection, CPA, Follow-up."></textarea>
+      </div>
+
+      <div>
+        <label>Responsible Person</label>
+        <input id="responsible" placeholder="Assigned person">
+      </div>
+
+      <div>
+        <label>Due Date</label>
+        <input type="date" id="dueDate">
+      </div>
+
+      <div>
+        <label>Related CPA / Report</label>
+        <input id="relatedCpa" placeholder="Example: 26-117-7">
+      </div>
+
+      <div>
+        <label>Meeting Outcome</label>
+        <select id="outcome">
+          <option value="">Select Outcome</option>
+          <option value="No Action Required">No Action Required</option>
+          <option value="Monitor">Monitor</option>
+          <option value="Read & Sign Required">Read & Sign Required</option>
+          <option value="CPA Required">CPA Required</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label>Additional Notes</label>
+        <textarea id="notes" placeholder="Closure notes, evidence reference, or additional comments."></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="buttons">
+  <button type="submit" class="save-btn">💾 Save Meeting</button>
+  <button type="button" class="print-btn" onclick="window.print()">🖨️ Print</button>
+  <button type="button" class="database-btn" onclick="window.location.href='SMS-Policy-Meetings-Database.html'">📂 Database</button>
+  <button type="button" class="reset-btn" onclick="resetForm()">🔄 Reset</button>
+  <button type="button" class="back-btn" onclick="window.location.href='SMS-Policy.html'">← Back</button>
+  <button type="button" class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+</div>
+
+</form>
+
+<div class="footer">
+  371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+</div>
 
 </div>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-/* PEGA AQUÍ EL MISMO FIREBASE CONFIG DE AIR ACCESSORIES */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const meetingsPath = "smsPolicyMeetings";
 
 document.getElementById("meetingDate").valueAsDate = new Date();
 
@@ -399,17 +459,15 @@ document.getElementById("meetingForm").addEventListener("submit", async function
     document.querySelectorAll(".topic-card input:checked")
   ).map(item => item.value);
 
-  const selectedOutcome = document.querySelector("input[name='outcome']:checked");
-
   const meetingData = {
     meetingId: document.getElementById("meetingId").value.trim(),
+    status: document.getElementById("status").value,
     date: document.getElementById("meetingDate").value,
     time: document.getElementById("meetingTime").value,
     leader: document.getElementById("leader").value.trim(),
     location: document.getElementById("location").value.trim(),
-    status: document.getElementById("status").value,
     attendees: document.getElementById("attendees").value.trim(),
-    selectedTopics: selectedTopics,
+    selectedTopics:selectedTopics,
     topics: document.getElementById("topics").value.trim(),
     concerns: document.getElementById("concerns").value.trim(),
     impact: document.getElementById("impact").value.trim(),
@@ -417,16 +475,18 @@ document.getElementById("meetingForm").addEventListener("submit", async function
     responsible: document.getElementById("responsible").value.trim(),
     dueDate: document.getElementById("dueDate").value,
     relatedCpa: document.getElementById("relatedCpa").value.trim(),
-    outcome: selectedOutcome ? selectedOutcome.value : "",
+    outcome: document.getElementById("outcome").value,
     notes: document.getElementById("notes").value.trim(),
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    updatedAt: new Date().toLocaleString()
   };
 
   try{
-    const newRef = push(ref(db, "smsPolicyMeetings"));
+    const newRef = push(ref(db, meetingsPath));
     await set(newRef, meetingData);
 
-    alert("Operational Safety Meeting saved successfully.");
+    alert("SMS Policy Meeting saved successfully.");
+
     document.getElementById("meetingForm").reset();
     document.getElementById("meetingDate").valueAsDate = new Date();
 
@@ -441,7 +501,6 @@ window.resetForm = function(){
     document.getElementById("meetingDate").valueAsDate = new Date();
   }
 };
-
 </script>
 
 </body>
