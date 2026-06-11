@@ -327,6 +327,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const calendarPath = "smsPolicyCalendar";
+  let allCalendarItems = {};
 
 function todayISO(){
   return new Date().toISOString().split("T")[0];
@@ -348,17 +349,37 @@ function nextDate(date, frequency){
 }
 
 window.quickAdd = function(title, frequency, category){
+
+  const existingItems = Object.values(allCalendarItems || {}).filter(item =>
+    item.title === title &&
+    item.frequency === frequency
+  );
+
+  let dueDate = todayISO();
+
+  if(existingItems.length > 0){
+
+    existingItems.sort((a,b)=>{
+      return (a.dueDate || "").localeCompare(b.dueDate || "");
+    });
+
+    const lastItem = existingItems[existingItems.length - 1];
+
+    dueDate = nextDate(lastItem.dueDate, frequency);
+  }
+
   const newRef = push(ref(db, calendarPath));
 
   set(newRef,{
     title:title,
     frequency:frequency,
     category:category,
-    dueDate:todayISO(),
+    dueDate:dueDate,
     status:"OPEN",
     createdAt:new Date().toLocaleString(),
     updatedAt:new Date().toLocaleString()
   });
+
 };
 
 window.markCompleted = function(key){
@@ -461,6 +482,7 @@ function loadCalendar(){
     }
 
     const data = snapshot.val();
+    allCalendarItems = data;
 
     const groups = {
       MONTHLY:[],
