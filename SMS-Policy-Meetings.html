@@ -104,9 +104,7 @@ h1{
   margin-top:6px;
 }
 
-.section{
-  margin-bottom:34px;
-}
+.section{margin-bottom:34px;}
 
 .section-title{
   background:linear-gradient(135deg,#003b66,#005f99);
@@ -165,25 +163,28 @@ select:focus,input:focus,textarea:focus{
   box-shadow:0 0 0 4px rgba(0,174,239,.14);
 }
 
-.topic-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:14px;
-}
-
-.topic-card{
-  background:white;
-  border:1px solid #e6eef5;
-  border-radius:18px;
-  padding:14px;
+.meeting-point-title{
   color:#003b66;
+  font-size:22px;
   font-weight:900;
-  box-shadow:0 8px 18px rgba(0,0,0,.07);
+  margin-bottom:16px;
 }
 
-.topic-card input{
-  width:auto;
-  margin-right:8px;
+.point-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:15px;
+}
+
+.remove-point{
+  background:linear-gradient(135deg,#dc2626,#991b1b);
+  padding:11px 20px;
+  font-size:14px;
+}
+
+.add-point-btn{
+  background:linear-gradient(135deg,#00aeef,#0284c7);
+  margin-top:10px;
 }
 
 .buttons{
@@ -237,7 +238,7 @@ button:hover{
 
 @media print{
   body{background:white;padding:10px;}
-  .buttons{display:none;}
+  .buttons,.point-actions,.add-point-btn{display:none;}
   .container{box-shadow:none;padding:15px;}
   .card{break-inside:avoid;}
 }
@@ -249,29 +250,29 @@ button:hover{
 <div class="container">
 
 <div class="header">
-  <div class="logo">🤝</div>
+  <div class="logo">📝</div>
   <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
   <h1>SMS Policy Meetings</h1>
-  <div class="subtitle">Operational Safety Meeting Record • Safety Promotion • 14 CFR Part 5</div>
+  <div class="subtitle">Operational Safety Meeting Minutes • Safety Promotion • 14 CFR Part 5</div>
   <div class="title-line"></div>
 </div>
 
 <div class="summary">
   <div class="summary-card">
-    <h2>SMS</h2>
-    <p>SAFETY POLICY</p>
+    <h2>ACTA</h2>
+    <p>MEETING MINUTES</p>
   </div>
   <div class="summary-card">
-    <h2>OPR</h2>
-    <p>OPERATIONAL MEETING</p>
-  </div>
-  <div class="summary-card">
-    <h2>CPA</h2>
-    <p>ACTION TRACKING</p>
+    <h2 id="pointCount">1</h2>
+    <p>MEETING POINTS</p>
   </div>
   <div class="summary-card">
     <h2>5.93</h2>
     <p>SAFETY COMMUNICATION</p>
+  </div>
+  <div class="summary-card">
+    <h2>SMS</h2>
+    <p>SAFETY POLICY</p>
   </div>
 </div>
 
@@ -314,109 +315,71 @@ button:hover{
         <label>Location *</label>
         <input id="location" placeholder="OPF Hangar / Shop / Office" required>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <div class="section-title">ATTENDANCE RECORD</div>
-
-  <div class="card">
-    <label>Attendees *</label>
-    <textarea id="attendees" placeholder="List all attendees..." required></textarea>
-  </div>
-</div>
-
-<div class="section">
-  <div class="section-title">SAFETY TOPICS DISCUSSED</div>
-
-  <div class="card">
-    <div class="topic-grid">
-      <label class="topic-card"><input type="checkbox" value="Human Factors">Human Factors</label>
-      <label class="topic-card"><input type="checkbox" value="Tool Control">Tool Control</label>
-      <label class="topic-card"><input type="checkbox" value="FOD Prevention">FOD Prevention</label>
-      <label class="topic-card"><input type="checkbox" value="LOTO Compliance">LOTO Compliance</label>
-      <label class="topic-card"><input type="checkbox" value="PPE Compliance">PPE Compliance</label>
-      <label class="topic-card"><input type="checkbox" value="Ladder Safety">Ladder Safety</label>
-      <label class="topic-card"><input type="checkbox" value="Hazmat / Shelf Life">Hazmat / Shelf Life</label>
-      <label class="topic-card"><input type="checkbox" value="MOR / VOR">MOR / VOR</label>
-      <label class="topic-card"><input type="checkbox" value="Internal Audit">Internal Audit</label>
-      <label class="topic-card"><input type="checkbox" value="Lessons Learned">Lessons Learned</label>
-      <label class="topic-card"><input type="checkbox" value="Recent Events">Recent Events</label>
-      <label class="topic-card"><input type="checkbox" value="Customer Requirements">Customer Requirements</label>
-    </div>
-
-    <br>
-
-    <label>Meeting Summary *</label>
-    <textarea id="topics" placeholder="Describe the main topics discussed during the operational safety meeting." required></textarea>
-  </div>
-</div>
-
-<div class="section">
-  <div class="section-title">HAZARDS / SAFETY CONCERNS</div>
-
-  <div class="card">
-    <div class="grid">
-      <div class="full">
-        <label>Safety Concerns Identified</label>
-        <textarea id="concerns" placeholder="Describe hazards, unsafe conditions, unsafe behaviors, audit findings, or operational risks identified."></textarea>
-      </div>
 
       <div class="full">
-        <label>Operational Impact</label>
-        <textarea id="impact" placeholder="Describe possible impact on personnel, aircraft, equipment, compliance, or customer requirements."></textarea>
+        <label>General Attendees / Attendance List *</label>
+        <textarea id="generalAttendees" placeholder="Write the full attendance list for the meeting." required></textarea>
       </div>
     </div>
   </div>
 </div>
 
 <div class="section">
-  <div class="section-title">CORRECTIVE / PREVENTIVE ACTIONS</div>
+  <div class="section-title">PENDING TASKS FROM PREVIOUS MEETING</div>
 
   <div class="card">
     <div class="grid">
       <div class="full">
-        <label>Actions Required</label>
-        <textarea id="actions" placeholder="Example: Coaching Form, Read & Sign, Operational Bulletin, Inspection, CPA, Follow-up."></textarea>
+        <label>Pending Tasks / Open Items</label>
+        <textarea id="pendingTasks" placeholder="Write pending tasks from the previous meeting, open actions, follow-ups, or items still under review."></textarea>
       </div>
 
       <div>
         <label>Responsible Person</label>
-        <input id="responsible" placeholder="Assigned person">
+        <input id="pendingResponsible" placeholder="Person responsible for previous pending tasks">
       </div>
 
       <div>
-        <label>Due Date</label>
-        <input type="date" id="dueDate">
-      </div>
-
-      <div>
-        <label>Related CPA / Report</label>
-        <input id="relatedCpa" placeholder="Example: 26-117-7">
-      </div>
-
-      <div>
-        <label>Meeting Outcome</label>
-        <select id="outcome">
-          <option value="">Select Outcome</option>
-          <option value="No Action Required">No Action Required</option>
-          <option value="Monitor">Monitor</option>
-          <option value="Read & Sign Required">Read & Sign Required</option>
-          <option value="CPA Required">CPA Required</option>
-        </select>
+        <label>Expected Closure Date</label>
+        <input type="date" id="pendingDueDate">
       </div>
 
       <div class="full">
-        <label>Additional Notes</label>
-        <textarea id="notes" placeholder="Closure notes, evidence reference, or additional comments."></textarea>
+        <label>Status / Comments</label>
+        <textarea id="pendingComments" placeholder="Describe current status, comments, or progress of pending tasks."></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">MEETING POINTS / AGENDA ITEMS</div>
+
+  <div id="pointsContainer"></div>
+
+  <button type="button" class="add-point-btn" onclick="addMeetingPoint()">➕ Add Meeting Point</button>
+</div>
+
+<div class="section">
+  <div class="section-title">GENERAL CONCLUSIONS</div>
+
+  <div class="card">
+    <div class="grid">
+      <div class="full">
+        <label>Meeting Conclusions</label>
+        <textarea id="conclusions" placeholder="Write final conclusions, safety decisions, agreements, or general outcomes."></textarea>
+      </div>
+
+      <div class="full">
+        <label>Next Meeting Topics</label>
+        <textarea id="nextTopics" placeholder="Write topics to be reviewed in the next meeting."></textarea>
       </div>
     </div>
   </div>
 </div>
 
 <div class="buttons">
-  <button type="submit" class="save-btn">💾 Save Meeting</button>
+  <button type="submit" class="save-btn">💾 Save Meeting Minutes</button>
   <button type="button" class="print-btn" onclick="window.print()">🖨️ Print</button>
   <button type="button" class="database-btn" onclick="window.location.href='SMS-Policy-Meetings-Database.html'">📂 Database</button>
   <button type="button" class="reset-btn" onclick="resetForm()">🔄 Reset</button>
@@ -450,45 +413,149 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const meetingsPath = "smsPolicyMeetings";
 
+let pointCounter = 0;
+
 document.getElementById("meetingDate").valueAsDate = new Date();
+
+function updatePointCount(){
+  document.getElementById("pointCount").innerText = document.querySelectorAll(".meeting-point").length;
+}
+
+window.addMeetingPoint = function(){
+  pointCounter++;
+
+  const pointDiv = document.createElement("div");
+  pointDiv.className = "card meeting-point";
+  pointDiv.setAttribute("data-point", pointCounter);
+
+  pointDiv.innerHTML = `
+    <div class="meeting-point-title">Meeting Point ${pointCounter}</div>
+
+    <div class="grid">
+      <div class="full">
+        <label>Point / Topic *</label>
+        <input class="pointTitle" placeholder="Write meeting point or agenda topic" required>
+      </div>
+
+      <div class="full">
+        <label>Discussion / Description</label>
+        <textarea class="pointDiscussion" placeholder="Write what was discussed for this point."></textarea>
+      </div>
+
+      <div class="full">
+        <label>Decision / Agreement</label>
+        <textarea class="pointDecision" placeholder="Write decision, agreement, or conclusion for this point."></textarea>
+      </div>
+
+      <div>
+        <label>Action Required</label>
+        <select class="pointActionRequired">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+          <option value="Monitor">Monitor</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Responsible Person</label>
+        <input class="pointResponsible" placeholder="Assigned person">
+      </div>
+
+      <div>
+        <label>Due Date</label>
+        <input type="date" class="pointDueDate">
+      </div>
+
+      <div>
+        <label>Status</label>
+        <select class="pointStatus">
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label>Attendees / Signatures for This Point</label>
+        <textarea class="pointSignatures" placeholder="Write names or signatures of attendees related to this meeting point."></textarea>
+      </div>
+
+      <div class="full">
+        <label>Notes / Evidence Reference</label>
+        <textarea class="pointNotes" placeholder="Write notes, evidence references, links, or follow-up comments."></textarea>
+      </div>
+    </div>
+
+    <div class="point-actions">
+      <button type="button" class="remove-point" onclick="removeMeetingPoint(this)">🗑 Remove Point</button>
+    </div>
+  `;
+
+  document.getElementById("pointsContainer").appendChild(pointDiv);
+  updatePointCount();
+};
+
+window.removeMeetingPoint = function(button){
+  if(confirm("Do you want to remove this meeting point?")){
+    button.closest(".meeting-point").remove();
+    updatePointCount();
+  }
+};
 
 document.getElementById("meetingForm").addEventListener("submit", async function(e){
   e.preventDefault();
 
-  const selectedTopics = Array.from(
-    document.querySelectorAll(".topic-card input:checked")
-  ).map(item => item.value);
+  const meetingPoints = [];
+
+  document.querySelectorAll(".meeting-point").forEach((point,index)=>{
+    meetingPoints.push({
+      number:index + 1,
+      title:point.querySelector(".pointTitle").value.trim(),
+      discussion:point.querySelector(".pointDiscussion").value.trim(),
+      decision:point.querySelector(".pointDecision").value.trim(),
+      actionRequired:point.querySelector(".pointActionRequired").value,
+      responsible:point.querySelector(".pointResponsible").value.trim(),
+      dueDate:point.querySelector(".pointDueDate").value,
+      status:point.querySelector(".pointStatus").value,
+      signatures:point.querySelector(".pointSignatures").value.trim(),
+      notes:point.querySelector(".pointNotes").value.trim()
+    });
+  });
 
   const meetingData = {
-    meetingId: document.getElementById("meetingId").value.trim(),
-    status: document.getElementById("status").value,
-    date: document.getElementById("meetingDate").value,
-    time: document.getElementById("meetingTime").value,
-    leader: document.getElementById("leader").value.trim(),
-    location: document.getElementById("location").value.trim(),
-    attendees: document.getElementById("attendees").value.trim(),
-    selectedTopics:selectedTopics,
-    topics: document.getElementById("topics").value.trim(),
-    concerns: document.getElementById("concerns").value.trim(),
-    impact: document.getElementById("impact").value.trim(),
-    actions: document.getElementById("actions").value.trim(),
-    responsible: document.getElementById("responsible").value.trim(),
-    dueDate: document.getElementById("dueDate").value,
-    relatedCpa: document.getElementById("relatedCpa").value.trim(),
-    outcome: document.getElementById("outcome").value,
-    notes: document.getElementById("notes").value.trim(),
-    createdAt: Date.now(),
-    updatedAt: new Date().toLocaleString()
+    meetingId:document.getElementById("meetingId").value.trim(),
+    status:document.getElementById("status").value,
+    date:document.getElementById("meetingDate").value,
+    time:document.getElementById("meetingTime").value,
+    leader:document.getElementById("leader").value.trim(),
+    location:document.getElementById("location").value.trim(),
+    generalAttendees:document.getElementById("generalAttendees").value.trim(),
+
+    pendingTasks:document.getElementById("pendingTasks").value.trim(),
+    pendingResponsible:document.getElementById("pendingResponsible").value.trim(),
+    pendingDueDate:document.getElementById("pendingDueDate").value,
+    pendingComments:document.getElementById("pendingComments").value.trim(),
+
+    meetingPoints:meetingPoints,
+
+    conclusions:document.getElementById("conclusions").value.trim(),
+    nextTopics:document.getElementById("nextTopics").value.trim(),
+
+    createdAt:Date.now(),
+    updatedAt:new Date().toLocaleString()
   };
 
   try{
     const newRef = push(ref(db, meetingsPath));
     await set(newRef, meetingData);
 
-    alert("SMS Policy Meeting saved successfully.");
+    alert("SMS Policy Meeting Minutes saved successfully.");
 
     document.getElementById("meetingForm").reset();
+    document.getElementById("pointsContainer").innerHTML = "";
+    pointCounter = 0;
     document.getElementById("meetingDate").valueAsDate = new Date();
+    addMeetingPoint();
 
   }catch(error){
     alert("Error saving meeting: " + error.message);
@@ -498,9 +565,14 @@ document.getElementById("meetingForm").addEventListener("submit", async function
 window.resetForm = function(){
   if(confirm("Do you want to clear the form?")){
     document.getElementById("meetingForm").reset();
+    document.getElementById("pointsContainer").innerHTML = "";
+    pointCounter = 0;
     document.getElementById("meetingDate").valueAsDate = new Date();
+    addMeetingPoint();
   }
 };
+
+addMeetingPoint();
 </script>
 
 </body>
