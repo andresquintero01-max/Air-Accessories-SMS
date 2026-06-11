@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SMS Policy Meetings</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  background:
+  radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.94)),
+  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  padding:40px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  border-radius:34px;
+  padding:38px;
+  box-shadow:0 25px 70px rgba(0,0,0,.35);
+}
+
+.header{
+  text-align:center;
+  padding:35px;
+  border-radius:28px;
+  color:white;
+  background:linear-gradient(135deg,#003B66,#0077A8,#00AEF0);
+  margin-bottom:30px;
+}
+
+.header h1{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.header p{
+  font-size:17px;
+  opacity:.95;
+}
+
+.section{
+  background:#f4f9fc;
+  border-left:8px solid #00AEF0;
+  padding:25px;
+  border-radius:22px;
+  margin-bottom:25px;
+}
+
+.section h2{
+  color:#003B66;
+  margin-bottom:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:18px;
+}
+
+label{
+  font-weight:700;
+  color:#003B66;
+  margin-bottom:6px;
+  display:block;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid #b7c9d6;
+  font-size:15px;
+  background:white;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.btn-area{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  justify-content:center;
+  margin-top:30px;
+}
+
+button{
+  border:none;
+  padding:14px 24px;
+  border-radius:40px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.25s;
+}
+
+button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.save-btn{
+  background:linear-gradient(135deg,#00AEF0,#0077A8);
+  color:white;
+}
+
+.reset-btn{
+  background:linear-gradient(135deg,#6c757d,#495057);
+  color:white;
+}
+
+.db-btn{
+  background:linear-gradient(135deg,#003B66,#005f8f);
+  color:white;
+}
+
+.back-btn{
+  background:linear-gradient(135deg,#ff9800,#f57c00);
+  color:white;
+}
+
+.home-btn{
+  background:linear-gradient(135deg,#111827,#374151);
+  color:white;
+}
+
+.footer{
+  text-align:center;
+  color:#003B66;
+  font-weight:700;
+  margin-top:25px;
+}
+
+.required{
+  color:#d62828;
+}
+
+.status-box{
+  padding:15px;
+  border-radius:18px;
+  background:#e8f7fd;
+  color:#003B66;
+  font-weight:800;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>Operational Safety Meeting</h1>
+    <p>Air Accessories SMS Policy • Safety Communication & Operational Risk Awareness</p>
+  </div>
+
+  <form id="meetingForm">
+
+    <div class="section">
+      <h2>Meeting Information</h2>
+
+      <div class="grid">
+        <div>
+          <label>Meeting ID <span class="required">*</span></label>
+          <input type="text" id="meetingId" placeholder="SM-2026-001" required>
+        </div>
+
+        <div>
+          <label>Date <span class="required">*</span></label>
+          <input type="date" id="meetingDate" required>
+        </div>
+
+        <div>
+          <label>Time <span class="required">*</span></label>
+          <input type="time" id="meetingTime" required>
+        </div>
+
+        <div>
+          <label>Meeting Leader <span class="required">*</span></label>
+          <input type="text" id="leader" placeholder="Meeting leader" required>
+        </div>
+
+        <div>
+          <label>Location <span class="required">*</span></label>
+          <input type="text" id="location" placeholder="OPF Hangar / Shop / Office" required>
+        </div>
+
+        <div>
+          <label>Status</label>
+          <select id="status">
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Meeting Content</h2>
+
+      <label>Attendees <span class="required">*</span></label>
+      <textarea id="attendees" placeholder="List all attendees..." required></textarea>
+
+      <br><br>
+
+      <label>Topics Discussed <span class="required">*</span></label>
+      <textarea id="topics" placeholder="LOTO, PPE, FOD prevention, tool control, ladder safety, MOR/VOR, recent events..." required></textarea>
+
+      <br><br>
+
+      <label>Safety Concerns / Hazards Identified</label>
+      <textarea id="concerns" placeholder="Describe any hazard, unsafe condition, unsafe behavior, or operational concern identified during the meeting."></textarea>
+
+      <br><br>
+
+      <label>Corrective / Preventive Actions</label>
+      <textarea id="actions" placeholder="Describe Read & Sign, coaching form, operational bulletin, follow-up, inspection, or CPA required."></textarea>
+    </div>
+
+    <div class="section">
+      <h2>Follow-Up</h2>
+
+      <div class="grid">
+        <div>
+          <label>Responsible Person</label>
+          <input type="text" id="responsible" placeholder="Person assigned">
+        </div>
+
+        <div>
+          <label>Due Date</label>
+          <input type="date" id="dueDate">
+        </div>
+
+        <div>
+          <label>Related CPA / Report Number</label>
+          <input type="text" id="relatedCpa" placeholder="Example: 26-117-7">
+        </div>
+      </div>
+
+      <br>
+
+      <label>Additional Notes</label>
+      <textarea id="notes" placeholder="Additional comments, evidence reference, or closure notes."></textarea>
+    </div>
+
+    <div class="status-box">
+      This meeting record will be saved under Firebase path: smsPolicyMeetings
+    </div>
+
+    <div class="btn-area">
+      <button type="submit" class="save-btn">💾 Save Meeting</button>
+      <button type="button" class="reset-btn" onclick="resetForm()">🔄 Reset</button>
+      <button type="button" class="db-btn" onclick="window.location.href='SMS-Policy-Meetings-Database.html'">📂 Meetings Database</button>
+      <button type="button" class="back-btn" onclick="window.location.href='SMS-Policy.html'">⬅ Back</button>
+      <button type="button" class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+    </div>
+
+  </form>
+
+  <div class="footer">
+    371Q SMS Software • Accident Prevention Tool
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* PEGA AQUÍ EL MISMO FIREBASE CONFIG DE AIR ACCESSORIES */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+document.getElementById("meetingDate").valueAsDate = new Date();
+
+document.getElementById("meetingForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const meetingData = {
+    meetingId: document.getElementById("meetingId").value.trim(),
+    date: document.getElementById("meetingDate").value,
+    time: document.getElementById("meetingTime").value,
+    leader: document.getElementById("leader").value.trim(),
+    location: document.getElementById("location").value.trim(),
+    status: document.getElementById("status").value,
+    attendees: document.getElementById("attendees").value.trim(),
+    topics: document.getElementById("topics").value.trim(),
+    concerns: document.getElementById("concerns").value.trim(),
+    actions: document.getElementById("actions").value.trim(),
+    responsible: document.getElementById("responsible").value.trim(),
+    dueDate: document.getElementById("dueDate").value,
+    relatedCpa: document.getElementById("relatedCpa").value.trim(),
+    notes: document.getElementById("notes").value.trim(),
+    createdAt: Date.now()
+  };
+
+  try{
+    const newRef = push(ref(db, "smsPolicyMeetings"));
+    await set(newRef, meetingData);
+
+    alert("Operational Safety Meeting saved successfully.");
+    document.getElementById("meetingForm").reset();
+    document.getElementById("meetingDate").valueAsDate = new Date();
+
+  }catch(error){
+    alert("Error saving meeting: " + error.message);
+  }
+});
+
+window.resetForm = function(){
+  if(confirm("Do you want to clear the form?")){
+    document.getElementById("meetingForm").reset();
+    document.getElementById("meetingDate").valueAsDate = new Date();
+  }
+};
+
+</script>
+
+</body>
+</html>
