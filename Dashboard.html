@@ -168,7 +168,22 @@ function renderDashboard(){
 
   let months = {};
   let categories = {};
+let morCount = 0;
+let vorCount = 0;
 
+let totalCPA = 0;
+let openCPA = 0;
+let closedCPA = 0;
+
+let totalEventCost = 0;
+let costDrivers = {};
+
+let factors = {};
+
+let fiveWhys = 0;
+let shell = 0;
+let bowTie = 0;
+let dirtyDozen = 0;
   smsReports.forEach(r => {
 
     if(isReportClosed(r)) closed++;
@@ -214,6 +229,47 @@ function renderDashboard(){
 
     const category = r.category || r.eventType || r.reportType || "Other";
     categories[category] = (categories[category] || 0) + 1;
+    const type = (r.reportType || "").toUpperCase();
+
+if(type === "MOR") morCount++;
+if(type === "VOR") vorCount++;
+
+const factor = r.contributingFactor || "Not Classified";
+factors[factor] = (factors[factor] || 0) + 1;
+
+if(r.totalCost){
+  totalEventCost += Number(r.totalCost) || 0;
+}
+
+if(r.costs){
+  Object.values(r.costs).forEach(cost=>{
+    const desc = cost.description || "Other Cost";
+    const amount = Number(cost.amount) || 0;
+
+    costDrivers[desc] = (costDrivers[desc] || 0) + amount;
+  });
+}
+
+if(r.CPA){
+  Object.values(r.CPA).forEach(cpa=>{
+    totalCPA++;
+
+    const cpaStatus = (cpa.status || "OPEN").toUpperCase();
+
+    if(cpaStatus === "CLOSED"){
+      closedCPA++;
+    }else{
+      openCPA++;
+    }
+  });
+}
+
+if(r.investigationModules){
+  if(r.investigationModules.fiveWhys === true) fiveWhys++;
+  if(r.investigationModules.shell === true) shell++;
+  if(r.investigationModules.bowTie === true) bowTie++;
+  if(r.investigationModules.dirtyDozen === true) dirtyDozen++;
+}
   });
 
   let medaOpen = 0, medaClosed = 0;
@@ -246,6 +302,12 @@ function renderDashboard(){
   setText("closedReports", closed);
   setText("notAcceptable", notAcceptable);
   setText("safetyScore", safetyScore + "%");
+  setText("totalCPA", totalCPA);
+setText("openCPA", openCPA);
+setText("closedCPA", closedCPA);
+setText("totalCost", "$" + totalEventCost.toLocaleString());
+setText("morCount", morCount);
+setText("vorCount", vorCount);
 
   setText("medaTotal", medaReports.length);
   setText("medaOpen", medaOpen);
@@ -269,6 +331,16 @@ function renderDashboard(){
 
   createBar("categoryChart",Object.keys(categories),Object.values(categories),"Reports by Category",[COLORS.blue,COLORS.cyan,COLORS.green,COLORS.red,COLORS.gray]);
 
+createBar("cpaChart",["Total CPA","Open CPA","Closed CPA"],[totalCPA,openCPA,closedCPA],"CPA Status Monitoring",[COLORS.blue,COLORS.red,COLORS.green]);
+
+createBar("factorChart",Object.keys(factors),Object.values(factors),"Contributing Factors",[COLORS.blue,COLORS.cyan,COLORS.green,COLORS.orange,COLORS.red]);
+
+createPie("typeChart",["MOR","VOR"],[morCount,vorCount],"MOR vs VOR",[COLORS.red,COLORS.green]);
+
+createBar("investigationChart",["5 Whys","SHELL","Bow-Tie","Dirty Dozen"],[fiveWhys,shell,bowTie,dirtyDozen],"Investigation Modules Used",[COLORS.blue,COLORS.cyan,COLORS.orange,COLORS.purple]);
+
+createBar("costChart",Object.keys(costDrivers),Object.values(costDrivers),"Event Cost Drivers",[COLORS.orange,COLORS.red,COLORS.yellow,COLORS.blue,COLORS.green]);
+  
   createBar("medaChart",["Total MEDA","Open","Closed"],[medaReports.length,medaOpen,medaClosed],"MEDA Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
 
   createPie("mocInitialRiskChart",["Low","Medium","High","Extreme","Not Assessed"],[initialMoc.low,initialMoc.medium,initialMoc.high,initialMoc.extreme,initialMoc.notAssessed],"MOC Initial Risk Distribution",[COLORS.green,COLORS.yellow,COLORS.orange,COLORS.red,COLORS.gray]);
@@ -652,6 +724,12 @@ canvas{
     <div class="card green"><h2 id="closedReports">0</h2><p>Closed Reports</p></div>
     <div class="card red"><h2 id="notAcceptable">0</h2><p>Not Acceptable Risk</p></div>
     <div class="card"><h2 id="safetyScore">100%</h2><p>Executive Safety Score</p></div>
+    <div class="card orange"><h2 id="totalCPA">0</h2><p>Total CPA</p></div>
+<div class="card purple"><h2 id="openCPA">0</h2><p>Open CPA</p></div>
+<div class="card green"><h2 id="closedCPA">0</h2><p>Closed CPA</p></div>
+<div class="card yellow"><h2 id="totalCost">$0</h2><p>Total Event Cost</p></div>
+<div class="card"><h2 id="morCount">0</h2><p>MOR Reports</p></div>
+<div class="card purple"><h2 id="vorCount">0</h2><p>VOR Reports</p></div>
   </div>
 
   <div class="database-btn-wrapper">
@@ -672,6 +750,11 @@ canvas{
     <div class="charts-column">
       <div class="chart-box"><canvas id="residualRiskChart"></canvas></div>
       <div class="chart-box"><canvas id="categoryChart"></canvas></div>
+      <div class="chart-box"><canvas id="cpaChart"></canvas></div>
+<div class="chart-box"><canvas id="factorChart"></canvas></div>
+<div class="chart-box"><canvas id="typeChart"></canvas></div>
+<div class="chart-box"><canvas id="investigationChart"></canvas></div>
+<div class="chart-box"><canvas id="costChart"></canvas></div>
     </div>
   </div>
 
