@@ -349,11 +349,26 @@ if(r.investigationModules){
     else mocOpen++;
   });
 
-  let auditOpen = 0, auditClosed = 0;
+  let auditOpen = 0;
+let auditClosed = 0;
+let internalAudits = 0;
+let externalAudits = 0;
   auditData.forEach(a => {
-    if(isReportClosed(a)) auditClosed++;
-    else auditOpen++;
-  });
+
+  if(isReportClosed(a))
+    auditClosed++;
+  else
+    auditOpen++;
+
+  const type = (a.auditType || a.type || a.category || "").toLowerCase();
+
+  if(type.includes("internal"))
+    internalAudits++;
+
+  if(type.includes("external"))
+    externalAudits++;
+
+});
 
   const initialMoc = countMocRisk("initial", mocData);
 const residualMoc = countMocRisk("residual", mocData);
@@ -385,6 +400,8 @@ setText("mocClosed", mocClosed);
 setText("auditTotal", auditData.length);
 setText("auditOpen", auditOpen);
 setText("auditClosed", auditClosed);
+setText("internalAudits", internalAudits);
+setText("externalAudits", externalAudits);
 
   createPie("riskChart",["Acceptable","Tolerable","Not Acceptable","Not Assessed"],[acceptable,tolerable,notAcceptable,notAssessed],"Risk Distribution",[COLORS.green,COLORS.yellow,COLORS.red,COLORS.gray]);
 
@@ -1020,10 +1037,31 @@ canvas{
     <div class="module-monitor-title">Audit Monitoring</div>
 
     <div class="cards">
-      <div class="card"><h2 id="auditTotal">0</h2><p>Total Audits</p></div>
-      <div class="card purple"><h2 id="auditOpen">0</h2><p>Open Audits</p></div>
-      <div class="card green"><h2 id="auditClosed">0</h2><p>Closed Audits</p></div>
-    </div>
+  <div class="card">
+    <h2 id="auditTotal">0</h2>
+    <p>Total Audits</p>
+  </div>
+
+  <div class="card purple">
+    <h2 id="auditOpen">0</h2>
+    <p>Open Audits</p>
+  </div>
+
+  <div class="card green">
+    <h2 id="auditClosed">0</h2>
+    <p>Closed Audits</p>
+  </div>
+
+  <div class="card orange">
+    <h2 id="internalAudits">0</h2>
+    <p>Internal Audits</p>
+  </div>
+
+  <div class="card yellow">
+    <h2 id="externalAudits">0</h2>
+    <p>External Audits</p>
+  </div>
+</div>
 
     <div class="database-btn-wrapper">
       <button class="database-btn" onclick="openDatabase('Safety-Assurance-Audit-Database.html')">
