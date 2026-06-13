@@ -189,28 +189,21 @@ let dirtyDozen = 0;
     if(isReportClosed(r)) closed++;
     else open++;
 
-    const riskText = (
-      r.riskLevel ||
-      r.riskAssessment ||
-      r.initialRiskLevel ||
-      r.riskCategory ||
-      ""
-    ).toString().toLowerCase();
+    const riskCode = (r.risk || "").toString().toUpperCase();
 
-    const riskValue = Number(
-      r.riskValue ||
-      r.riskScore ||
-      r.risk ||
-      r.initialRiskValue ||
-      r.initialRiskScore ||
-      r.initialRisk ||
-      0
-    );
+const lowRisk = ["C1","D2","E3","D1","E2","E1"];
+const mediumRisk = ["A1","B2","C3","D4","E5","B1","C2","D3","E4"];
+const highRisk = ["A2","B3","C4","D5","A5","A4","A3","B5","B4","C5"];
 
-    if(riskText.includes("not") || riskValue >= 15) notAcceptable++;
-    else if(riskText.includes("tolerable") || riskText.includes("mor") || (riskValue >= 5 && riskValue <= 14)) tolerable++;
-    else if(riskText.includes("acceptable") || (riskValue >= 1 && riskValue <= 4)) acceptable++;
-    else notAssessed++;
+if(lowRisk.includes(riskCode)){
+  acceptable++;
+}else if(mediumRisk.includes(riskCode)){
+  tolerable++;
+}else if(highRisk.includes(riskCode)){
+  notAcceptable++;
+}else{
+  notAssessed++;
+}
 
     const residualData = getResidualData(r);
     const residualText = residualData.text;
