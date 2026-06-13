@@ -500,7 +500,59 @@ h1{
   font-weight:900;
   letter-spacing:2px;
 }
+.cost-btn{
+  background:linear-gradient(135deg,#0f766e,#00aeef);
+  color:white;
+  border:none;
+  border-radius:15px;
+  padding:13px 21px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:14px;
+  box-shadow:0 9px 20px rgba(0,0,0,0.22);
+}
 
+.cost-area{
+  margin-top:18px;
+  display:none;
+  background:#f0fdff;
+  padding:22px;
+  border-radius:22px;
+  border:1px solid #bae6fd;
+  position:relative;
+  z-index:2;
+}
+
+.cost-area h3{
+  color:#003b66;
+  margin-top:0;
+}
+
+.cost-row{
+  display:grid;
+  grid-template-columns:2fr 1fr auto;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.cost-row input{
+  width:100%;
+  padding:13px;
+  border-radius:14px;
+  border:1px solid #cfd8e3;
+  font-size:14px;
+}
+
+.cost-total{
+  margin-top:16px;
+  padding:16px;
+  border-radius:18px;
+  background:white;
+  color:#003b66;
+  font-size:22px;
+  font-weight:900;
+  border:1px solid #e6eef5;
+}
 @media(max-width:900px){
   body{
     padding:18px;
@@ -802,7 +854,111 @@ return "NOT ACCEPTABLE 🔴";
 return "NOT ASSESSED";
 
 }
+window.showCosts = function(key){
 
+const box = document.getElementById("cost-"+key);
+box.style.display = box.style.display === "block" ? "none" : "block";
+
+const list = document.getElementById("cost-list-"+key);
+
+if(list.children.length === 0){
+
+const report = allReports.find(r => r.key === key);
+const savedCosts = report?.item?.costs || [];
+
+if(savedCosts.length > 0){
+
+savedCosts.forEach(cost=>{
+addCostRow(key,cost.description,cost.amount);
+});
+
+}else{
+
+addCostRow(key,"","");
+
+}
+
+}
+
+calculateCostTotal(key);
+
+};
+
+window.addCostRow = function(key,description="",amount=""){
+
+const list = document.getElementById("cost-list-"+key);
+
+const row = document.createElement("div");
+row.className = "cost-row";
+
+row.innerHTML = `
+
+<input type="text" class="cost-description-${key}" placeholder="Cost Description" value="${description || ""}">
+
+<input type="number" class="cost-amount-${key}" placeholder="Amount $" value="${amount || ""}" oninput="calculateCostTotal('${key}')">
+
+<button class="delete-btn" onclick="this.parentElement.remove(); calculateCostTotal('${key}')">
+X
+</button>
+
+`;
+
+list.appendChild(row);
+
+calculateCostTotal(key);
+
+};
+
+window.calculateCostTotal = function(key){
+
+let total = 0;
+
+document.querySelectorAll(".cost-amount-"+key).forEach(input=>{
+total += Number(input.value) || 0;
+});
+
+document.getElementById("cost-total-"+key).innerText =
+"Total Event Cost: $" + total.toLocaleString();
+
+return total;
+
+};
+
+window.saveCosts = function(key){
+
+const descriptions = document.querySelectorAll(".cost-description-"+key);
+const amounts = document.querySelectorAll(".cost-amount-"+key);
+
+let costs = [];
+
+descriptions.forEach((input,index)=>{
+
+const description = input.value.trim();
+const amount = Number(amounts[index].value) || 0;
+
+if(description !== "" || amount > 0){
+costs.push({
+description:description,
+amount:amount
+});
+}
+
+});
+
+const totalCost = calculateCostTotal(key);
+
+update(ref(db,"smsReports/"+key),{
+costs:costs,
+totalCost:totalCost,
+updatedAt:new Date().toLocaleString()
+}).then(()=>{
+
+alert("Costs saved successfully.");
+location.reload();
+
+});
+
+};
 function renderReports(reports){
 
 container.innerHTML = "";
@@ -927,6 +1083,10 @@ ${reportType}
 ${manualStatus}
 </button>
 
+<button class="cost-btn" onclick="showCosts('${key}')">
+💰 Costs
+</button>
+
 <button class="edit-btn" onclick="showEdit('${key}')">
 Edit
 </button>
@@ -1030,6 +1190,28 @@ ${item.recommendation || "N/A"}
 
 <button class="save-btn" onclick="saveEdit('${key}')">
 Save Changes
+</button>
+
+</div>
+
+<div class="cost-area" id="cost-${key}">
+
+<h3>💰 Event Costs</h3>
+
+<div id="cost-list-${key}"></div>
+
+<button class="edit-btn" onclick="addCostRow('${key}')">
++ Add Cost
+</button>
+
+<div class="cost-total" id="cost-total-${key}">
+Total Event Cost: $${Number(item.totalCost || 0).toLocaleString()}
+</div>
+
+<br>
+
+<button class="save-btn" onclick="saveCosts('${key}')">
+Save Costs
 </button>
 
 </div>
