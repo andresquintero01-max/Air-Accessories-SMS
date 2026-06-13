@@ -360,13 +360,15 @@ let externalAudits = 0;
   else
     auditOpen++;
 
-  const type = (a.auditType || a.type || a.category || "").toLowerCase();
+ const auditCategory = (a.auditCategory || "").toLowerCase();
 
-  if(type.includes("internal"))
-    internalAudits++;
+if(auditCategory === "internal audit"){
+  internalAudits++;
+}
 
-  if(type.includes("external"))
-    externalAudits++;
+if(auditCategory === "external audit"){
+  externalAudits++;
+}
 
 });
 
@@ -1036,7 +1038,7 @@ canvas{
   <div class="module-card-container">
     <div class="module-monitor-title">Audit Monitoring</div>
 
-    <div class="cards">
+   <div class="cards">
   <div class="card">
     <h2 id="auditTotal">0</h2>
     <p>Total Audits</p>
@@ -1063,24 +1065,16 @@ canvas{
   </div>
 </div>
 
-    <div class="database-btn-wrapper">
-      <button class="database-btn" onclick="openDatabase('Safety-Assurance-Audit-Database.html')">
-        🛡️ Open Audit Database
-      </button>
-    </div>
-  </div>
-
-  <div class="module-chart-box">
-    <canvas id="auditChart"></canvas>
-  </div>
+<div class="database-btn-wrapper">
+  <button class="database-btn" onclick="openDatabase('Safety-Assurance-Audit-Database.html')">
+    🛡️ Open Audit Database
+  </button>
 </div>
-
-<button class="home-btn" onclick="goBack()">
-  <span class="home-icon">🏠</span>
-  Back to Home
-</button>
 
 </div>
 
-</body>
-</html>
+<div class="module-chart-box">
+  <canvas id="auditChart"></canvas>
+</div>
+
+</div>
