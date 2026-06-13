@@ -205,14 +205,21 @@ if(lowRisk.includes(riskCode)){
   notAssessed++;
 }
 
-    const residualData = getResidualData(r);
-    const residualText = residualData.text;
-    const residualValue = residualData.value;
+   const residualCode = (r.residualRisk || "").toString().toUpperCase();
 
-    if(residualText.includes("not acceptable") || residualText.includes("red") || residualValue >= 15) residualNotAcceptable++;
-    else if(residualText.includes("tolerable") || residualText.includes("mor") || residualText.includes("yellow") || residualText.includes("orange") || (residualValue >= 5 && residualValue <= 14)) residualTolerable++;
-    else if(residualText.includes("acceptable") || residualText.includes("green") || (residualValue >= 1 && residualValue <= 4)) residualAcceptable++;
-    else residualNotAssessed++;
+const lowResidual = ["C1","D2","E3","D1","E2","E1"];
+const mediumResidual = ["A1","B2","C3","D4","E5","B1","C2","D3","E4"];
+const highResidual = ["A2","B3","C4","D5","A5","A4","A3","B5","B4","C5"];
+
+if(lowResidual.includes(residualCode)){
+  residualAcceptable++;
+}else if(mediumResidual.includes(residualCode)){
+  residualTolerable++;
+}else if(highResidual.includes(residualCode)){
+  residualNotAcceptable++;
+}else{
+  residualNotAssessed++;
+}
 
     const dateValue = getDate(r);
     if(dateValue){
@@ -549,17 +556,14 @@ h1{
 }
 
 .charts-columns{
-  display:flex;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
   gap:30px;
   margin-top:30px;
-  align-items:flex-start;
 }
 
 .charts-column{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:30px;
+  display:contents;
 }
 
 .chart-box,
@@ -732,114 +736,23 @@ canvas{
   </div>
 
   <div class="section-title">Charts</div>
+<div class="charts-columns">
 
-  <div class="charts-columns">
-    <div class="charts-column">
-      <div class="chart-box"><canvas id="riskChart"></canvas></div>
-      <div class="chart-box"><canvas id="statusChart"></canvas></div>
-      <div class="chart-box"><canvas id="monthChart"></canvas></div>
-    </div>
+  <div class="chart-box"><canvas id="riskChart"></canvas></div>
+  <div class="chart-box"><canvas id="residualRiskChart"></canvas></div>
 
-    <div class="charts-column">
-      <div class="chart-box"><canvas id="residualRiskChart"></canvas></div>
-      <div class="chart-box"><canvas id="categoryChart"></canvas></div>
-      <div class="chart-box"><canvas id="cpaChart"></canvas></div>
-<div class="chart-box"><canvas id="factorChart"></canvas></div>
-<div class="chart-box"><canvas id="typeChart"></canvas></div>
-<div class="chart-box"><canvas id="investigationChart"></canvas></div>
-<div class="chart-box"><canvas id="costChart"></canvas></div>
-    </div>
-  </div>
+  <div class="chart-box"><canvas id="statusChart"></canvas></div>
+  <div class="chart-box"><canvas id="categoryChart"></canvas></div>
 
-  <div class="module-container">
-    <div class="module-title-wrapper">
-      <div class="module-line"></div>
-      <div class="module-main-title">MEDA</div>
-      <div class="module-line"></div>
-    </div>
+  <div class="chart-box"><canvas id="monthChart"></canvas></div>
+  <div class="chart-box"><canvas id="cpaChart"></canvas></div>
 
-    <div class="module-card-container">
-      <div class="module-monitor-title">MEDA Monitoring</div>
+  <div class="chart-box"><canvas id="factorChart"></canvas></div>
+  <div class="chart-box"><canvas id="typeChart"></canvas></div>
 
-      <div class="cards">
-        <div class="card"><h2 id="medaTotal">0</h2><p>Total MEDA</p></div>
-        <div class="card purple"><h2 id="medaOpen">0</h2><p>Open MEDA</p></div>
-        <div class="card green"><h2 id="medaClosed">0</h2><p>Closed MEDA</p></div>
-      </div>
-
-      <div class="database-btn-wrapper">
-        <button class="database-btn" onclick="openDatabase('MEDA-Database.html')">
-          🔎 Open MEDA Database
-        </button>
-      </div>
-    </div>
-
-    <div class="module-chart-box"><canvas id="medaChart"></canvas></div>
-  </div>
-
-  <div class="module-container">
-    <div class="module-title-wrapper">
-      <div class="module-line"></div>
-      <div class="module-main-title">MOC</div>
-      <div class="module-line"></div>
-    </div>
-
-    <div class="module-card-container">
-      <div class="module-monitor-title">Management of Change Monitoring</div>
-
-      <div class="cards">
-        <div class="card"><h2 id="mocTotal">0</h2><p>Total MOC</p></div>
-        <div class="card purple"><h2 id="mocOpen">0</h2><p>Open MOC</p></div>
-        <div class="card green"><h2 id="mocClosed">0</h2><p>Closed MOC</p></div>
-      </div>
-
-      <div class="database-btn-wrapper">
-        <button class="database-btn" onclick="openDatabase('Safety-Assurance-Management-of-Change-Database.html')">
-          🔄 Open Management of Change Database
-        </button>
-      </div>
-    </div>
-
-    <div class="moc-risk-grid">
-      <div class="module-chart-box"><canvas id="mocInitialRiskChart"></canvas></div>
-      <div class="module-chart-box"><canvas id="mocResidualRiskChart"></canvas></div>
-    </div>
-
-    <div class="module-chart-box"><canvas id="mocStatusChart"></canvas></div>
-  </div>
-
-  <div class="module-container">
-    <div class="module-title-wrapper">
-      <div class="module-line"></div>
-      <div class="module-main-title">AUDIT</div>
-      <div class="module-line"></div>
-    </div>
-
-    <div class="module-card-container">
-      <div class="module-monitor-title">Audit Monitoring</div>
-
-      <div class="cards">
-        <div class="card"><h2 id="auditTotal">0</h2><p>Total Audits</p></div>
-        <div class="card purple"><h2 id="auditOpen">0</h2><p>Open Audits</p></div>
-        <div class="card green"><h2 id="auditClosed">0</h2><p>Closed Audits</p></div>
-      </div>
-
-      <div class="database-btn-wrapper">
-        <button class="database-btn" onclick="openDatabase('Safety-Assurance-Audit-Database.html')">
-          🛡️ Open Audit Database
-        </button>
-      </div>
-    </div>
-
-    <div class="module-chart-box"><canvas id="auditChart"></canvas></div>
-  </div>
-
-  <button class="home-btn" onclick="goBack()">
-    <span class="home-icon">🏠</span>
-    Back to Home
-  </button>
+  <div class="chart-box"><canvas id="investigationChart"></canvas></div>
+  <div class="chart-box"><canvas id="costChart"></canvas></div>
 
 </div>
 
-</body>
-</html>
+<div class="module-container">
