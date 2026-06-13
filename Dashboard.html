@@ -135,11 +135,12 @@ function getMocRiskLevel(r,type){
   return "Not Assessed";
 }
 
-function countMocRisk(type){
+function countMocRisk(type, data){
   let low = 0, medium = 0, high = 0, extreme = 0, notAssessed = 0;
 
-  mocReports.forEach(r => {
+  data.forEach(r => {
     const risk = getMocRiskLevel(r,type).toLowerCase();
+
     if(risk.includes("low")) low++;
     else if(risk.includes("medium")) medium++;
     else if(risk.includes("high")) high++;
@@ -149,10 +150,74 @@ function countMocRisk(type){
 
   return {low,medium,high,extreme,notAssessed};
 }
+let activeFilters = {};
 
+function getRiskGroup(r){
+  const riskCode = (r.risk || r.initialRiskCode || r.riskCode || "").toString().toUpperCase();
+
+  const low = ["C1","D2","E3","D1","E2","E1"];
+  const medium = ["A1","B2","C3","D4","E5","B1","C2","D3","E4"];
+  const high = ["A2","B3","C4","D5","A5","A4","A3","B5","B4","C5"];
+
+  if(low.includes(riskCode)) return "acceptable";
+  if(medium.includes(riskCode)) return "tolerable";
+  if(high.includes(riskCode)) return "not acceptable";
+  return "not assessed";
+}
+
+function applyFiltersToArray(data, moduleName){
+  return data.filter(r => {
+    const text = JSON.stringify(r).toLowerCase();
+    const reportDate = getDate(r);
+    const status = isReportClosed(r) ? "closed" : "open";
+    const riskGroup = getRiskGroup(r);
+
+    if(activeFilters.module && activeFilters.module !== moduleName) return false;
+    if(activeFilters.status && activeFilters.status !== status) return false;
+    if(activeFilters.risk && activeFilters.risk !== riskGroup) return false;
+    if(activeFilters.search && !text.includes(activeFilters.search)) return false;
+    if(activeFilters.from && reportDate && reportDate < activeFilters.from) return false;
+    if(activeFilters.to && reportDate && reportDate > activeFilters.to) return false;
+
+    return true;
+  });
+}
+
+window.toggleDashboardFilters = function(){
+  document.getElementById("dashboardFilterPanel").classList.toggle("show");
+};
+
+window.applyDashboardFilters = function(){
+  activeFilters = {
+    module: document.getElementById("filterModule").value,
+    status: document.getElementById("filterStatus").value,
+    risk: document.getElementById("filterRisk").value,
+    search: document.getElementById("filterSearch").value.toLowerCase().trim(),
+    from: document.getElementById("filterFrom").value,
+    to: document.getElementById("filterTo").value
+  };
+
+  renderDashboard();
+};
+
+window.clearDashboardFilters = function(){
+  activeFilters = {};
+
+  document.getElementById("filterModule").value = "";
+  document.getElementById("filterStatus").value = "";
+  document.getElementById("filterRisk").value = "";
+  document.getElementById("filterSearch").value = "";
+  document.getElementById("filterFrom").value = "";
+  document.getElementById("filterTo").value = "";
+
+  renderDashboard();
+};
 function renderDashboard(){
-
-  let total = smsReports.length;
+  const smsData = applyFiltersToArray(smsReports, "SMS");
+  const medaData = applyFiltersToArray(medaReports, "MEDA");
+  const mocData = applyFiltersToArray(mocReports, "MOC");
+  const auditData = applyFiltersToArray(auditReports, "AUDIT");
+  let total = smsData.length;
   let open = 0;
   let closed = 0;
 
@@ -184,7 +249,7 @@ let fiveWhys = 0;
 let shell = 0;
 let bowTie = 0;
 let dirtyDozen = 0;
-  smsReports.forEach(r => {
+  smsData.forEach(r => {
 
     if(isReportClosed(r)) closed++;
     else open++;
@@ -273,25 +338,25 @@ if(r.investigationModules){
   });
 
   let medaOpen = 0, medaClosed = 0;
-  medaReports.forEach(m => {
+  medaData.forEach(m => {
     if(isReportClosed(m)) medaClosed++;
     else medaOpen++;
   });
 
   let mocOpen = 0, mocClosed = 0;
-  mocReports.forEach(m => {
+  mocData.forEach(m => {
     if(isReportClosed(m)) mocClosed++;
     else mocOpen++;
   });
 
   let auditOpen = 0, auditClosed = 0;
-  auditReports.forEach(a => {
+  auditData.forEach(a => {
     if(isReportClosed(a)) auditClosed++;
     else auditOpen++;
   });
 
-  const initialMoc = countMocRisk("initial");
-  const residualMoc = countMocRisk("residual");
+  const initialMoc = countMocRisk("initial", mocData);
+const residualMoc = countMocRisk("residual", mocData);
 
   const safetyScore =
     total === 0 ? 100 :
@@ -309,17 +374,17 @@ setText("totalCost", "$" + totalEventCost.toLocaleString());
 setText("morCount", morCount);
 setText("vorCount", vorCount);
 
-  setText("medaTotal", medaReports.length);
-  setText("medaOpen", medaOpen);
-  setText("medaClosed", medaClosed);
+  setText("medaTotal", medaData.length);
+setText("medaOpen", medaOpen);
+setText("medaClosed", medaClosed);
 
-  setText("mocTotal", mocReports.length);
-  setText("mocOpen", mocOpen);
-  setText("mocClosed", mocClosed);
+setText("mocTotal", mocData.length);
+setText("mocOpen", mocOpen);
+setText("mocClosed", mocClosed);
 
-  setText("auditTotal", auditReports.length);
-  setText("auditOpen", auditOpen);
-  setText("auditClosed", auditClosed);
+setText("auditTotal", auditData.length);
+setText("auditOpen", auditOpen);
+setText("auditClosed", auditClosed);
 
   createPie("riskChart",["Acceptable","Tolerable","Not Acceptable","Not Assessed"],[acceptable,tolerable,notAcceptable,notAssessed],"Risk Distribution",[COLORS.green,COLORS.yellow,COLORS.red,COLORS.gray]);
 
@@ -341,15 +406,15 @@ createBar("investigationChart",["5 Whys","SHELL","Bow-Tie","Dirty Dozen"],[fiveW
 
 createBar("costChart",Object.keys(costDrivers),Object.values(costDrivers),"Event Cost Drivers",[COLORS.orange,COLORS.red,COLORS.yellow,COLORS.blue,COLORS.green]);
   
-  createBar("medaChart",["Total MEDA","Open","Closed"],[medaReports.length,medaOpen,medaClosed],"MEDA Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
+  createBar("medaChart",["Total MEDA","Open","Closed"],[medaData.length,medaOpen,medaClosed],"MEDA Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
 
   createPie("mocInitialRiskChart",["Low","Medium","High","Extreme","Not Assessed"],[initialMoc.low,initialMoc.medium,initialMoc.high,initialMoc.extreme,initialMoc.notAssessed],"MOC Initial Risk Distribution",[COLORS.green,COLORS.yellow,COLORS.orange,COLORS.red,COLORS.gray]);
 
   createPie("mocResidualRiskChart",["Low","Medium","High","Extreme","Not Assessed"],[residualMoc.low,residualMoc.medium,residualMoc.high,residualMoc.extreme,residualMoc.notAssessed],"MOC Residual Risk Distribution",[COLORS.green,COLORS.yellow,COLORS.orange,COLORS.red,COLORS.gray]);
 
-  createBar("mocStatusChart",["Total MOC","Open","Closed"],[mocReports.length,mocOpen,mocClosed],"MOC Status Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
+  createBar("mocStatusChart",["Total MOC","Open","Closed"],[mocData.length,mocOpen,mocClosed],"MOC Status Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
 
-  createBar("auditChart",["Total Audits","Open","Closed"],[auditReports.length,auditOpen,auditClosed],"Audit Status Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
+  createBar("auditChart",["Total Audits","Open","Closed"],[auditData.length,auditOpen,auditClosed],"Audit Status Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
 }
 
 function loadSMSReports(){
@@ -666,7 +731,63 @@ canvas{
   border-radius:12px;
   font-size:26px;
 }
+.filter-wrapper{
+  margin:0 0 35px;
+  text-align:center;
+}
 
+.filter-main-btn{
+  padding:18px 38px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(135deg,#003b66,#00aeef);
+  color:white;
+  font-size:22px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,0.28);
+}
+
+.filter-panel{
+  display:none;
+  margin-top:24px;
+  background:linear-gradient(135deg,#f4f8fb,#ffffff);
+  border-radius:28px;
+  padding:28px;
+  box-shadow:0 10px 28px rgba(0,0,0,0.15);
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.filter-panel.show{
+  display:grid;
+}
+
+.filter-panel input,
+.filter-panel select{
+  padding:16px;
+  border-radius:16px;
+  border:2px solid #dbeafe;
+  font-size:16px;
+  font-weight:700;
+  color:#003b66;
+  outline:none;
+}
+
+.filter-panel button{
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#003b66,#00aeef);
+  color:white;
+  font-size:17px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.clear-filter-btn{
+  background:linear-gradient(135deg,#7f1d1d,#e74c3c)!important;
+}
 @media(max-width:900px){
   .charts-columns,
   .moc-risk-grid{
@@ -712,7 +833,58 @@ canvas{
       </div>
     </div>
   </div>
+<div class="filter-wrapper">
 
+  <button class="filter-main-btn" onclick="toggleDashboardFilters()">
+    🔎 Advanced Dashboard Filters
+  </button>
+
+  <div id="dashboardFilterPanel" class="filter-panel">
+
+    <select id="filterModule">
+      <option value="">All Modules</option>
+      <option value="SMS">SMS Reports</option>
+      <option value="MEDA">MEDA</option>
+      <option value="MOC">MOC</option>
+      <option value="AUDIT">AUDIT</option>
+    </select>
+
+    <select id="filterStatus">
+      <option value="">All Status</option>
+      <option value="open">Open</option>
+      <option value="closed">Closed</option>
+    </select>
+
+    <select id="filterRisk">
+      <option value="">All Risk Levels</option>
+      <option value="acceptable">Acceptable</option>
+      <option value="tolerable">Tolerable</option>
+      <option value="not acceptable">Not Acceptable</option>
+      <option value="not assessed">Not Assessed</option>
+    </select>
+
+    <input
+      id="filterSearch"
+      type="text"
+      placeholder="Search anything..."
+    >
+
+    <input id="filterFrom" type="date">
+    <input id="filterTo" type="date">
+
+    <button onclick="applyDashboardFilters()">
+      Apply Filters
+    </button>
+
+    <button
+      class="clear-filter-btn"
+      onclick="clearDashboardFilters()">
+      Clear
+    </button>
+
+  </div>
+
+</div>
   <div class="section-title">Executive Summary</div>
 
   <div class="cards">
