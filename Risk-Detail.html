@@ -1117,7 +1117,35 @@ window.sendCPAEmail=function(email,type,action,date,cpaNumber,pdfUrl){
   "?subject="+subject+
   "&body="+body;
 };
+window.toggleCPAStatus=function(id,btn){
 
+const current=
+btn.innerText.trim();
+
+const newStatus=
+current==="OPEN" ? "CLOSED" : "OPEN";
+
+update(
+ref(db,
+"smsReports/"+key+"/CPA/"+id),
+{
+status:newStatus
+}
+).then(()=>{
+
+btn.innerText=newStatus;
+
+if(newStatus==="CLOSED"){
+btn.classList.add("closed");
+btn.style.background="linear-gradient(135deg,#15803d,#22c55e)";
+}else{
+btn.classList.remove("closed");
+btn.style.background="linear-gradient(135deg,#dc2626,#ef4444)";
+}
+
+});
+
+}
 window.deleteCPA=async function(id,pdfPath){
   if(!confirm("Delete this CPA?")) return;
 
@@ -1163,6 +1191,12 @@ function loadCPA(data){
     Action: ${safeText(x.actionPlan)}<br>
     Date: ${safeText(x.actionDate)}<br>
     Email: ${safeText(x.emailTo)}<br><br>
+    <button
+    class="send-btn ${x.status==='CLOSED'?'closed':''}"
+    style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}"
+    onclick="toggleCPAStatus('${id}',this)">
+    ${x.status || 'OPEN'}
+    </button>
     <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
     ${x.pdfUrl ? `<button class="send-btn" onclick="window.open('${safeAttr(x.pdfUrl)}','_blank')">Open Document</button>` : ""}
     `;
