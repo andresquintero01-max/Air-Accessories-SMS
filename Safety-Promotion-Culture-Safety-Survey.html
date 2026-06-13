@@ -1,1 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Air Accessories Safety Survey</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  min-height:100vh;
+  background:
+  radial-gradient(circle at top left, rgba(0,174,239,.25), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,59,102,.35), transparent 35%),
+  linear-gradient(rgba(2,23,48,.88), rgba(2,23,48,.94)),
+  url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  padding:40px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);
+  border-radius:38px;
+  padding:55px;
+  box-shadow:0 28px 70px rgba(0,0,0,.38);
+}
+
+.header{text-align:center;margin-bottom:40px;}
+
+.logo{
+  width:96px;
+  height:96px;
+  margin:0 auto 20px;
+  border-radius:28px;
+  background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:44px;
+  box-shadow:0 16px 34px rgba(0,0,0,.28);
+}
+
+.company-label{
+  color:#00aeef;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:10px;
+}
+
+h1{
+  font-size:56px;
+  color:#003b66;
+  margin-bottom:12px;
+  font-weight:900;
+}
+
+.subtitle{
+  color:#536172;
+  font-size:19px;
+  font-weight:600;
+}
+
+.title-line{
+  width:260px;
+  height:6px;
+  margin:25px auto 0;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
+}
+
+.form-section{
+  background:linear-gradient(135deg,#ffffff,#f8fcff);
+  border-radius:30px;
+  padding:32px;
+  border:1px solid #e6eef5;
+  box-shadow:0 14px 30px rgba(0,0,0,.11);
+  margin-bottom:28px;
+}
+
+.section-title{
+  color:#003b66;
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:22px;
+  border-left:8px solid #00aeef;
+  padding-left:14px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+
+label{
+  color:#003b66;
+  font-weight:900;
+  margin-bottom:8px;
+  display:block;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  border:1px solid #cfd8e3;
+  font-size:15px;
+  background:#f9fbfd;
+  outline:none;
+}
+
+textarea{min-height:120px;resize:vertical;}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#00aeef;
+  box-shadow:0 0 0 4px rgba(0,174,239,.14);
+  background:white;
+}
+
+.question-card{
+  background:#f8fcff;
+  border:1px solid #e6eef5;
+  border-left:8px solid #00aeef;
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.question-card p{
+  color:#003b66;
+  font-size:17px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:35px;
+}
+
+.btn{
+  border:none;
+  color:white;
+  padding:17px 34px;
+  border-radius:16px;
+  font-size:17px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 12px 26px rgba(0,0,0,.20);
+}
+
+.btn:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
+
+.save-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
+.new-btn{background:linear-gradient(135deg,#00aeef,#0284c7);}
+.back-btn{background:linear-gradient(135deg,#003b66,#005f99);}
+.dashboard-btn{background:linear-gradient(135deg,#6d28d9,#00aeef);}
+
+.footer{
+  text-align:center;
+  margin-top:38px;
+  color:#003b66;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+@media(max-width:800px){
+  body{padding:25px;}
+  .container{padding:35px 22px;border-radius:28px;}
+  h1{font-size:40px;}
+  .btn{width:100%;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">📋</div>
+    <div class="company-label">AIR ACCESSORIES & AVIONICS</div>
+    <h1>Safety Survey</h1>
+    <div class="subtitle">
+      Safety Culture • Employee Perception • SMS Continuous Improvement
+    </div>
+    <div class="title-line"></div>
+  </div>
+
+  <div class="form-section">
+    <div class="section-title">Employee Information</div>
+
+    <div class="grid">
+      <div>
+        <label>Employee Name</label>
+        <input id="employeeName" placeholder="Enter employee name">
+      </div>
+
+      <div>
+        <label>Employee Number</label>
+        <input id="employeeNumber" placeholder="Enter employee number">
+      </div>
+
+      <div>
+        <label>Date</label>
+        <input id="surveyDate" type="date">
+      </div>
+
+      <div>
+        <label>Department / Area</label>
+        <input id="department" placeholder="Maintenance, QC, Stores, Admin...">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="section-title">Safety Culture Questions</div>
+
+    <div class="question-card">
+      <p>1. I feel comfortable reporting safety hazards or concerns.</p>
+      <select id="q1">
+        <option value="">Select answer</option>
+        <option>Strongly Agree</option>
+        <option>Agree</option>
+        <option>Neutral</option>
+        <option>Disagree</option>
+        <option>Strongly Disagree</option>
+      </select>
+    </div>
+
+    <div class="question-card">
+      <p>2. Management supports safety reporting and corrective actions.</p>
+      <select id="q2">
+        <option value="">Select answer</option>
+        <option>Strongly Agree</option>
+        <option>Agree</option>
+        <option>Neutral</option>
+        <option>Disagree</option>
+        <option>Strongly Disagree</option>
+      </select>
+    </div>
+
+    <div class="question-card">
+      <p>3. I receive enough safety information, alerts, bulletins, or lessons learned.</p>
+      <select id="q3">
+        <option value="">Select answer</option>
+        <option>Strongly Agree</option>
+        <option>Agree</option>
+        <option>Neutral</option>
+        <option>Disagree</option>
+        <option>Strongly Disagree</option>
+      </select>
+    </div>
+
+    <div class="question-card">
+      <p>4. Safety procedures are clear and easy to follow.</p>
+      <select id="q4">
+        <option value="">Select answer</option>
+        <option>Strongly Agree</option>
+        <option>Agree</option>
+        <option>Neutral</option>
+        <option>Disagree</option>
+        <option>Strongly Disagree</option>
+      </select>
+    </div>
+
+    <div class="question-card">
+      <p>5. I have the proper tools, equipment, and resources to work safely.</p>
+      <select id="q5">
+        <option value="">Select answer</option>
+        <option>Strongly Agree</option>
+        <option>Agree</option>
+        <option>Neutral</option>
+        <option>Disagree</option>
+        <option>Strongly Disagree</option>
+      </select>
+    </div>
+
+    <div class="question-card">
+      <p>6. Corrective actions are communicated and followed up properly.</p>
+      <select id="q6">
+        <option value="">Select answer</option>
+        <option>Strongly Agree</option>
+        <option>Agree</option>
+        <option>Neutral</option>
+        <option>Disagree</option>
+        <option>Strongly Disagree</option>
+      </select>
+    </div>
+
+    <div class="question-card">
+      <p>7. What safety improvement would you recommend?</p>
+      <textarea id="recommendation" placeholder="Write employee recommendation here..."></textarea>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="btn save-btn" onclick="saveSurvey()">💾 Save Survey</button>
+    <button class="btn new-btn" onclick="newSurvey()">➕ New Survey / Another Person</button>
+    <button class="btn back-btn" onclick="location.href='Safety-Promotion-Culture.html'">← Safety Promotion Culture</button>
+    <button class="btn dashboard-btn" onclick="location.href='Dashboard.html'">📊 Dashboard</button>
+  </div>
+
+  <div class="footer">
+    371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+  authDomain: "air-accessories-sms.firebaseapp.com",
+  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
+  projectId: "air-accessories-sms",
+  storageBucket: "air-accessories-sms.firebasestorage.app",
+  messagingSenderId: "1051190584016",
+  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+document.getElementById("surveyDate").value =
+new Date().toISOString().split("T")[0];
+
+function getValue(id){
+  return document.getElementById(id).value.trim();
+}
+
+window.saveSurvey = function(){
+
+  const employeeName = getValue("employeeName");
+  const employeeNumber = getValue("employeeNumber");
+  const surveyDate = getValue("surveyDate");
+
+  if(employeeName === "" || employeeNumber === "" || surveyDate === ""){
+    alert("Please complete Employee Name, Employee Number, and Date.");
+    return;
+  }
+
+  const surveyData = {
+    employeeName,
+    employeeNumber,
+    surveyDate,
+    department:getValue("department"),
+
+    questions:{
+      q1:getValue("q1"),
+      q2:getValue("q2"),
+      q3:getValue("q3"),
+      q4:getValue("q4"),
+      q5:getValue("q5"),
+      q6:getValue("q6"),
+      recommendation:getValue("recommendation")
+    },
+
+    status:"Completed",
+    createdAt:new Date().toISOString()
+  };
+
+  const newRef = push(ref(db,"safetySurveys"));
+
+  set(newRef,surveyData)
+  .then(()=>{
+    alert("Safety Survey saved successfully.");
+  })
+  .catch(error=>{
+    alert("Error saving survey: " + error.message);
+  });
+
+};
+
+window.newSurvey = function(){
+  document.getElementById("employeeName").value = "";
+  document.getElementById("employeeNumber").value = "";
+  document.getElementById("department").value = "";
+  document.getElementById("surveyDate").value = new Date().toISOString().split("T")[0];
+
+  document.getElementById("q1").value = "";
+  document.getElementById("q2").value = "";
+  document.getElementById("q3").value = "";
+  document.getElementById("q4").value = "";
+  document.getElementById("q5").value = "";
+  document.getElementById("q6").value = "";
+  document.getElementById("recommendation").value = "";
+};
+</script>
+
+</body>
+</html>
