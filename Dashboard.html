@@ -756,3 +756,121 @@ canvas{
 </div>
 
 <div class="module-container">
+  <div class="module-title-wrapper">
+    <div class="module-line"></div>
+    <div class="module-main-title">MEDA</div>
+    <div class="module-line"></div>
+  </div>
+
+  <div class="module-card-container">
+    <div class="module-monitor-title">MEDA Monitoring</div>
+
+    <div class="cards">
+      <div class="card"><h2 id="medaTotal">0</h2><p>Total MEDA</p></div>
+      <div class="card purple"><h2 id="medaOpen">0</h2><p>Open MEDA</p></div>
+      <div class="card green"><h2 id="medaClosed">0</h2><p>Closed MEDA</p></div>
+    </div>
+
+    <div class="database-btn-wrapper">
+      <button class="database-btn" onclick="openDatabase('MEDA-Database.html')">
+        🔎 Open MEDA Database
+      </button>
+    </div>
+  </div>
+
+  <div class="module-chart-box">
+    <canvas id="medaChart"></canvas>
+  </div>
+</div>
+<div class="module-container">
+  <div class="module-title-wrapper">
+    <div class="module-line"></div>
+    <div class="module-main-title">MOC</div>
+    <div class="module-line"></div>
+  </div>
+
+  <div class="module-card-container">
+    <div class="module-monitor-title">
+      Management of Change Monitoring
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h2 id="mocTotal">0</h2>
+        <p>Total MOC</p>
+      </div>
+
+      <div class="card purple">
+        <h2 id="mocOpen">0</h2>
+        <p>Open MOC</p>
+      </div>
+
+      <div class="card green">
+        <h2 id="mocClosed">0</h2>
+        <p>Closed MOC</p>
+      </div>
+    </div>
+
+    <div class="database-btn-wrapper">
+      <button class="database-btn"
+      onclick="openDatabase('Safety-Assurance-Management-of-Change-Database.html')">
+        🔄 Open Management of Change Database
+      </button>
+    </div>
+
+  </div>
+
+  <div class="moc-risk-grid">
+
+    <div class="module-chart-box">
+      <canvas id="mocInitialRiskChart"></canvas>
+    </div>
+
+    <div class="module-chart-box">
+      <canvas id="mocResidualRiskChart"></canvas>
+    </div>
+
+  </div>
+
+  <div class="module-chart-box">
+    <canvas id="mocStatusChart"></canvas>
+  </div>
+
+</div>
+<div class="module-container">
+  <div class="module-title-wrapper">
+    <div class="module-line"></div>
+    <div class="module-main-title">AUDIT</div>
+    <div class="module-line"></div>
+  </div>
+
+  <div class="module-card-container">
+    <div class="module-monitor-title">Audit Monitoring</div>
+
+    <div class="cards">
+      <div class="card"><h2 id="auditTotal">0</h2><p>Total Audits</p></div>
+      <div class="card purple"><h2 id="auditOpen">0</h2><p>Open Audits</p></div>
+      <div class="card green"><h2 id="auditClosed">0</h2><p>Closed Audits</p></div>
+    </div>
+
+    <div class="database-btn-wrapper">
+      <button class="database-btn" onclick="openDatabase('Safety-Assurance-Audit-Database.html')">
+        🛡️ Open Audit Database
+      </button>
+    </div>
+  </div>
+
+  <div class="module-chart-box">
+    <canvas id="auditChart"></canvas>
+  </div>
+</div>
+
+<button class="home-btn" onclick="goBack()">
+  <span class="home-icon">🏠</span>
+  Back to Home
+</button>
+
+</div>
+
+</body>
+</html>
