@@ -189,7 +189,46 @@ button.closed,
   margin:0;
   padding:18px;
 }
+.suggestion-box{
+  margin-top:25px;
+  padding:28px;
+  border-radius:26px;
+  background:linear-gradient(135deg,#ffffff,#e8f8ff);
+  box-shadow:0 18px 42px rgba(0,59,102,.16);
+  border-left:8px solid var(--orange);
+}
 
+.suggestion-box h3{
+  color:var(--navy);
+  font-size:28px;
+  margin-bottom:12px;
+}
+
+.suggestion-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+
+.suggestion-result{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border-radius:18px;
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  color:var(--navy);
+  line-height:1.7;
+}
+
+.suggestion-btn{
+  background:linear-gradient(135deg,#ff9800,#f59e0b)!important;
+}
+
+.apply-btn{
+  background:linear-gradient(135deg,#15803d,#22c55e)!important;
+}
 .result{
   margin-top:18px;
   padding:18px;
@@ -467,6 +506,20 @@ select:focus{
 </select>
 
 </div>
+
+<div class="suggestion-box">
+<h3>💡 Suggestion</h3>
+<p>Generate a smart safety suggestion based on the report description.</p>
+
+<div class="suggestion-actions">
+<button class="suggestion-btn" onclick="generateSuggestion()">💡 Generate Suggestion</button>
+<button class="apply-btn" onclick="applySuggestion()">✅ Apply Suggestion</button>
+</div>
+
+<div id="suggestionResult" class="suggestion-result">
+No suggestion generated yet.
+</div>
+</div>
   
 <div class="box">
 <h3>Initial Risk Assessment</h3>
@@ -607,6 +660,12 @@ if(key && key !== "general"){
 }
 
 let p="",s="",risk="",cpaCounter=0;
+let suggestedRisk="";
+let suggestedFactor="";
+let suggestedControlType="";
+let suggestedActionPlan="";
+let suggestedInstruction="";
+let suggestedResidualRisk="";
 let rp="",rs="",residualRisk="";
 
 const mandatoryInvestigationRisks = ["A5","B5","C5","A4","B4","A3"];
@@ -900,7 +959,119 @@ window.openDirtyDozen=function(){
     location.href="Investigation-DirtyDozen.html?key="+key;
   });
 };
+window.generateSuggestion=function(){
 
+  const reportText = document.getElementById("reportBox").innerText.toLowerCase();
+
+  suggestedRisk = "C3";
+  suggestedFactor = "Human Factors";
+  suggestedControlType = "Administration";
+  suggestedActionPlan = "Review the event, verify the condition, document evidence, and perform safety follow-up.";
+  suggestedInstruction = "Review this event with the involved personnel and reinforce the applicable procedure.";
+  suggestedResidualRisk = "C2";
+
+  if(
+    reportText.includes("damage") ||
+    reportText.includes("dent") ||
+    reportText.includes("crack") ||
+    reportText.includes("hit") ||
+    reportText.includes("impact") ||
+    reportText.includes("aircraft damage")
+  ){
+    suggestedRisk = "A5";
+    suggestedFactor = "Training";
+    suggestedControlType = "Administration";
+    suggestedActionPlan = "Perform immediate inspection, document evidence, notify QA/SMS, review the applicable procedure, and conduct refresher training.";
+    suggestedInstruction = "Conduct Read & Sign training on aircraft damage prevention, task execution, and reporting requirements.";
+    suggestedResidualRisk = "C2";
+  }
+
+  if(
+    reportText.includes("injury") ||
+    reportText.includes("cut") ||
+    reportText.includes("hurt") ||
+    reportText.includes("slip") ||
+    reportText.includes("fall")
+  ){
+    suggestedRisk = "B4";
+    suggestedFactor = "Human Factors";
+    suggestedControlType = "PPE";
+    suggestedActionPlan = "Document the injury, verify PPE use, review task conditions, and conduct a safety briefing with involved personnel.";
+    suggestedInstruction = "Conduct Read & Sign training on PPE use, safe task execution, and hazard awareness.";
+    suggestedResidualRisk = "C2";
+  }
+
+  if(
+    reportText.includes("fod") ||
+    reportText.includes("tool") ||
+    reportText.includes("missing tool") ||
+    reportText.includes("foreign object")
+  ){
+    suggestedRisk = "B5";
+    suggestedFactor = "Tooling / Equipment";
+    suggestedControlType = "Administration";
+    suggestedActionPlan = "Stop the task, perform tool/FOD search, verify the aircraft area, document results, and reinforce tool control procedures.";
+    suggestedInstruction = "Conduct Read & Sign training on tool control, FOD prevention, and final area inspection.";
+    suggestedResidualRisk = "C2";
+  }
+
+  if(
+    reportText.includes("documentation") ||
+    reportText.includes("record") ||
+    reportText.includes("manual") ||
+    reportText.includes("procedure") ||
+    reportText.includes("paperwork")
+  ){
+    suggestedRisk = "C3";
+    suggestedFactor = "Documentation";
+    suggestedControlType = "Administration";
+    suggestedActionPlan = "Review the documentation error, correct the record if applicable, and reinforce proper documentation practices.";
+    suggestedInstruction = "Conduct coaching on proper documentation, maintenance record accuracy, and procedure compliance.";
+    suggestedResidualRisk = "D2";
+  }
+
+  if(
+    reportText.includes("expired") ||
+    reportText.includes("shelf life") ||
+    reportText.includes("material")
+  ){
+    suggestedRisk = "B4";
+    suggestedFactor = "Parts / Material";
+    suggestedControlType = "Administration";
+    suggestedActionPlan = "Quarantine the material, verify shelf life status, update inventory records, and brief personnel on material control requirements.";
+    suggestedInstruction = "Conduct Read & Sign training on shelf life control, material identification, and expired material prevention.";
+    suggestedResidualRisk = "C2";
+  }
+
+  document.getElementById("suggestionResult").style.display="block";
+  document.getElementById("suggestionResult").innerHTML = `
+    <b>Recommended Risk:</b> ${suggestedRisk}<br>
+    <b>Contributing Factor:</b> ${suggestedFactor}<br>
+    <b>Control Type:</b> ${suggestedControlType}<br>
+    <b>Suggested Action Plan:</b> ${suggestedActionPlan}<br>
+    <b>Suggested Instruction:</b> ${suggestedInstruction}<br>
+    <b>Suggested Residual Risk:</b> ${suggestedResidualRisk}<br><br>
+    <b>Note:</b> This is a system suggestion. The SMS Manager must review and approve the final decision.
+  `;
+};
+
+window.applySuggestion=function(){
+
+  if(!suggestedRisk){
+    alert("Please generate a suggestion first.");
+    return;
+  }
+
+  document.getElementById("contributingFactor").value = suggestedFactor;
+  document.getElementById("controlType").value = suggestedControlType;
+  document.getElementById("actionPlan").value = suggestedActionPlan;
+  document.getElementById("instruction").value = suggestedInstruction;
+
+  restoreSavedRisk(suggestedRisk);
+  restoreSavedResidualRisk(suggestedResidualRisk);
+
+  alert("Suggestion applied. Please review before saving.");
+};
 window.saveRisk=function(){
   if(!risk){
     alert("Please select a risk cell first.");
