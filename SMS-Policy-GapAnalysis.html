@@ -240,6 +240,18 @@ select:focus,input:focus,textarea:focus{
   margin-top:35px;
   flex-wrap:wrap;
 }
+  .block-buttons{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin:24px 0 34px;
+  flex-wrap:wrap;
+}
+
+.block-buttons button{
+  padding:13px 24px;
+  font-size:15px;
+}
 
 button{
   border:none;
@@ -452,7 +464,7 @@ function renderQuestions(saved = {}){
 
     let html = `<div class="section-title">${section}</div>`;
 
-    sections[section].forEach(item=>{
+    sections[section].forEach((item,blockIndex)=>{
       const data = saved[item.index] || {};
       const statusClass =
         data.status === "COMPLIANT" ? "status-compliant" :
@@ -512,7 +524,20 @@ function renderQuestions(saved = {}){
           </div>
         </div>
       </div>
-      `;
+            `;
+
+      if((blockIndex + 1) % 4 === 0 || blockIndex === sections[section].length - 1){
+        const startIndex = item.index - (blockIndex % 4);
+        const endIndex = item.index;
+
+        html += `
+        <div class="block-buttons">
+          <button class="save-btn" onclick="saveGapBlock(${startIndex},${endIndex})">💾 Save This Block</button>
+          <button class="back-btn" onclick="window.location.href='SMS-Policy.html'">← Back</button>
+          <button class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+        </div>
+        `;
+      }
     });
 
     div.innerHTML = html;
@@ -556,7 +581,38 @@ window.updateSummary = function(){
   document.getElementById("progressText").innerText = percent + "% Complete";
   document.getElementById("progressFill").style.width = percent + "%";
 };
+function collectGapItem(index){
+  const q = questions[index];
 
+  return {
+    section:q.s,
+    reference:q.r,
+    question:q.q,
+    status:document.getElementById("status-" + index).value,
+    responsible:document.getElementById("responsible-" + index).value,
+    targetDate:document.getElementById("target-" + index).value,
+    cpaRequired:document.getElementById("cpa-" + index).value,
+    evidence:document.getElementById("evidence-" + index).value,
+    observation:document.getElementById("observation-" + index).value,
+    actionRequired:document.getElementById("action-" + index).value
+  };
+}
+
+window.saveGapBlock = async function(startIndex,endIndex){
+  const snapshot = await get(ref(db,gapPath));
+  const current = snapshot.exists() && snapshot.val().items ? snapshot.val().items : {};
+
+  for(let i=startIndex;i<=endIndex;i++){
+    current[i] = collectGapItem(i);
+  }
+
+  set(ref(db,gapPath),{
+    updatedAt:new Date().toLocaleString(),
+    items:current
+  }).then(()=>{
+    alert("Questions " + (startIndex + 1) + " to " + (endIndex + 1) + " saved successfully.");
+  });
+};
 window.saveGapAnalysis = function(){
   const data = {};
 
