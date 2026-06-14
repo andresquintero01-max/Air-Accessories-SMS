@@ -427,6 +427,14 @@ button:hover{
     <p><b>Priority:</b> <span id="savedPriority">N/A</span></p>
     <p><b>Date:</b> <span id="savedDate">N/A</span></p>
     <p><b>Message:</b> <span id="savedMessage">N/A</span></p>
+    <p><b>Status:</b> <span id="savedStatus">OPEN</span></p>
+    <p><b>Action Taken:</b> <span id="savedActionTaken">N/A</span></p>
+
+    <div style="margin-top:18px;">
+    <textarea id="actionTaken" placeholder="Write the action taken before closing the request..." style="min-height:100px;"></textarea>
+    <br><br>
+    <button id="statusBtn" onclick="toggleRequestStatus()">🔴 OPEN</button>
+</div>
   </div>
 
   <div class="bottom-buttons">
@@ -508,6 +516,19 @@ function showSavedRequest(id,data){
   document.getElementById("savedPriority").innerHTML=safeText(data.priority);
   document.getElementById("savedDate").innerHTML=safeText(data.date);
   document.getElementById("savedMessage").innerHTML=safeText(data.message);
+  document.getElementById("savedStatus").innerHTML=safeText(data.status || "OPEN");
+document.getElementById("savedActionTaken").innerHTML=safeText(data.actionTaken || "N/A");
+document.getElementById("actionTaken").value=data.actionTaken || "";
+
+const statusBtn=document.getElementById("statusBtn");
+
+if((data.status || "OPEN") === "CLOSED"){
+  statusBtn.innerText="🟢 CLOSED";
+  statusBtn.style.background="linear-gradient(135deg,#15803d,#22c55e)";
+}else{
+  statusBtn.innerText="🔴 OPEN";
+  statusBtn.style.background="linear-gradient(135deg,#dc2626,#ef4444)";
+}
 }
 
 window.saveRequest=function(){
@@ -584,7 +605,34 @@ window.newRequest=function(){
 
   showStatus("New request form ready.", "info");
 };
+window.toggleRequestStatus=function(){
+  if(!currentRequestKey){
+    alert("Please save the request first.");
+    return;
+  }
 
+  const actionTaken=document.getElementById("actionTaken").value.trim();
+  const currentStatus=document.getElementById("savedStatus").innerText.trim();
+  const newStatus=currentStatus==="OPEN" ? "CLOSED" : "OPEN";
+
+  if(newStatus==="CLOSED" && !actionTaken){
+    alert("Please write the action taken before closing this request.");
+    return;
+  }
+
+  update(ref(db,"requestConsult/"+currentRequestKey),{
+    status:newStatus,
+    actionTaken:actionTaken,
+    closedAt:newStatus==="CLOSED" ? new Date().toISOString() : "",
+    updatedAt:new Date().toISOString()
+  }).then(()=>{
+    get(ref(db,"requestConsult/"+currentRequestKey)).then((snap)=>{
+      if(snap.exists()){
+        showSavedRequest(currentRequestKey,snap.val());
+      }
+    });
+  });
+};
 window.goBack=function(){
   location.href="Safety-Promotion-Culture.html";
 };
