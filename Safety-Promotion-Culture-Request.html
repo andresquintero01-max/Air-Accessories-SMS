@@ -417,25 +417,10 @@ button:hover{
 
   </div>
 
-  <div id="savedBox" class="saved-box">
-    <h3>Saved Request</h3>
-    <p><b>Request ID:</b> <span id="savedId">N/A</span></p>
-    <p><b>Name:</b> <span id="savedName">N/A</span></p>
-    <p><b>Department:</b> <span id="savedDepartment">N/A</span></p>
-    <p><b>Email:</b> <span id="savedEmail">N/A</span></p>
-    <p><b>Type:</b> <span id="savedType">N/A</span></p>
-    <p><b>Priority:</b> <span id="savedPriority">N/A</span></p>
-    <p><b>Date:</b> <span id="savedDate">N/A</span></p>
-    <p><b>Message:</b> <span id="savedMessage">N/A</span></p>
-    <p><b>Status:</b> <span id="savedStatus">OPEN</span></p>
-    <p><b>Action Taken:</b> <span id="savedActionTaken">N/A</span></p>
-
-    <div style="margin-top:18px;">
-    <textarea id="actionTaken" placeholder="Write the action taken before closing the request..." style="min-height:100px;"></textarea>
-    <br><br>
-    <button id="statusBtn" onclick="toggleRequestStatus()">🔴 OPEN</button>
+<div id="savedBox" class="saved-box">
+  <h3>Saved Requests</h3>
+  <div id="requestsList"></div>
 </div>
-  </div>
 
   <div class="bottom-buttons">
     <button class="nav-btn back-btn" onclick="goBack()">← Back</button>
@@ -450,7 +435,7 @@ button:hover{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push, update, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, push, update, get, remove, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
