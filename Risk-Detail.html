@@ -1205,7 +1205,7 @@ function loadCPA(data){
     onclick="toggleCPAStatus('${id}',this)">
     ${x.status || 'OPEN'}
     </button>
-    <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
+    <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${safeAttr(x.instruction || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
     ${x.pdfUrl ? `<button class="send-btn" onclick="window.open('${safeAttr(x.pdfUrl)}','_blank')">Open Document</button>` : ""}
     `;
 
