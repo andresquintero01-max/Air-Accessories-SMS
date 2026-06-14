@@ -295,7 +295,7 @@ button.closed,
 
 .form-row{
   display:grid;
-  grid-template-columns:1fr 2fr 1fr 1fr auto;
+  grid-template-columns:1fr 2fr 1fr 1fr 2fr auto;
   gap:12px;
   align-items:center;
 }
@@ -519,6 +519,8 @@ Press any cell in the matrix to see the severity and probability definitions.
 <option>andresquintero01@gmail.com</option>
 <option>Geraldinmurilli85@gmail.com</option>
 </select>
+
+<input id="instruction" placeholder="Instruction">
 
 <button onclick="saveCPA()">Save CPA</button>
 </div>
@@ -1031,6 +1033,7 @@ function renderResidualMatrix(){
 window.saveCPA=function(){
   const actionPlan = document.getElementById("actionPlan").value.trim();
   const actionDate = document.getElementById("actionDate").value;
+  const instruction = document.getElementById("instruction").value.trim();
 
   if(!actionPlan){
     alert("Please enter an action plan.");
@@ -1050,10 +1053,12 @@ window.saveCPA=function(){
     actionPlan:actionPlan,
     actionDate:actionDate,
     emailTo:document.getElementById("emailTo").value,
+    instruction:instruction,
     attachments:{}
   }).then(()=>{
     document.getElementById("actionPlan").value="";
     document.getElementById("actionDate").value="";
+    document.getElementById("instruction").value="";
 
     get(ref(db,"smsReports/"+key+"/CPA")).then(s=>{
       if(s.exists()){
@@ -1191,6 +1196,8 @@ function loadCPA(data){
     Action: ${safeText(x.actionPlan)}<br>
     Date: ${safeText(x.actionDate)}<br>
     Email: ${safeText(x.emailTo)}<br><br>
+    Email: ${safeText(x.emailTo)}<br>
+    Instruction: ${safeText(x.instruction)}<br><br>
     <button
     class="send-btn ${x.status==='CLOSED'?'closed':''}"
     style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}"
