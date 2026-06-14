@@ -644,7 +644,9 @@ function safeAttr(value){
   .replaceAll("<","&lt;")
   .replaceAll(">","&gt;");
 }
-
+function selectedOption(value, option){
+  return String(value || "") === option ? "selected" : "";
+}
 function getRiskClass(severity, probability){
   const code = severity + probability;
   const extreme = ["A5","A4","A3","B5","B4","C5"];
@@ -1069,7 +1071,48 @@ window.saveCPA=function(){
     });
   });
 };
+window.showCPAEdit=function(id){
+  const box=document.getElementById("editBox_"+id);
+  if(!box) return;
 
+  if(box.style.display==="none" || box.style.display===""){
+    box.style.display="block";
+  }else{
+    box.style.display="none";
+  }
+};
+
+window.saveCPAEdit=function(id){
+  const controlType=document.getElementById("editControlType_"+id).value;
+  const actionPlan=document.getElementById("editActionPlan_"+id).value.trim();
+  const actionDate=document.getElementById("editActionDate_"+id).value;
+  const emailTo=document.getElementById("editEmailTo_"+id).value.trim();
+  const instruction=document.getElementById("editInstruction_"+id).value.trim();
+
+  if(!actionPlan){
+    alert("Please enter an action plan.");
+    return;
+  }
+
+  if(!actionDate){
+    alert("Please select an action date.");
+    return;
+  }
+
+  update(ref(db,"smsReports/"+key+"/CPA/"+id),{
+    controlType:controlType,
+    actionPlan:actionPlan,
+    actionDate:actionDate,
+    emailTo:emailTo,
+    instruction:instruction
+  }).then(()=>{
+    get(ref(db,"smsReports/"+key+"/CPA")).then(s=>{
+      if(s.exists()){
+        loadCPA(s.val());
+      }
+    });
+  });
+};
 window.addDriveLink=async function(id,cpaNumber){
   const driveLink = prompt("Paste Google Drive document link");
 
@@ -1199,13 +1242,28 @@ function loadCPA(data){
     Email: ${safeText(x.emailTo)}<br><br>
     Email: ${safeText(x.emailTo)}<br>
     Instruction: ${safeText(x.instruction)}<br><br>
-    <button
-    class="send-btn ${x.status==='CLOSED'?'closed':''}"
-    style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}"
-    onclick="toggleCPAStatus('${id}',this)">
-    ${x.status || 'OPEN'}
-    </button>
-    <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${safeAttr(x.instruction || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
+    <button class="send-btn" onclick="showCPAEdit('${safeAttr(id)}')">Edit</button>
+<button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${safeAttr(x.instruction || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
+
+<div id="editBox_${safeAttr(id)}" style="display:none;margin-top:18px;padding:18px;border-radius:16px;background:white;border:1px solid #dbe3ef;">
+<select id="editControlType_${safeAttr(id)}">
+<option ${selectedOption(x.controlType,"Elimination")}>Elimination</option>
+<option ${selectedOption(x.controlType,"Substitution")}>Substitution</option>
+<option ${selectedOption(x.controlType,"Engineering")}>Engineering</option>
+<option ${selectedOption(x.controlType,"Administration")}>Administration</option>
+<option ${selectedOption(x.controlType,"PPE")}>PPE</option>
+</select>
+<br><br>
+<input id="editActionPlan_${safeAttr(id)}" value="${safeAttr(x.actionPlan || "")}" placeholder="Action Plan">
+<br><br>
+<input type="date" id="editActionDate_${safeAttr(id)}" value="${safeAttr(x.actionDate || "")}">
+<br><br>
+<input id="editEmailTo_${safeAttr(id)}" value="${safeAttr(x.emailTo || "")}" placeholder="Email">
+<br><br>
+<input id="editInstruction_${safeAttr(id)}" value="${safeAttr(x.instruction || "")}" placeholder="Instruction">
+<br><br>
+<button class="send-btn" onclick="saveCPAEdit('${safeAttr(id)}')">Save Changes</button>
+</div>
     ${x.pdfUrl ? `<button class="send-btn" onclick="window.open('${safeAttr(x.pdfUrl)}','_blank')">Open Document</button>` : ""}
     `;
 
@@ -1216,7 +1274,14 @@ function loadCPA(data){
 
     let attachmentHtml = `
     <b>CPA Attachment ${i+1}</b><br>
-    <button onclick="addDriveLink('${safeAttr(id)}','${i+1}')">+ Add Attachment</button><br><br>
+    <button onclick="addDriveLink('${safeAttr(id)}','${i+1}')">+ Add Attachment</button>
+    <button
+    class="send-btn ${x.status==='CLOSED'?'closed':''}"
+    style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}"
+    onclick="toggleCPAStatus('${safeAttr(id)}',this)">
+    ${x.status || 'OPEN'}
+    </button>
+    <br><br>
     `;
 
     if(x.attachments){
