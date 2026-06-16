@@ -28,6 +28,7 @@ let smsReports = [];
 let medaReports = [];
 let mocReports = [];
 let auditReports = [];
+let riskOverviewReports = [];
 
 const COLORS = {
   blue:"#003b66",
@@ -217,6 +218,7 @@ function renderDashboard(){
   const medaData = applyFiltersToArray(medaReports, "MEDA");
   const mocData = applyFiltersToArray(mocReports, "MOC");
   const auditData = applyFiltersToArray(auditReports, "AUDIT");
+  const riskOverviewData = applyFiltersToArray(riskOverviewReports, "RISK OVERVIEW");
   let total = smsData.length;
   let open = 0;
   let closed = 0;
@@ -464,6 +466,13 @@ function loadAuditReports(){
   });
 }
 
+function loadRiskOverviewReports(){
+  onValue(ref(db, "riskOverviewReports"), snapshot => {
+    riskOverviewReports = Object.values(snapshot.val() || {});
+    renderDashboard();
+  });
+}
+  
 window.goBack = function(){
   location.href = "index.html";
 };
@@ -477,6 +486,7 @@ window.onload = function(){
   loadMEDAReports();
   loadMOCReports();
   loadAuditReports();
+  loadRiskOverviewReports();
 };
 </script>
 
