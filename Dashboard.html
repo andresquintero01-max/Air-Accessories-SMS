@@ -475,15 +475,14 @@ function loadAuditReports(){
 }
 
 function loadRiskOverviewReports(){
-
-  const companyId = "defaultCompany";
+  const companyId = localStorage.getItem("companyId") || "defaultCompany";
 
   onValue(ref(db, "riskOverview/" + companyId), snapshot => {
-
     riskOverviewReports = Object.values(snapshot.val() || {});
 
-    renderDashboard();
+    alert("Risk Overview encontrados: " + riskOverviewReports.length);
 
+    renderDashboard();
   });
 }
   
