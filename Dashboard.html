@@ -219,9 +219,17 @@ function renderDashboard(){
   const mocData = applyFiltersToArray(mocReports, "MOC");
   const auditData = applyFiltersToArray(auditReports, "AUDIT");
   const riskOverviewData = applyFiltersToArray(riskOverviewReports, "RISK OVERVIEW");
-  let total = smsData.length;
+  let total = smsData.length + riskOverviewData.length;
   let open = 0;
   let closed = 0;
+  riskOverviewData.forEach(r => {
+
+  if(isReportClosed(r))
+    closed++;
+  else
+    open++;
+
+});
 
   let acceptable = 0;
   let tolerable = 0;
@@ -467,9 +475,16 @@ function loadAuditReports(){
 }
 
 function loadRiskOverviewReports(){
-  onValue(ref(db, "riskOverviewReports"), snapshot => {
+
+  const companyId =
+    localStorage.getItem("companyId") || "defaultCompany";
+
+  onValue(ref(db, "riskOverview/" + companyId), snapshot => {
+
     riskOverviewReports = Object.values(snapshot.val() || {});
+
     renderDashboard();
+
   });
 }
   
