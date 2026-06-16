@@ -219,6 +219,13 @@ function renderDashboard(){
   const mocData = applyFiltersToArray(mocReports, "MOC");
   const auditData = applyFiltersToArray(auditReports, "AUDIT");
   const riskOverviewData = applyFiltersToArray(riskOverviewReports, "RISK OVERVIEW");
+  let riskOverviewOpen = 0;
+  let riskOverviewClosed = 0;
+
+  riskOverviewData.forEach(r => {
+  if(isReportClosed(r)) riskOverviewClosed++;
+  else riskOverviewOpen++;
+});
   let total = smsData.length + riskOverviewData.length;
   let open = 0;
   let closed = 0;
@@ -414,6 +421,9 @@ setText("auditOpen", auditOpen);
 setText("auditClosed", auditClosed);
 setText("internalAudits", internalAudits);
 setText("externalAudits", externalAudits);
+setText("riskOverviewTotal", riskOverviewData.length);
+setText("riskOverviewOpen", riskOverviewOpen);
+setText("riskOverviewClosed", riskOverviewClosed);
 
   createPie("riskChart",["Acceptable","Tolerable","Not Acceptable","Not Assessed"],[acceptable,tolerable,notAcceptable,notAssessed],"Risk Distribution",[COLORS.green,COLORS.yellow,COLORS.red,COLORS.gray]);
 
@@ -443,6 +453,22 @@ createBar("costChart",Object.keys(costDrivers),Object.values(costDrivers),"Event
 
   createBar("mocStatusChart",["Total MOC","Open","Closed"],[mocData.length,mocOpen,mocClosed],"MOC Status Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
 
+createPie(
+  "riskOverviewPie",
+  ["Open","Closed"],
+  [riskOverviewOpen,riskOverviewClosed],
+  "Risk Overview Open vs Closed",
+  [COLORS.purple,COLORS.green]
+);
+
+createBar(
+  "riskOverviewChart",
+  ["Total","Open","Closed"],
+  [riskOverviewData.length,riskOverviewOpen,riskOverviewClosed],
+  "Risk Overview Status Monitoring",
+  [COLORS.blue,COLORS.purple,COLORS.green]
+);
+  
   createBar("auditChart",["Total Audits","Open","Closed"],[auditData.length,auditOpen,auditClosed],"Audit Status Monitoring",[COLORS.blue,COLORS.purple,COLORS.green]);
 }
 
@@ -995,6 +1021,7 @@ canvas{
     <canvas id="medaChart"></canvas>
   </div>
 </div>
+
 <div class="module-container">
   <div class="module-title-wrapper">
     <div class="module-line"></div>
@@ -1003,53 +1030,60 @@ canvas{
   </div>
 
   <div class="module-card-container">
-    <div class="module-monitor-title">
-      Management of Change Monitoring
-    </div>
+    <div class="module-monitor-title">Management of Change Monitoring</div>
 
     <div class="cards">
-      <div class="card">
-        <h2 id="mocTotal">0</h2>
-        <p>Total MOC</p>
-      </div>
-
-      <div class="card purple">
-        <h2 id="mocOpen">0</h2>
-        <p>Open MOC</p>
-      </div>
-
-      <div class="card green">
-        <h2 id="mocClosed">0</h2>
-        <p>Closed MOC</p>
-      </div>
+      <div class="card"><h2 id="mocTotal">0</h2><p>Total MOC</p></div>
+      <div class="card purple"><h2 id="mocOpen">0</h2><p>Open MOC</p></div>
+      <div class="card green"><h2 id="mocClosed">0</h2><p>Closed MOC</p></div>
     </div>
 
     <div class="database-btn-wrapper">
-      <button class="database-btn"
-      onclick="openDatabase('Safety-Assurance-Management-of-Change-Database.html')">
+      <button class="database-btn" onclick="openDatabase('Safety-Assurance-Management-of-Change-Database.html')">
         🔄 Open Management of Change Database
       </button>
     </div>
-
   </div>
 
   <div class="moc-risk-grid">
-
-    <div class="module-chart-box">
-      <canvas id="mocInitialRiskChart"></canvas>
-    </div>
-
-    <div class="module-chart-box">
-      <canvas id="mocResidualRiskChart"></canvas>
-    </div>
-
+    <div class="module-chart-box"><canvas id="mocInitialRiskChart"></canvas></div>
+    <div class="module-chart-box"><canvas id="mocResidualRiskChart"></canvas></div>
   </div>
 
   <div class="module-chart-box">
     <canvas id="mocStatusChart"></canvas>
   </div>
-
 </div>
+
+<div class="module-container">
+  <div class="module-title-wrapper">
+    <div class="module-line"></div>
+    <div class="module-main-title">RISK OVERVIEW</div>
+    <div class="module-line"></div>
+  </div>
+
+  <div class="module-card-container">
+    <div class="module-monitor-title">Risk Overview Monitoring</div>
+
+    <div class="cards">
+      <div class="card"><h2 id="riskOverviewTotal">0</h2><p>Total Risk Overview</p></div>
+      <div class="card purple"><h2 id="riskOverviewOpen">0</h2><p>Open Risk Overview</p></div>
+      <div class="card green"><h2 id="riskOverviewClosed">0</h2><p>Closed Risk Overview</p></div>
+    </div>
+
+    <div class="database-btn-wrapper">
+      <button class="database-btn" onclick="openDatabase('Risk-Overview-Database.html')">
+        📊 Open Risk Overview Database
+      </button>
+    </div>
+  </div>
+
+  <div class="moc-risk-grid">
+    <div class="module-chart-box"><canvas id="riskOverviewPie"></canvas></div>
+    <div class="module-chart-box"><canvas id="riskOverviewChart"></canvas></div>
+  </div>
+</div>
+
 <div class="module-container">
   <div class="module-title-wrapper">
     <div class="module-line"></div>
@@ -1060,50 +1094,29 @@ canvas{
   <div class="module-card-container">
     <div class="module-monitor-title">Audit Monitoring</div>
 
-   <div class="cards">
-  <div class="card">
-    <h2 id="auditTotal">0</h2>
-    <p>Total Audits</p>
+    <div class="cards">
+      <div class="card"><h2 id="auditTotal">0</h2><p>Total Audits</p></div>
+      <div class="card purple"><h2 id="auditOpen">0</h2><p>Open Audits</p></div>
+      <div class="card green"><h2 id="auditClosed">0</h2><p>Closed Audits</p></div>
+      <div class="card orange"><h2 id="internalAudits">0</h2><p>Internal Audits</p></div>
+      <div class="card yellow"><h2 id="externalAudits">0</h2><p>External Audits</p></div>
+    </div>
+
+    <div class="database-btn-wrapper">
+      <button class="database-btn" onclick="openDatabase('Safety-Assurance-Audit-Database.html')">
+        🛡️ Open Audit Database
+      </button>
+    </div>
   </div>
 
-  <div class="card purple">
-    <h2 id="auditOpen">0</h2>
-    <p>Open Audits</p>
+  <div class="module-chart-box">
+    <canvas id="auditChart"></canvas>
   </div>
-
-  <div class="card green">
-    <h2 id="auditClosed">0</h2>
-    <p>Closed Audits</p>
-  </div>
-
-  <div class="card orange">
-    <h2 id="internalAudits">0</h2>
-    <p>Internal Audits</p>
-  </div>
-
-  <div class="card yellow">
-    <h2 id="externalAudits">0</h2>
-    <p>External Audits</p>
-  </div>
-</div>
-
-<div class="database-btn-wrapper">
-  <button class="database-btn" onclick="openDatabase('Safety-Assurance-Audit-Database.html')">
-    🛡️ Open Audit Database
-  </button>
-</div>
-
-</div>
-
-<div class="module-chart-box">
-  <canvas id="auditChart"></canvas>
-</div>
 
   <button class="home-btn" onclick="goBack()">
-  <span class="home-icon">🏠</span>
-  Return to Main Page
-</button>
-
+    <span class="home-icon">🏠</span>
+    Return to Main Page
+  </button>
 </div>
 
 </body>
