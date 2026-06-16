@@ -476,8 +476,7 @@ function loadAuditReports(){
 
 function loadRiskOverviewReports(){
 
-  const companyId =
-    localStorage.getItem("companyId") || "defaultCompany";
+  const companyId = "defaultCompany";
 
   onValue(ref(db, "riskOverview/" + companyId), snapshot => {
 
