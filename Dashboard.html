@@ -480,8 +480,6 @@ function loadRiskOverviewReports(){
   onValue(ref(db, "riskOverview/" + companyId), snapshot => {
     riskOverviewReports = Object.values(snapshot.val() || {});
 
-    alert("Risk Overview encontrados: " + riskOverviewReports.length);
-
     renderDashboard();
   });
 }
