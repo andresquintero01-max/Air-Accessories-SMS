@@ -473,16 +473,18 @@ function calculateOpenClosedFromObject(data){
 
 function updateGlobalSafetyCard(open, closed){
     const total = open + closed;
-    const percent = total === 0 ? 0 : Math.round((closed / total) * 100);
+
+    // Porcentaje de cumplimiento basado en registros abiertos
+    const percent = total === 0 ? 100 : Math.round((1 - (open / total)) * 100);
 
     document.getElementById("globalOpen").innerText = open;
     document.getElementById("globalClosed").innerText = closed;
     document.getElementById("globalTotal").innerText = total;
     document.getElementById("globalPercent").innerText = percent + "%";
 
-    setTimeout(()=>{
+    setTimeout(() => {
         document.getElementById("globalProgressFill").style.width = percent + "%";
-    },200);
+    }, 200);
 }
 
 function startGlobalSafetyIndex(){
