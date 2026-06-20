@@ -475,7 +475,7 @@ function updateGlobalSafetyCard(open, closed){
     const total = open + closed;
 
     // Porcentaje de cumplimiento basado en registros abiertos
-    const percent = total === 0 ? 100 : Math.round((1 - (open / total)) * 100);
+    const percent = total === 0 ? 100 : Math.max(0, Math.round(100 - ((open / total) * 50)));
 
     document.getElementById("globalOpen").innerText = open;
     document.getElementById("globalClosed").innerText = closed;
