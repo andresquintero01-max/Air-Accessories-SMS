@@ -306,87 +306,17 @@ textarea{
       </div>
     </div>
 
-    <div class="section-title" style="margin-top:32px;">Safety Culture Questions</div>
+   <div class="section-title" style="margin-top:32px;">Safety Culture Questions</div>
 
-    <div class="question-box">
-      <label>1. I feel comfortable reporting safety hazards or concerns.</label>
-      <select id="q1">
-        <option value="">Select answer</option>
-        <option>Strongly Agree</option>
-        <option>Agree</option>
-        <option>Neutral</option>
-        <option>Disagree</option>
-        <option>Strongly Disagree</option>
-      </select>
-    </div>
+<div id="questionsContainer"></div>
 
-    <div class="question-box">
-      <label>2. Management supports safety reporting and corrective actions.</label>
-      <select id="q2">
-        <option value="">Select answer</option>
-        <option>Strongly Agree</option>
-        <option>Agree</option>
-        <option>Neutral</option>
-        <option>Disagree</option>
-        <option>Strongly Disagree</option>
-      </select>
-    </div>
+<div class="question-box">
+  <label>Comments / Recommendations</label>
+  <textarea id="recommendation" placeholder="Write employee comments or recommendations here..."></textarea>
+</div>
 
-    <div class="question-box">
-      <label>3. I receive enough safety information, alerts, bulletins, or lessons learned.</label>
-      <select id="q3">
-        <option value="">Select answer</option>
-        <option>Strongly Agree</option>
-        <option>Agree</option>
-        <option>Neutral</option>
-        <option>Disagree</option>
-        <option>Strongly Disagree</option>
-      </select>
-    </div>
-
-    <div class="question-box">
-      <label>4. Safety procedures are clear and easy to follow.</label>
-      <select id="q4">
-        <option value="">Select answer</option>
-        <option>Strongly Agree</option>
-        <option>Agree</option>
-        <option>Neutral</option>
-        <option>Disagree</option>
-        <option>Strongly Disagree</option>
-      </select>
-    </div>
-
-    <div class="question-box">
-      <label>5. I have the proper tools, equipment, and resources to work safely.</label>
-      <select id="q5">
-        <option value="">Select answer</option>
-        <option>Strongly Agree</option>
-        <option>Agree</option>
-        <option>Neutral</option>
-        <option>Disagree</option>
-        <option>Strongly Disagree</option>
-      </select>
-    </div>
-
-    <div class="question-box">
-      <label>6. Corrective actions are communicated and followed up properly.</label>
-      <select id="q6">
-        <option value="">Select answer</option>
-        <option>Strongly Agree</option>
-        <option>Agree</option>
-        <option>Neutral</option>
-        <option>Disagree</option>
-        <option>Strongly Disagree</option>
-      </select>
-    </div>
-
-    <div class="question-box">
-      <label>7. What safety improvement would you recommend?</label>
-      <textarea id="recommendation" placeholder="Write employee recommendation here..."></textarea>
-    </div>
-
-    <br>
-    <button class="save-btn" onclick="saveSurvey()">💾 Save Survey</button>
+<br>
+<button class="save-btn" onclick="saveSurvey()">💾 Save Survey</button>
 
   </div>
 
@@ -434,11 +364,56 @@ const db = getDatabase(app);
 
 const surveysRef = ref(db, "safetyPromotion/safetySurveys");
 
+const questions = [
+  "I understand the purpose of the SMS.",
+  "I know how to report safety concerns.",
+  "I feel safe reporting without fear of reprisal.",
+  "Management supports safety.",
+  "Safety issues are addressed on time.",
+  "Workload affects maintenance quality.",
+  "I received enough SMS training for my role.",
+  "Departments communicate well on safety.",
+  "I receive feedback after reporting a safety issue.",
+  "Procedures are clear and easy to follow.",
+  "Tools and equipment are adequate for the job.",
+  "Fatigue affects my performance.",
+  "I can stop work if I see an unsafe condition.",
+  "Supervisors promote safe work practices.",
+  "Training matches my job tasks.",
+  "Housekeeping supports a safe work area.",
+  "I understand my safety responsibilities.",
+  "Time pressure affects job quality."
+];
+
+function renderQuestions(){
+  const container = document.getElementById("questionsContainer");
+  container.innerHTML = "";
+
+  questions.forEach((question, index) => {
+    const number = index + 1;
+
+    container.innerHTML += `
+      <div class="question-box">
+        <label>${number}. ${question}</label>
+        <select id="q${number}">
+          <option value="">Select answer</option>
+          <option>Strongly Agree</option>
+          <option>Agree</option>
+          <option>Neutral</option>
+          <option>Disagree</option>
+          <option>Strongly Disagree</option>
+        </select>
+      </div>
+    `;
+  });
+}
+
 document.getElementById("surveyDate").value =
 new Date().toISOString().split("T")[0];
 
 function getValue(id){
-  return document.getElementById(id).value.trim();
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
 }
 
 window.saveSurvey = function(){
@@ -452,6 +427,16 @@ window.saveSurvey = function(){
     return;
   }
 
+  const answers = {};
+
+  questions.forEach((question, index) => {
+    const number = index + 1;
+    answers["q" + number] = {
+      question: question,
+      answer: getValue("q" + number)
+    };
+  });
+
   const newRef = push(surveysRef);
 
   const survey = {
@@ -460,12 +445,7 @@ window.saveSurvey = function(){
     employeeNumber:employeeNumber,
     surveyDate:surveyDate,
     department:getValue("department"),
-    q1:getValue("q1"),
-    q2:getValue("q2"),
-    q3:getValue("q3"),
-    q4:getValue("q4"),
-    q5:getValue("q5"),
-    q6:getValue("q6"),
+    answers:answers,
     recommendation:getValue("recommendation"),
     result:"Completed",
     createdDate:new Date().toLocaleString(),
@@ -515,6 +495,17 @@ function displayRecords(){
       const div = document.createElement("div");
       div.className = "record-card";
 
+      let answersHtml = "";
+
+      if(record.data.answers){
+        Object.values(record.data.answers).forEach((item, qIndex) => {
+          answersHtml += `
+            <strong>Q${qIndex + 1}:</strong> ${item.question || "N/A"}<br>
+            <strong>Answer:</strong> ${item.answer || "N/A"}<br><br>
+          `;
+        });
+      }
+
       div.innerHTML = `
         <strong>${index + 1}. Employee:</strong> ${record.data.employeeName || "N/A"}<br>
         <strong>Employee Number:</strong> ${record.data.employeeNumber || "N/A"}<br>
@@ -522,14 +513,9 @@ function displayRecords(){
         <strong>Date:</strong> ${record.data.surveyDate || "N/A"}<br>
         <strong>Result:</strong> ${record.data.result || "Completed"}<br><br>
 
-        <strong>Q1 Reporting Confidence:</strong> ${record.data.q1 || "N/A"}<br>
-        <strong>Q2 Management Support:</strong> ${record.data.q2 || "N/A"}<br>
-        <strong>Q3 Safety Communication:</strong> ${record.data.q3 || "N/A"}<br>
-        <strong>Q4 Procedures Clear:</strong> ${record.data.q4 || "N/A"}<br>
-        <strong>Q5 Tools / Resources:</strong> ${record.data.q5 || "N/A"}<br>
-        <strong>Q6 Corrective Action Follow-up:</strong> ${record.data.q6 || "N/A"}<br><br>
+        ${answersHtml}
 
-        <strong>Recommendation:</strong><br>
+        <strong>Comments / Recommendations:</strong><br>
         ${record.data.recommendation || "N/A"}<br><br>
 
         <button class="delete-btn" onclick="deleteSurvey('${record.key}')">🗑 Delete Record</button>
@@ -557,14 +543,13 @@ window.newSurvey = function(){
   document.getElementById("department").value = "";
   document.getElementById("surveyDate").value = new Date().toISOString().split("T")[0];
 
-  document.getElementById("q1").value = "";
-  document.getElementById("q2").value = "";
-  document.getElementById("q3").value = "";
-  document.getElementById("q4").value = "";
-  document.getElementById("q5").value = "";
-  document.getElementById("q6").value = "";
-  document.getElementById("recommendation").value = "";
+  questions.forEach((question, index) => {
+    const number = index + 1;
+    const field = document.getElementById("q" + number);
+    if(field) field.value = "";
+  });
 
+  document.getElementById("recommendation").value = "";
   document.getElementById("resultBox").classList.add("hidden");
   document.getElementById("formBox").scrollIntoView({behavior:"smooth"});
 };
@@ -577,6 +562,7 @@ window.goHome = function(){
   window.location.href = "index.html";
 };
 
+renderQuestions();
 displayRecords();
 
 </script>
