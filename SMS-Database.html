@@ -673,6 +673,11 @@ remove,
 update
 }
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
@@ -686,6 +691,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
 const container = document.getElementById("data");
 
 let allReports = [];
@@ -1393,29 +1399,52 @@ URL.revokeObjectURL(url);
 
 };
 
-get(child(ref(db), "smsReports")).then((snapshot)=>{
+onAuthStateChanged(auth, (user) => {
 
-if(snapshot.exists()){
+  if(!user){
+    alert("Your session has expired. Please log in again.");
+    window.location.href = "index.html";
+    return;
+  }
 
-const data = snapshot.val();
+  get(child(ref(db), "smsReports"))
+  .then((snapshot)=>{
 
-allReports =
-Object.entries(data).reverse().map(([key,item])=>({
-key:key,
-item:item
-}));
+    if(snapshot.exists()){
 
-renderReports(allReports);
+      const data = snapshot.val();
 
-}else{
+      allReports =
+      Object.entries(data).reverse().map(([key,item])=>({
+        key:key,
+        item:item
+      }));
 
-container.innerHTML = `
-<div class="empty">
-No SMS reports found
-</div>
-`;
+      renderReports(allReports);
 
-}
+    }else{
+
+      container.innerHTML = `
+      <div class="empty">
+      No SMS reports found
+      </div>
+      `;
+
+    }
+
+  })
+  .catch((error)=>{
+
+    console.error("SMS DATABASE ERROR:", error);
+
+    container.innerHTML = `
+    <div class="empty">
+    Unable to load SMS reports.<br><br>
+    ${error.message}
+    </div>
+    `;
+
+  });
 
 });
 
