@@ -575,26 +575,45 @@ function applyRoleAccess(role){
 }
 
 onAuthStateChanged(auth, async (user) => {
-    if(user){
+
+    if (!user){
+        showLogin();
+        return;
+    }
+
+    try{
+
         const snapshot = await get(child(ref(database), "users/" + user.uid));
 
-        if(snapshot.exists()){
-            const userData = snapshot.val();
-            const role = (userData.role || "").toLowerCase().trim();
-
-            localStorage.setItem("userRole", role);
-            localStorage.setItem("companyId", userData.companyId || "air-accessories");
-
-            applyRoleAccess(role);
-            showSystem();
-            startSessionControl();
-        }else{
-            alert("User role not found. Contact administrator.");
-            signOut(auth);
+        if(!snapshot.exists()){
+            alert("User authenticated, but no profile exists in Database.\n\nUID: " + user.uid);
+            await signOut(auth);
+            return;
         }
-    }else{
-        showLogin();
+
+        const userData = snapshot.val();
+        const role = (userData.role || "").toLowerCase().trim();
+
+        localStorage.setItem("userRole", role);
+        localStorage.setItem("companyId", userData.companyId || "air-accessories");
+
+        applyRoleAccess(role);
+        showSystem();
+        startSessionControl();
+
+    }catch(error){
+
+        console.error("DATABASE ERROR:", error);
+
+        alert(
+            "DATABASE ERROR\n\n" +
+            error.code + "\n\n" +
+            error.message
+        );
+
+        await signOut(auth);
     }
+
 });
 </script>
 
