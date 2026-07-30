@@ -450,6 +450,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const auth = getAuth(app);
 
 const overviewList = document.getElementById("overviewList");
 const noData = document.getElementById("noData");
@@ -734,30 +735,40 @@ window.applyFilter = function(){
 };
 
 const companyId = localStorage.getItem("companyId") || "defaultCompany";
-const reportsRef = ref(database, "riskOverview/" + companyId);
 
-onValue(reportsRef, (snapshot) => {
+onAuthStateChanged(auth, (user) => {
+  if(user){
 
-  allReports = [];
+    const reportsRef = ref(database, "riskOverview/" + companyId);
 
-  if(!snapshot.exists()){
-    renderReports([]);
-    return;
-  }
+    onValue(reportsRef, (snapshot) => {
 
-  snapshot.forEach((childSnapshot) => {
-    allReports.push({
-      firebaseId: childSnapshot.key,
-      ...childSnapshot.val()
+      allReports = [];
+
+      if(!snapshot.exists()){
+        renderReports([]);
+        return;
+      }
+
+      snapshot.forEach((childSnapshot) => {
+        allReports.push({
+          firebaseId: childSnapshot.key,
+          ...childSnapshot.val()
+        });
+      });
+
+      allReports.sort((a,b) => {
+        return String(b.firebaseId).localeCompare(String(a.firebaseId));
+      });
+
+      applyFilter();
+
     });
-  });
 
-  allReports.sort((a,b) => {
-    return String(b.firebaseId).localeCompare(String(a.firebaseId));
-  });
-
-  applyFilter();
-
+  }else{
+    alert("Session expired. Please log in again.");
+    location.href = "index.html";
+  }
 });
 
 window.openReport = function(reportId){
