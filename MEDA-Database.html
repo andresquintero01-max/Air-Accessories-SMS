@@ -382,6 +382,9 @@ h1{
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+import { getAuth, onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
   authDomain: "air-accessories-sms.firebaseapp.com",
@@ -394,6 +397,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+  const auth = getAuth(app);
 
 const medaList = document.getElementById("medaList");
 const noData = document.getElementById("noData");
@@ -542,25 +546,36 @@ window.applyFilter = function(){
   renderReports(filtered);
 };
 
-const reportsRef = ref(database, "medaReports");
+onAuthStateChanged(auth, (user) => {
 
-onValue(reportsRef, (snapshot) => {
-  allReports = [];
+  if(user){
 
-  if(!snapshot.exists()){
-    renderReports([]);
-    return;
+    const reportsRef = ref(database, "medaReports");
+
+    onValue(reportsRef, (snapshot) => {
+      allReports = [];
+
+      if(!snapshot.exists()){
+        renderReports([]);
+        return;
+      }
+
+      snapshot.forEach((childSnapshot) => {
+        allReports.push({
+          firebaseId: childSnapshot.key,
+          ...childSnapshot.val()
+        });
+      });
+
+      allReports.sort((a,b) => String(b.firebaseId).localeCompare(String(a.firebaseId)));
+      applyFilter();
+    });
+
+  }else{
+    alert("Session expired. Please log in again.");
+    location.href = "index.html";
   }
 
-  snapshot.forEach((childSnapshot) => {
-    allReports.push({
-      firebaseId: childSnapshot.key,
-      ...childSnapshot.val()
-    });
-  });
-
-  allReports.sort((a,b) => String(b.firebaseId).localeCompare(String(a.firebaseId)));
-  applyFilter();
 });
 
 window.openReport = function(reportId){
