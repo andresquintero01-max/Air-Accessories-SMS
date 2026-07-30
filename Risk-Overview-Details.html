@@ -818,7 +818,14 @@ window.deleteThisReport = async function(){
   window.location.href = "Risk-Overview-Database.html";
 };
 
-loadDetails();
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    loadDetails();
+  }else{
+    alert("Session expired. Please log in again.");
+    location.href = "index.html";
+  }
+});
 </script>
 
 </body>
