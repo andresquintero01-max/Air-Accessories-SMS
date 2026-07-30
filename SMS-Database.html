@@ -757,7 +757,7 @@ recommendation:document.getElementById("edit-recommendation-"+key).value
 }).then(()=>{
 
 alert("Report updated successfully.");
-location.reload();
+get(child(ref(db), "smsReports")).then((snapshot)=>{  if(snapshot.exists()){  const data = snapshot.val();  allReports = Object.entries(data).reverse().map(([key,item])=>({ key, item }));  renderReports(allReports);  }  });
 
 });
 
@@ -776,7 +776,7 @@ updatedAt:new Date().toLocaleString()
 }).then(()=>{
 
 alert("Report status changed to " + newStatus + ".");
-location.reload();
+get(child(ref(db), "smsReports")).then((snapshot)=>{  if(snapshot.exists()){  const data = snapshot.val();  allReports = Object.entries(data).reverse().map(([key,item])=>({ key, item }));  renderReports(allReports);  }  });
 
 });
 
@@ -791,7 +791,7 @@ update(ref(db,"smsReports/"+key),{
 reportType:newType,
 updatedAt:new Date().toLocaleString()
 }).then(()=>{
-location.reload();
+get(child(ref(db), "smsReports")).then((snapshot)=>{  if(snapshot.exists()){  const data = snapshot.val();  allReports = Object.entries(data).reverse().map(([key,item])=>({ key, item }));  renderReports(allReports);  }  });
 });
 
 };    
@@ -960,7 +960,7 @@ updatedAt:new Date().toLocaleString()
 }).then(()=>{
 
 alert("Costs saved successfully.");
-location.reload();
+get(child(ref(db), "smsReports")).then((snapshot)=>{  if(snapshot.exists()){  const data = snapshot.val();  allReports = Object.entries(data).reverse().map(([key,item])=>({ key, item }));  renderReports(allReports);  }  });
 
 });
 
@@ -1059,7 +1059,7 @@ ID: ${item.reportId || "N/A"}
 
 ${riskAssessmentStatus}
 
-<div class="risk-value ${riskClass}">
+<div class="risk-value ${riskClass}" onclick="location.href='Risk-Detail.html?key=${key}'" style="cursor:pointer;">
 Risk:
 ${riskValue}
 <br><br>
@@ -1072,7 +1072,7 @@ ${riskText}
 
 ${residualRiskAssessmentStatus}
 
-<div class="risk-value ${residualClass}">
+<div class="risk-value ${residualClass}" onclick="location.href='Risk-Detail.html?key=${key}'" style="cursor:pointer;">
 Residual:
 ${residualValue}
 <br><br>
