@@ -458,6 +458,7 @@ import {
   remove,
   update
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
@@ -471,6 +472,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const auth = getAuth(app);
 
 const auditList = document.getElementById("auditList");
 const noData = document.getElementById("noData");
@@ -734,32 +736,40 @@ window.applyFilter = function(){
 
 const reportsRef = ref(database, "auditReports");
 
-onValue(reportsRef, (snapshot) => {
+onAuthStateChanged(auth, (user) => {
+  if(user){
 
-  allReports = [];
+    onValue(reportsRef, (snapshot) => {
 
-  if(!snapshot.exists()){
-    renderReports([]);
-    return;
-  }
+      allReports = [];
 
-  snapshot.forEach((childSnapshot) => {
-    allReports.push({
-      firebaseId: childSnapshot.key,
-      ...childSnapshot.val()
+      if(!snapshot.exists()){
+        renderReports([]);
+        return;
+      }
+
+      snapshot.forEach((childSnapshot) => {
+        allReports.push({
+          firebaseId: childSnapshot.key,
+          ...childSnapshot.val()
+        });
+      });
+
+      allReports.sort((a,b) => {
+        const dateA = new Date(a.createdAt || a.date || 0).getTime();
+        const dateB = new Date(b.createdAt || b.date || 0).getTime();
+        return dateB - dateA;
+      });
+
+      applyFilter();
+
     });
-  });
 
-  allReports.sort((a,b) => {
-  const dateA = new Date(a.createdAt || a.date || 0).getTime();
-  const dateB = new Date(b.createdAt || b.date || 0).getTime();
-  return dateB - dateA;
+  }else{
+    alert("Session expired. Please log in again.");
+    location.href = "index.html";
+  }
 });
-
-  applyFilter();
-
-});
-
 window.openReport = function(reportId, category){
 
   if(category === "External Audit"){
