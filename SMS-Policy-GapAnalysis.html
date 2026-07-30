@@ -369,7 +369,7 @@ button:hover{
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
   authDomain: "air-accessories-sms.firebaseapp.com",
@@ -382,6 +382,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
 const gapPath = "smsPolicyGapAnalysis";
 
 const questions = [
@@ -650,7 +651,14 @@ function loadSaved(){
   });
 }
 
-loadSaved();
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    loadSaved();
+  }else{
+    alert("Session expired. Please log in again.");
+    location.href = "index.html";
+  }
+});
 </script>
 
 </body>
