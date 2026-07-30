@@ -384,6 +384,7 @@ import {
   update,
   remove
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
@@ -397,6 +398,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
 
 const scheduleRef = ref(db, "auditSchedule");
 
@@ -599,22 +601,31 @@ window.nextMonth = function(){
   renderCalendar();
 };
 
-onValue(scheduleRef, snapshot => {
+onAuthStateChanged(auth, (user) => {
+  if(user){
 
-  audits = [];
+    onValue(scheduleRef, snapshot => {
 
-  if(snapshot.exists()){
-    snapshot.forEach(child => {
-      audits.push({
-        id:child.key,
-        ...child.val()
-      });
+      audits = [];
+
+      if(snapshot.exists()){
+        snapshot.forEach(child => {
+          audits.push({
+            id:child.key,
+            ...child.val()
+          });
+        });
+      }
+
+      renderCalendar();
+      renderRecords();
+
     });
+
+  }else{
+    alert("Session expired. Please log in again.");
+    location.href = "index.html";
   }
-
-  renderCalendar();
-  renderRecords();
-
 });
 
 </script>
