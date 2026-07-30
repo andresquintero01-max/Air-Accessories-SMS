@@ -1410,9 +1410,8 @@ function loadCPA(data){
     Type: ${safeText(x.controlType)}<br>
     Action: ${safeText(x.actionPlan)}<br>
     Date: ${safeText(x.actionDate)}<br>
-    Email: ${safeText(x.emailTo)}<br><br>
     Email: ${safeText(x.emailTo)}<br>
-    Instruction: ${safeText(x.instruction)}<br><br>
+Instruction: ${safeText(x.instruction)}<br><br>
     <button class="send-btn" onclick="showCPAEdit('${safeAttr(id)}')">Edit</button>
 <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${safeAttr(x.instruction || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
 
