@@ -421,6 +421,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getDatabase, ref, get, update, remove }
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+import { getAuth, onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
   authDomain: "air-accessories-sms.firebaseapp.com",
@@ -433,6 +436,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+  const auth = getAuth(app);
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -567,7 +571,14 @@ window.goHome = function(){
   location.href = "index.html";
 };
 
-loadInvestigation();
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    loadInvestigation();
+  }else{
+    alert("Session expired. Please log in again.");
+    location.href = "index.html";
+  }
+});
 
 </script>
 
