@@ -746,10 +746,7 @@ update(ref(db,"smsReports/"+key),{
 title:title,
 reporterName:document.getElementById("edit-reporterName-"+key).value,
 date:document.getElementById("edit-date-"+key).value,
-flightNumber:document.getElementById("edit-flightNumber-"+key).value,
-aircraftRegistration:document.getElementById("edit-aircraftRegistration-"+key).value,
-airport:document.getElementById("edit-airport-"+key).value,
-destination:document.getElementById("edit-destination-"+key).value,
+
 reportType:document.getElementById("edit-reportType-"+key).value,
 whatHappened:document.getElementById("edit-whatHappened-"+key).value,
 recommendation:document.getElementById("edit-recommendation-"+key).value
@@ -1119,25 +1116,6 @@ ${item.reporterName || "N/A"}
 ${item.date || "N/A"}
 </div>
 
-<div>
-<span class="label">Flight Number:</span>
-${item.flightNumber || "N/A"}
-</div>
-
-<div>
-<span class="label">Aircraft Registration:</span>
-${item.aircraftRegistration || "N/A"}
-</div>
-
-<div>
-<span class="label">Airport:</span>
-${item.airport || "N/A"}
-</div>
-
-<div>
-<span class="label">Destination:</span>
-${item.destination || "N/A"}
-</div>
 
 <div>
 <span class="label">Type Report:</span>
@@ -1169,17 +1147,6 @@ ${item.recommendation || "N/A"}
 <label><b>Date:</b></label>
 <input type="date" id="edit-date-${key}" value="${item.date || ""}">
 
-<label><b>Flight Number:</b></label>
-<input id="edit-flightNumber-${key}" value="${item.flightNumber || ""}">
-
-<label><b>Aircraft Registration:</b></label>
-<input id="edit-aircraftRegistration-${key}" value="${item.aircraftRegistration || ""}">
-
-<label><b>Airport:</b></label>
-<input id="edit-airport-${key}" value="${item.airport || ""}">
-
-<label><b>Destination:</b></label>
-<input id="edit-destination-${key}" value="${item.destination || ""}">
 
 <label><b>Type Report:</b></label>
 <select id="edit-reportType-${key}">
@@ -1278,10 +1245,6 @@ ${item.reportId || ""}
 ${item.title || ""}
 ${item.reporterName || ""}
 ${item.date || ""}
-${item.flightNumber || ""}
-${item.aircraftRegistration || ""}
-${item.airport || ""}
-${item.destination || ""}
 ${item.reportType || ""}
 ${item.whatHappened || ""}
 ${item.recommendation || ""}
@@ -1359,10 +1322,6 @@ table += `
 <td>${item.title || "N/A"}</td>
 <td>${item.reporterName || "N/A"}</td>
 <td>${item.date || "N/A"}</td>
-<td>${item.flightNumber || "N/A"}</td>
-<td>${item.aircraftRegistration || "N/A"}</td>
-<td>${item.airport || "N/A"}</td>
-<td>${item.destination || "N/A"}</td>
 <td>${item.reportType || "N/A"}</td>
 <td>${item.whatHappened || "N/A"}</td>
 <td>${item.recommendation || "N/A"}</td>
