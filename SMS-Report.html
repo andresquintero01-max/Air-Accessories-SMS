@@ -68,10 +68,7 @@ window.sendReport = function () {
     date: document.getElementById("date").value,
     createdByUid: user.uid,
     createdByEmail: user.email,
-    flightNumber: document.getElementById("flightNumber").value,
-    aircraftRegistration: document.getElementById("aircraftRegistration").value,
-    airport: document.getElementById("airport").value,
-    destination: document.getElementById("destination").value,
+    
     reportType: document.getElementById("reportType").value,
     whatHappened: document.getElementById("what").value,
     recommendation: document.getElementById("recommendation").value,
@@ -442,25 +439,7 @@ button:hover,
         <input id="date" type="date">
       </div>
 
-      <div>
-        <label>Flight Number</label>
-        <input id="flightNumber" type="text" placeholder="Example: AV1234">
-      </div>
-
-      <div>
-        <label>Aircraft Registration</label>
-        <input id="aircraftRegistration" type="text" placeholder="Example: N123XX">
-      </div>
-
-      <div>
-        <label>Airport</label>
-        <input id="airport" type="text" placeholder="Example: KOPF, KMIA, KBOS">
-      </div>
-
-      <div>
-        <label>Destination</label>
-        <input id="destination" type="text" placeholder="Destination airport">
-      </div>
+      
 
       <div class="full">
         <label>Type Report</label>
