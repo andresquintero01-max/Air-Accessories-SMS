@@ -860,19 +860,21 @@ function loadMainReport(){
     if(snap.exists()){
       const d=snap.val();
 
-      document.getElementById("reportBox").innerHTML=`
+    document.getElementById("reportBox").innerHTML=`
       <b>ID:</b> ${safeText(d.reportId || key || "")}<br>
       <b>Title:</b> ${safeText(d.title)}<br>
       <b>Name:</b> ${safeText(d.reporterName)}<br>
       <b>Date:</b> ${safeText(d.date)}<br>
-           <b>Type Report:</b> ${safeText(d.reportType)}<br>
+      <b>Type Report:</b> ${safeText(d.reportType)}<br>
       <b>What Happened:</b> ${safeText(d.whatHappened)}<br>
       <b>Recommendation:</b> ${safeText(d.recommendation)}<br>
+      <b>Contributing Factor:</b> ${safeText(d.contributingFactor)}<br>
       <b>Risk:</b> ${safeText(d.risk)}
       `;
 
       document.getElementById("savedRisk").innerText=d.risk||"N/A";
       document.getElementById("savedResidualRisk").innerText=d.residualRisk||"N/A";
+      document.getElementById("contributingFactor").value=d.contributingFactor||"";
 
       renderMatrix();
       renderResidualMatrix();
@@ -1081,6 +1083,7 @@ window.saveRisk=function(){
 
   update(ref(db,"smsReports/"+key),{
     risk:risk,
+    contributingFactor:document.getElementById("contributingFactor").value,
     riskClosed:true,
     status:"IN PROGRESS",
     sagRequired:requiredInvestigation,
@@ -1092,6 +1095,8 @@ window.saveRisk=function(){
     alert("Risk saved successfully.");
   });
 };
+
+window.saveResidualRisk=function(){
 
 window.saveResidualRisk=function(){
   if(!residualRisk){
