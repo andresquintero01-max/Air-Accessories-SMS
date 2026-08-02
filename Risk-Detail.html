@@ -1079,7 +1079,7 @@ window.saveRisk=function(){
     return;
   }
 
-  let requiredInvestigation = mandatoryInvestigationRisks.includes(risk);
+  let requiredInvestigation=mandatoryInvestigationRisks.includes(risk);
 
   update(ref(db,"smsReports/"+key),{
     risk:risk,
@@ -1088,15 +1088,13 @@ window.saveRisk=function(){
     status:"IN PROGRESS",
     sagRequired:requiredInvestigation,
     inDepthInvestigationRequired:requiredInvestigation,
-    recommendedInvestigationMethods: requiredInvestigation ? "MEDA / REDA / HFACS / FRAT" : "As required based on safety assessment"
+    recommendedInvestigationMethods:requiredInvestigation?"MEDA / REDA / HFACS / FRAT":"As required based on safety assessment"
   }).then(()=>{
     document.getElementById("savedRisk").innerText=risk;
     document.getElementById("saveRiskBtn").classList.add("closed");
     alert("Risk saved successfully.");
   });
 };
-
-window.saveResidualRisk=function(){
 
 window.saveResidualRisk=function(){
   if(!residualRisk){
