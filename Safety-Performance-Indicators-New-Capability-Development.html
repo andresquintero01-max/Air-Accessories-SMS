@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SPI - Improper Storage</title>
+<title>SPI - New Capability Development</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -37,23 +37,49 @@ body{
 .header{text-align:center;margin-bottom:32px;}
 
 .logo{
-  width:100px;height:100px;margin:0 auto 18px;border-radius:30px;
+  width:100px;
+  height:100px;
+  margin:0 auto 18px;
+  border-radius:30px;
   background:linear-gradient(135deg,#003b66,#005f99,#00aeef);
-  color:white;display:flex;align-items:center;justify-content:center;
-  font-size:46px;box-shadow:0 18px 40px rgba(0,0,0,.30);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:46px;
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
 }
 
 .badge{
-  display:inline-block;background:#ecfeff;color:#003b66;
-  padding:10px 24px;border-radius:999px;font-size:14px;
-  font-weight:900;letter-spacing:1.8px;margin-bottom:14px;
+  display:inline-block;
+  background:#ecfeff;
+  color:#003b66;
+  padding:10px 24px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.8px;
+  margin-bottom:14px;
 }
 
-h1{color:#003b66;font-size:52px;font-weight:900;margin-bottom:10px;}
-.subtitle{color:#536172;font-size:19px;font-weight:600;}
+h1{
+  color:#003b66;
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:#536172;
+  font-size:19px;
+  font-weight:600;
+}
 
 .title-line{
-  width:260px;height:6px;margin:24px auto 0;border-radius:999px;
+  width:260px;
+  height:6px;
+  margin:24px auto 0;
+  border-radius:999px;
   background:linear-gradient(90deg,transparent,#00aeef,#003b66,transparent);
 }
 
@@ -68,21 +94,37 @@ h1{color:#003b66;font-size:52px;font-weight:900;margin-bottom:10px;}
 }
 
 .card h2{
-  text-align:center;color:#003b66;font-size:30px;margin-bottom:20px;font-weight:900;
+  text-align:center;
+  color:#003b66;
+  font-size:30px;
+  margin-bottom:20px;
+  font-weight:900;
 }
 
 .top-buttons{
-  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
   margin-bottom:30px;
 }
 
 button{
-  border:none;color:white;padding:15px 26px;border-radius:16px;
-  font-size:15px;font-weight:900;cursor:pointer;transition:.3s;
+  border:none;
+  color:white;
+  padding:15px 26px;
+  border-radius:16px;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.3s;
   box-shadow:0 12px 26px rgba(0,0,0,.20);
 }
 
-button:hover{transform:translateY(-4px);filter:brightness(1.08);}
+button:hover{
+  transform:translateY(-4px);
+  filter:brightness(1.08);
+}
 
 .print-btn{background:linear-gradient(135deg,#16a34a,#22c55e);}
 .add-btn{background:linear-gradient(135deg,#003b66,#005f99,#00aeef);}
@@ -154,10 +196,14 @@ input:focus{
   font-weight:900;
 }
 
-.right-buttons{display:flex;gap:10px;flex-wrap:wrap;}
+.right-buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
 
 input{
-  width:85px;
+  width:95px;
   padding:8px;
   text-align:center;
   border:1px solid #cfd8e3;
@@ -167,12 +213,32 @@ input{
   outline:none;
 }
 
-.rate{background:#f8fcff;color:#003b66;font-weight:900;}
-.summary{font-weight:900;background:#ecfeff !important;color:#003b66;}
+.rate{
+  background:#f8fcff;
+  color:#003b66;
+  font-weight:900;
+}
 
-.acceptable-row{background:#dcfce7 !important;font-weight:900;}
-.tolerable-row{background:#fef9c3 !important;font-weight:900;}
-.notacceptable-row{background:#fee2e2 !important;font-weight:900;}
+.summary{
+  font-weight:900;
+  background:#ecfeff !important;
+  color:#003b66;
+}
+
+.acceptable-row{
+  background:#dcfce7 !important;
+  font-weight:900;
+}
+
+.tolerable-row{
+  background:#fef9c3 !important;
+  font-weight:900;
+}
+
+.notacceptable-row{
+  background:#fee2e2 !important;
+  font-weight:900;
+}
 
 canvas{
   background:white;
@@ -181,7 +247,9 @@ canvas{
   padding:15px;
 }
 
-.historical{border-top:9px solid #005f99;}
+.historical{
+  border-top:9px solid #005f99;
+}
 
 .trend-box{
   margin-top:18px;
@@ -215,6 +283,7 @@ canvas{
   h1{font-size:38px;}
   .year-header{flex-direction:column;align-items:flex-start;}
 }
+
 </style>
 </head>
 
@@ -222,499 +291,1363 @@ canvas{
 
 <div class="container">
 
-  <div class="header">
-    <div class="logo">📦</div>
-    <div class="badge">371Q Virtual Professional Safety Office</div>
-    <h1>SPI - Improper Storage</h1>
-    <div class="subtitle">Safety Performance Indicator Monitoring</div>
-    <div class="title-line"></div>
+<div class="header">
+
+  <div class="logo">🔧</div>
+
+  <div class="badge">
+    371Q Virtual Professional Safety Office
   </div>
 
-  <div class="card">
-    <h2>SPI Objective</h2>
+  <h1>SPI - New Capability Development</h1>
 
-    <table>
-      <tr>
-        <th>Indicator</th>
-        <th>Improper Storage of Maintenance Materials or Components</th>
-      </tr>
-
-      <tr>
-        <td class="objective-label">Specific Objective</td>
-        <td><div id="objSpecific" class="editable-cell" contenteditable="true">Reduce improper storage of materials and components through improved practices and regular inspections.</div></td>
-      </tr>
-
-      <tr>
-        <td class="objective-label">Formula for its Calculation</td>
-        <td><div id="objFormula" class="editable-cell" contenteditable="true">(Number of Maintenance Material or Component Stored Improperly / Man-Hours per Month) * 1000 Man-Hours</div></td>
-      </tr>
-
-      <tr>
-        <td class="objective-label">Data Sources</td>
-        <td><div id="objSources" class="editable-cell" contenteditable="true">Quality Assurance</div></td>
-      </tr>
-
-      <tr>
-        <td class="objective-label">Measurement Frequency</td>
-        <td><div id="objFrequency" class="editable-cell" contenteditable="true">Monthly</div></td>
-      </tr>
-
-      <tr>
-        <td class="objective-label">Responsible Party for Monitoring</td>
-        <td><div id="objResponsible" class="editable-cell" contenteditable="true">Chief Inspector</div></td>
-      </tr>
-    </table>
-
-    <div class="top-buttons">
-      <button class="year-save-btn" onclick="saveData()">💾 Save Objective</button>
-    </div>
+  <div class="subtitle">
+    Safety Performance Indicator Monitoring
   </div>
 
-  <div class="top-buttons">
-    <button class="print-btn" onclick="window.print()">🖨️ Print</button>
-    <button class="add-btn" onclick="addYear()">➕ Add Year</button>
-    <button class="back-btn" onclick="window.location.href='Safety-Performance-Indicators.html'">📊 Back to SPI</button>
-    <button class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
-  </div>
-
-  <div id="yearsContainer"></div>
-
-  <div class="historical">
-    <h2 style="text-align:center;color:#003b66;">Historical Trend</h2>
-    <canvas id="historicalChart"></canvas>
-    <div class="trend-box" id="trendSummary">
-      Historical trend will be calculated automatically.
-    </div>
-  </div>
-
-  <div class="footer">
-    371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
-  </div>
+  <div class="title-line"></div>
 
 </div>
 
+
+<div class="card">
+
+<h2>SPI Objective</h2>
+
+<table>
+
+<tr>
+  <th>Indicator</th>
+  <th>New Capability Development</th>
+</tr>
+
+<tr>
+  <td class="objective-label">
+    Specific Objective
+  </td>
+
+  <td>
+    <div
+      id="objSpecific"
+      class="editable-cell"
+      contenteditable="true">
+      Maintain an average of more than 10 new capabilities developed per month.
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td class="objective-label">
+    Formula for its Calculation
+  </td>
+
+  <td>
+    <div
+      id="objFormula"
+      class="editable-cell"
+      contenteditable="true">
+      Total New Capabilities Developed / Number of Months Reported
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td class="objective-label">
+    Data Sources
+  </td>
+
+  <td>
+    <div
+      id="objSources"
+      class="editable-cell"
+      contenteditable="true">
+      Capability Development Records
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td class="objective-label">
+    Measurement Frequency
+  </td>
+
+  <td>
+    <div
+      id="objFrequency"
+      class="editable-cell"
+      contenteditable="true">
+      Monthly
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td class="objective-label">
+    Responsible Party for Monitoring
+  </td>
+
+  <td>
+    <div
+      id="objResponsible"
+      class="editable-cell"
+      contenteditable="true">
+      Chief Inspector
+    </div>
+  </td>
+</tr>
+
+</table>
+
+<div class="top-buttons">
+
+<button
+  class="year-save-btn"
+  onclick="saveData()">
+  💾 Save Objective
+</button>
+
+</div>
+
+</div>
+
+
+<div class="top-buttons">
+
+<button
+  class="print-btn"
+  onclick="window.print()">
+  🖨️ Print
+</button>
+
+<button
+  class="add-btn"
+  onclick="addYear()">
+  ➕ Add Year
+</button>
+
+<button
+  class="back-btn"
+  onclick="window.location.href='Safety-Performance-Indicators.html'">
+  📊 Back to SPI
+</button>
+
+<button
+  class="home-btn"
+  onclick="window.location.href='index.html'">
+  🏠 Home
+</button>
+
+</div>
+
+
+<div id="yearsContainer"></div>
+
+
+<div class="historical">
+
+<h2 style="text-align:center;color:#003b66;">
+Historical Trend
+</h2>
+
+<canvas id="historicalChart"></canvas>
+
+<div
+  class="trend-box"
+  id="trendSummary">
+
+  Historical trend will be calculated automatically.
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+
+</div>
+
+</div>
+
+
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
-  authDomain: "air-accessories-sms.firebaseapp.com",
-  databaseURL: "https://air-accessories-sms-default-rtdb.firebaseio.com",
-  projectId: "air-accessories-sms",
-  storageBucket: "air-accessories-sms.firebasestorage.app",
-  messagingSenderId: "1051190584016",
-  appId: "1:1051190584016:web:43da6a1b646834a21074d5"
+
+  apiKey:
+  "AIzaSyCgeoQf74WZrtRLx_8cCfJSJfaRlHNl-Y0",
+
+  authDomain:
+  "air-accessories-sms.firebaseapp.com",
+
+  databaseURL:
+  "https://air-accessories-sms-default-rtdb.firebaseio.com",
+
+  projectId:
+  "air-accessories-sms",
+
+  storageBucket:
+  "air-accessories-sms.firebasestorage.app",
+
+  messagingSenderId:
+  "1051190584016",
+
+  appId:
+  "1:1051190584016:web:43da6a1b646834a21074d5"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const auth = getAuth(app);
 
-const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const app =
+initializeApp(firebaseConfig);
 
-let years = [2024,2025,2026];
+const db =
+getDatabase(app);
+
+const auth =
+getAuth(app);
+
+
+const months = [
+"JAN","FEB","MAR","APR","MAY","JUN",
+"JUL","AUG","SEP","OCT","NOV","DEC"
+];
+
+
+let years = [
+2026,
+2027,
+2028
+];
+
+
+const monthlyTarget = 10;
+
+
 let charts = {};
+
 let historicalChart;
 
+
 let objectiveData = {
-  specific:"Reduce improper storage of materials and components through improved practices and regular inspections.",
-  formula:"(Number of Maintenance Material or Component Stored Improperly / Man-Hours per Month) * 1000 Man-Hours",
-  sources:"Quality Assurance",
-  frequency:"Monthly",
-  responsible:"Chief Inspector"
+
+specific:
+"Maintain an average of more than 10 new capabilities developed per month.",
+
+formula:
+"Total New Capabilities Developed / Number of Months Reported",
+
+sources:
+"Capability Development Records",
+
+frequency:
+"Monthly",
+
+responsible:
+"Chief Inspector"
+
 };
+
 
 window.onload = () => {
-  onAuthStateChanged(auth, (user) => {
-    if(user){
-      loadData();
-    }else{
-      alert("Session expired. Please log in again.");
-      location.href = "index.html";
-    }
-  });
+
+onAuthStateChanged(
+auth,
+(user) => {
+
+if(user){
+
+loadData();
+
+}else{
+
+alert(
+"Session expired. Please log in again."
+);
+
+location.href =
+"index.html";
+
+}
+
+});
+
 };
+
 
 function defaultData(){
-  let data = {};
-  years.forEach(year=>{
-    data[year] = months.map(month=>({
-      month:month,
-      workhours:0,
-      events:0
-    }));
-  });
-  return data;
+
+let data = {};
+
+years.forEach(year=>{
+
+data[year] =
+months.map(month=>({
+
+month:month,
+
+capabilities:0
+
+}));
+
+});
+
+return data;
+
 }
 
-let spiData = defaultData();
 
-function calculateRate(events, workhours){
-  if(!workhours || workhours <= 0) return 0;
-  return (events / workhours) * 1000;
+let spiData =
+defaultData();
+
+
+function getYearValues(year){
+
+if(!spiData[year]){
+return [];
 }
 
-function getYearRates(year){
-  if(!spiData[year]) return [];
-  return spiData[year].map(row=>calculateRate(row.events,row.workhours));
+return spiData[year].map(
+row=>Number(row.capabilities || 0)
+);
+
 }
 
-function getAverage(rates){
-  if(!rates.length) return 0;
-  return rates.reduce((a,b)=>a+b,0) / rates.length;
+
+function getAverage(values){
+
+if(!values.length){
+return 0;
 }
 
-function getStandardDeviation(rates){
-  if(!rates.length) return 0;
-  const average = getAverage(rates);
-  return Math.sqrt(rates.map(x=>Math.pow(x-average,2)).reduce((a,b)=>a+b,0) / rates.length);
+return values.reduce(
+(a,b)=>a+b,
+0
+) / values.length;
+
 }
 
-function getThresholds(year){
-  const previousYear = year - 1;
-  if(!spiData[previousYear]) return null;
-
-  const previousRates = getYearRates(previousYear);
-  const average = getAverage(previousRates);
-  const sd = getStandardDeviation(previousRates);
-
-  return {
-    acceptable: average,
-    tolerable: average + sd,
-    notAcceptable: average + (sd * 2),
-    baseYear: previousYear
-  };
-}
 
 function calculateTrendLine(values){
-  const n = values.length;
-  if(n === 0) return { slope:0, trendValues:[] };
 
-  let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+const n =
+values.length;
 
-  values.forEach((y,x)=>{
-    sumX += x;
-    sumY += y;
-    sumXY += x * y;
-    sumXX += x * x;
-  });
+if(n === 0){
 
-  const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX || 1);
-  const intercept = (sumY - slope * sumX) / n;
-  const trendValues = values.map((_,x)=> intercept + slope * x);
+return {
+slope:0,
+trendValues:[]
+};
 
-  return { slope, trendValues };
 }
+
+let sumX = 0;
+let sumY = 0;
+let sumXY = 0;
+let sumXX = 0;
+
+
+values.forEach((y,x)=>{
+
+sumX += x;
+
+sumY += y;
+
+sumXY +=
+x * y;
+
+sumXX +=
+x * x;
+
+});
+
+
+const slope =
+
+(n * sumXY -
+sumX * sumY) /
+
+(n * sumXX -
+sumX * sumX || 1);
+
+
+const intercept =
+
+(sumY -
+slope * sumX) / n;
+
+
+const trendValues =
+
+values.map(
+(_,x)=>
+intercept +
+slope * x
+);
+
+
+return {
+
+slope,
+trendValues
+
+};
+
+}
+
 
 function renderAll(){
-  const container = document.getElementById("yearsContainer");
-  container.innerHTML = "";
 
-  years.forEach(year=>{
-    const section = document.createElement("div");
-    section.className = "year-section";
+const container =
 
-    section.innerHTML = `
-      <div class="year-header">
-        <div class="year-title">${year}</div>
-        <div class="right-buttons">
-          <button class="year-save-btn" onclick="saveData()">💾 Save</button>
-          <button class="delete-year-btn" onclick="deleteYear(${year})">🗑</button>
-        </div>
-      </div>
+document.getElementById(
+"yearsContainer"
+);
 
-      <table>
-        <thead>
-          <tr>
-            <th style="width:18%;">Month</th>
-            <th style="width:18%;">Man-Hours</th>
-            <th style="width:15%;">Improper Storage Events</th>
-            <th style="width:18%;">Event Rate</th>
-          </tr>
-        </thead>
-        <tbody id="table-${year}"></tbody>
-      </table>
+container.innerHTML = "";
 
-      <canvas id="chart-${year}"></canvas>
-    `;
 
-    container.appendChild(section);
-    renderTable(year);
-    renderYearChart(year);
-  });
+years.forEach(year=>{
 
-  renderHistoricalChart();
+const section =
+
+document.createElement(
+"div"
+);
+
+section.className =
+"year-section";
+
+
+section.innerHTML = `
+
+<div class="year-header">
+
+<div class="year-title">
+${year}
+</div>
+
+<div class="right-buttons">
+
+<button
+class="year-save-btn"
+onclick="saveData()">
+💾 Save
+</button>
+
+<button
+class="delete-year-btn"
+onclick="deleteYear(${year})">
+🗑
+</button>
+
+</div>
+
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="width:25%;">
+Month
+</th>
+
+<th style="width:25%;">
+New Capabilities Developed
+</th>
+
+<th style="width:25%;">
+Monthly Target
+</th>
+
+<th style="width:25%;">
+Status
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="table-${year}">
+</tbody>
+
+</table>
+
+
+<canvas
+id="chart-${year}">
+</canvas>
+
+`;
+
+
+container.appendChild(
+section
+);
+
+
+renderTable(year);
+
+renderYearChart(year);
+
+});
+
+
+renderHistoricalChart();
+
 }
+
 
 function renderTable(year){
-  const tbody = document.getElementById(`table-${year}`);
-  tbody.innerHTML = "";
 
-  let totalWorkHours = 0;
-  let totalEvents = 0;
-  const rates = [];
+const tbody =
 
-  spiData[year].forEach((row,index)=>{
-    const rate = calculateRate(row.events,row.workhours);
-    rates.push(rate);
+document.getElementById(
+`table-${year}`
+);
 
-    totalWorkHours += Number(row.workhours || 0);
-    totalEvents += Number(row.events || 0);
 
-    tbody.innerHTML += `
-      <tr>
-        <td><strong>${row.month}</strong></td>
-        <td><input type="number" value="${row.workhours}" onchange="updateValue(${year},${index},'workhours',this.value)"></td>
-        <td><input type="number" value="${row.events}" onchange="updateValue(${year},${index},'events',this.value)"></td>
-        <td class="rate">${rate.toFixed(2)}</td>
-      </tr>
-    `;
-  });
+tbody.innerHTML = "";
 
-  const average = getAverage(rates);
-  const sd = getStandardDeviation(rates);
 
-  tbody.innerHTML += `
-    <tr class="summary">
-      <td>Total</td>
-      <td>${totalWorkHours.toFixed(2)}</td>
-      <td>${totalEvents}</td>
-      <td></td>
-    </tr>
+let totalCapabilities = 0;
 
-    <tr class="summary">
-      <td colspan="3">Average</td>
-      <td>${average.toFixed(2)}</td>
-    </tr>
 
-    <tr class="summary">
-      <td colspan="3">Standard Deviation</td>
-      <td>${sd.toFixed(2)}</td>
-    </tr>
-  `;
+spiData[year].forEach(
+(row,index)=>{
 
-  if(year >= 2025){
-    const thresholds = getThresholds(year);
 
-    if(thresholds){
-      tbody.innerHTML += `
-        <tr class="acceptable-row">
-          <td colspan="3">Acceptable Limit - Based on ${thresholds.baseYear}</td>
-          <td>${thresholds.acceptable.toFixed(2)}</td>
-        </tr>
-        <tr class="tolerable-row">
-          <td colspan="3">Tolerable Limit - Based on ${thresholds.baseYear}</td>
-          <td>${thresholds.tolerable.toFixed(2)}</td>
-        </tr>
-        <tr class="notacceptable-row">
-          <td colspan="3">Not Acceptable Limit - Based on ${thresholds.baseYear}</td>
-          <td>${thresholds.notAcceptable.toFixed(2)}</td>
-        </tr>
-      `;
-    }
-  }
+const capabilities =
+
+Number(
+row.capabilities || 0
+);
+
+
+totalCapabilities +=
+capabilities;
+
+
+let status = "";
+
+
+if(capabilities > monthlyTarget){
+
+status =
+"Acceptable";
+
+}else if(
+capabilities === monthlyTarget
+){
+
+status =
+"Target";
+
+}else{
+
+status =
+"Below Target";
+
 }
 
-window.updateValue = function(year,index,field,value){
-  spiData[year][index][field] = Number(value);
-  renderAll();
+
+tbody.innerHTML += `
+
+<tr>
+
+<td>
+<strong>
+${row.month}
+</strong>
+</td>
+
+
+<td>
+
+<input
+type="number"
+min="0"
+value="${capabilities}"
+onchange="updateValue(${year},${index},this.value)">
+
+</td>
+
+
+<td class="rate">
+
+More than ${monthlyTarget}
+
+</td>
+
+
+<td class="rate">
+
+${status}
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+
+const annualAverage =
+
+totalCapabilities /
+12;
+
+
+tbody.innerHTML += `
+
+<tr class="summary">
+
+<td>
+Total
+</td>
+
+<td>
+${totalCapabilities}
+</td>
+
+<td colspan="2">
+Annual Total
+</td>
+
+</tr>
+
+
+<tr class="summary">
+
+<td colspan="2">
+Monthly Average
+</td>
+
+<td colspan="2">
+${annualAverage.toFixed(2)}
+</td>
+
+</tr>
+
+`;
+
+
+if(annualAverage > monthlyTarget){
+
+tbody.innerHTML += `
+
+<tr class="acceptable-row">
+
+<td colspan="3">
+
+Annual Performance
+
+</td>
+
+<td>
+
+ACCEPTABLE
+
+</td>
+
+</tr>
+
+`;
+
+}else if(
+annualAverage === monthlyTarget
+){
+
+tbody.innerHTML += `
+
+<tr class="tolerable-row">
+
+<td colspan="3">
+
+Annual Performance
+
+</td>
+
+<td>
+
+TARGET
+
+</td>
+
+</tr>
+
+`;
+
+}else{
+
+tbody.innerHTML += `
+
+<tr class="notacceptable-row">
+
+<td colspan="3">
+
+Annual Performance
+
+</td>
+
+<td>
+
+BELOW TARGET
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+}
+
+
+window.updateValue =
+function(
+year,
+index,
+value
+){
+
+spiData[year][index]
+.capabilities =
+Number(value);
+
+
+renderAll();
+
 };
+
 
 function renderYearChart(year){
-  const ctx = document.getElementById(`chart-${year}`);
 
-  if(charts[year]) charts[year].destroy();
+const ctx =
 
-  const rates = getYearRates(year);
+document.getElementById(
+`chart-${year}`
+);
 
-  let datasets = [{
-    label:String(year),
-    data:rates,
-    borderColor:"#00aeef",
-    backgroundColor:"#00aeef",
-    borderWidth:4,
-    tension:0.25,
-    pointRadius:5
-  }];
 
-  if(year >= 2025){
-    const thresholds = getThresholds(year);
+if(charts[year]){
 
-    if(thresholds){
-      datasets.push(
-        {
-          label:"Acceptable Limit",
-          data:months.map(()=>thresholds.acceptable),
-          borderColor:"#22c55e",
-          backgroundColor:"#22c55e",
-          pointRadius:0,
-          borderWidth:4
-        },
-        {
-          label:"Tolerable Limit",
-          data:months.map(()=>thresholds.tolerable),
-          borderColor:"#f59e0b",
-          backgroundColor:"#f59e0b",
-          pointRadius:0,
-          borderWidth:4
-        },
-        {
-          label:"Not Acceptable Limit",
-          data:months.map(()=>thresholds.notAcceptable),
-          borderColor:"#ef4444",
-          backgroundColor:"#ef4444",
-          pointRadius:0,
-          borderWidth:4
-        }
-      );
-    }
-  }
+charts[year].destroy();
 
-  charts[year] = new Chart(ctx,{
-    type:"line",
-    data:{ labels:months, datasets:datasets },
-    options:{
-      responsive:true,
-      plugins:{ title:{ display:true, text:"Improper Storage Event Rate" } },
-      scales:{ y:{ beginAtZero:true } }
-    }
-  });
 }
+
+
+const values =
+getYearValues(year);
+
+
+charts[year] =
+
+new Chart(ctx,{
+
+type:"line",
+
+data:{
+
+labels:months,
+
+datasets:[
+
+{
+
+label:
+"New Capabilities Developed",
+
+data:
+values,
+
+borderColor:
+"#00aeef",
+
+backgroundColor:
+"#00aeef",
+
+borderWidth:4,
+
+tension:.25,
+
+pointRadius:5
+
+},
+
+{
+
+label:
+"Monthly Target",
+
+data:
+months.map(
+()=>monthlyTarget
+),
+
+borderColor:
+"#22c55e",
+
+backgroundColor:
+"#22c55e",
+
+borderWidth:4,
+
+pointRadius:0
+
+}
+
+]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+title:{
+
+display:true,
+
+text:
+"New Capability Development"
+
+}
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true
+
+}
+
+}
+
+}
+
+});
+
+}
+
 
 function renderHistoricalChart(){
-  const ctx = document.getElementById("historicalChart");
 
-  if(historicalChart) historicalChart.destroy();
+const ctx =
 
-  let labels = [];
-  let rates = [];
+document.getElementById(
+"historicalChart"
+);
 
-  years.forEach(year=>{
-    spiData[year].forEach(row=>{
-      labels.push(row.month + "-" + String(year).slice(2));
-      rates.push(calculateRate(row.events,row.workhours));
-    });
-  });
 
-  const trend = calculateTrendLine(rates);
+if(historicalChart){
 
-  let trendText = "";
+historicalChart.destroy();
 
-  if(trend.slope > 0.05){
-    trendText = "Increasing trend: improper storage events are rising over time.";
-  }else if(trend.slope < -0.05){
-    trendText = "Decreasing trend: improper storage events are improving over time.";
-  }else{
-    trendText = "Stable trend: improper storage events remain relatively unchanged over time.";
-  }
-
-  document.getElementById("trendSummary").innerHTML =
-  "Historical Slope: " + trend.slope.toFixed(2) + " | " + trendText;
-
-  historicalChart = new Chart(ctx,{
-    type:"line",
-    data:{
-      labels:labels,
-      datasets:[
-        {
-          label:"Historical Improper Storage Event Rate",
-          data:rates,
-          borderColor:"#00aeef",
-          backgroundColor:"#00aeef",
-          borderWidth:4,
-          tension:0.25,
-          pointRadius:4
-        },
-        {
-          label:"Trend Line / Slope",
-          data:trend.trendValues,
-          borderColor:"#003b66",
-          backgroundColor:"#003b66",
-          borderWidth:4,
-          pointRadius:0,
-          tension:0
-        }
-      ]
-    },
-    options:{
-      responsive:true,
-      plugins:{ title:{ display:true, text:"Historical Improper Storage Event Rate" } },
-      scales:{ y:{ beginAtZero:true } }
-    }
-  });
 }
 
-window.addYear = function(){
-  let lastYear = Math.max(...years);
-  let newYear = lastYear + 1;
 
-  years.push(newYear);
+let labels = [];
 
-  spiData[newYear] = months.map(month=>({
-    month:month,
-    workhours:0,
-    events:0
-  }));
+let values = [];
 
-  renderAll();
+
+years.forEach(year=>{
+
+spiData[year].forEach(
+row=>{
+
+labels.push(
+
+row.month +
+"-" +
+String(year).slice(2)
+
+);
+
+
+values.push(
+
+Number(
+row.capabilities || 0
+)
+
+);
+
+});
+
+});
+
+
+const trend =
+calculateTrendLine(values);
+
+
+let trendText = "";
+
+
+if(trend.slope > 0.05){
+
+trendText =
+"Increasing trend: new capability development is increasing over time.";
+
+}else if(
+trend.slope < -0.05
+){
+
+trendText =
+"Decreasing trend: new capability development is decreasing over time.";
+
+}else{
+
+trendText =
+"Stable trend: new capability development remains relatively unchanged over time.";
+
+}
+
+
+document.getElementById(
+"trendSummary"
+).innerHTML =
+
+"Historical Slope: " +
+
+trend.slope.toFixed(2) +
+
+" | " +
+
+trendText;
+
+
+historicalChart =
+
+new Chart(ctx,{
+
+type:"line",
+
+data:{
+
+labels:labels,
+
+datasets:[
+
+{
+
+label:
+"Historical New Capability Development",
+
+data:
+values,
+
+borderColor:
+"#00aeef",
+
+backgroundColor:
+"#00aeef",
+
+borderWidth:4,
+
+tension:.25,
+
+pointRadius:4
+
+},
+
+{
+
+label:
+"Target",
+
+data:
+values.map(
+()=>monthlyTarget
+),
+
+borderColor:
+"#22c55e",
+
+backgroundColor:
+"#22c55e",
+
+borderWidth:4,
+
+pointRadius:0
+
+},
+
+{
+
+label:
+"Trend Line / Slope",
+
+data:
+trend.trendValues,
+
+borderColor:
+"#003b66",
+
+backgroundColor:
+"#003b66",
+
+borderWidth:4,
+
+pointRadius:0,
+
+tension:0
+
+}
+
+]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+title:{
+
+display:true,
+
+text:
+"Historical New Capability Development"
+
+}
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true
+
+}
+
+}
+
+}
+
+});
+
+}
+
+
+window.addYear =
+function(){
+
+let lastYear =
+Math.max(...years);
+
+let newYear =
+lastYear + 1;
+
+
+years.push(
+newYear
+);
+
+
+spiData[newYear] =
+
+months.map(month=>({
+
+month:month,
+
+capabilities:0
+
+}));
+
+
+renderAll();
+
 };
 
-window.deleteYear = async function(year){
-  if(!confirm("Are you sure you want to delete year " + year + "?")) return;
 
-  years = years.filter(y => y !== year);
-  delete spiData[year];
+window.deleteYear =
+async function(year){
 
-  await saveData();
-  renderAll();
+if(
+
+!confirm(
+
+"Are you sure you want to delete year " +
+
+year +
+
+"?"
+
+)
+
+){
+
+return;
+
+}
+
+
+years =
+years.filter(
+y=>y !== year
+);
+
+
+delete spiData[year];
+
+
+await saveData();
+
+
+renderAll();
+
 };
 
-window.saveData = async function(){
 
-  objectiveData = {
-    specific:document.getElementById("objSpecific").innerText.trim(),
-    formula:document.getElementById("objFormula").innerText.trim(),
-    sources:document.getElementById("objSources").innerText.trim(),
-    frequency:document.getElementById("objFrequency").innerText.trim(),
-    responsible:document.getElementById("objResponsible").innerText.trim()
-  };
+window.saveData =
+async function(){
 
-  await set(
-    ref(db,"SPI-Improper-Storage"),
-    {
-      objective:objectiveData,
-      years:years,
-      data:spiData,
-      updatedAt:new Date().toISOString()
-    }
-  );
 
-  alert("SPI Improper Storage saved successfully.");
+objectiveData = {
+
+specific:
+
+document
+.getElementById(
+"objSpecific"
+)
+.innerText
+.trim(),
+
+
+formula:
+
+document
+.getElementById(
+"objFormula"
+)
+.innerText
+.trim(),
+
+
+sources:
+
+document
+.getElementById(
+"objSources"
+)
+.innerText
+.trim(),
+
+
+frequency:
+
+document
+.getElementById(
+"objFrequency"
+)
+.innerText
+.trim(),
+
+
+responsible:
+
+document
+.getElementById(
+"objResponsible"
+)
+.innerText
+.trim()
+
 };
+
+
+await set(
+
+ref(
+
+db,
+
+"SPI-New-Capability-Development"
+
+),
+
+{
+
+objective:
+objectiveData,
+
+years:
+years,
+
+data:
+spiData,
+
+target:
+monthlyTarget,
+
+updatedAt:
+new Date().toISOString()
+
+}
+
+);
+
+
+alert(
+
+"SPI New Capability Development saved successfully."
+
+);
+
+};
+
 
 async function loadData(){
-  const snapshot = await get(ref(db,"SPI-Improper-Storage"));
 
-  if(snapshot.exists()){
-    const saved = snapshot.val();
+const snapshot =
 
-    years = saved.years || [2024,2025,2026];
-    spiData = saved.data || defaultData();
+await get(
 
-    if(saved.objective){
-      objectiveData = saved.objective;
+ref(
 
-      document.getElementById("objSpecific").innerText = objectiveData.specific || "";
-      document.getElementById("objFormula").innerText = objectiveData.formula || "";
-      document.getElementById("objSources").innerText = objectiveData.sources || "";
-      document.getElementById("objFrequency").innerText = objectiveData.frequency || "";
-      document.getElementById("objResponsible").innerText = objectiveData.responsible || "";
-    }
-  }
+db,
 
-  renderAll();
+"SPI-New-Capability-Development"
+
+)
+
+);
+
+
+years = [
+2026,
+2027,
+2028
+];
+
+
+if(snapshot.exists()){
+
+
+const saved =
+snapshot.val();
+
+
+const savedData =
+saved.data || {};
+
+
+spiData = {};
+
+
+years.forEach(year=>{
+
+
+spiData[year] =
+
+savedData[year] ||
+
+months.map(month=>({
+
+month:month,
+
+capabilities:0
+
+}));
+
+
+});
+
+
+if(saved.objective){
+
+
+objectiveData =
+saved.objective;
+
+
+document
+.getElementById(
+"objSpecific"
+)
+.innerText =
+objectiveData.specific || "";
+
+
+document
+.getElementById(
+"objFormula"
+)
+.innerText =
+objectiveData.formula || "";
+
+
+document
+.getElementById(
+"objSources"
+)
+.innerText =
+objectiveData.sources || "";
+
+
+document
+.getElementById(
+"objFrequency"
+)
+.innerText =
+objectiveData.frequency || "";
+
+
+document
+.getElementById(
+"objResponsible"
+)
+.innerText =
+objectiveData.responsible || "";
+
+}
+
+}else{
+
+spiData =
+defaultData();
+
+}
+
+
+renderAll();
+
 }
 
 </script>
