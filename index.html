@@ -526,7 +526,7 @@ window.openDatabaseAndClear = function(){
     window.location.href = "SMS-Database.html";
 };
 
-window.login = function(){
+window.login = async function(){
     const email = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
@@ -535,14 +535,23 @@ window.login = function(){
         return;
     }
 
-    signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
+    try{
+        await setPersistence(auth, browserLocalPersistence);
+
+        const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
         localStorage.setItem("loginTime", Date.now());
-    })
-   .catch((error) => {
-    alert("Invalid email or password");
-    console.error(error);
-});
+
+        console.log("Firebase user authenticated:", userCredential.user.uid);
+
+    }catch(error){
+        alert("Invalid email or password");
+        console.error("LOGIN ERROR:", error);
+    }
 };
 
 document.addEventListener("keydown", function(e){
