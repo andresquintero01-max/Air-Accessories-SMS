@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SPI - Customer Units Received Damaged By The Customer</title>
+<title>KPI - Personal Training Compliance</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -64,7 +64,7 @@ body{
 
 h1{
     color:#003b66;
-    font-size:48px;
+    font-size:52px;
     font-weight:900;
     margin-bottom:10px;
 }
@@ -280,7 +280,7 @@ canvas{
 @media(max-width:800px){
     body{padding:25px;}
     .container{padding:28px 18px;border-radius:28px;}
-    h1{font-size:36px;}
+    h1{font-size:38px;}
     .year-header{flex-direction:column;align-items:flex-start;}
 }
 </style>
@@ -291,72 +291,104 @@ canvas{
 <div class="container">
 
 <div class="header">
-    <div class="logo">📦</div>
+
+    <div class="logo">🎓</div>
 
     <div class="badge">
         371Q Virtual Professional Safety Office
     </div>
 
-    <h1>SPI - Customer Units Received Damaged By The Customer</h1>
+    <h1>KPI - Personal Training Compliance</h1>
 
     <div class="subtitle">
-        Safety Performance Indicator Monitoring
+        Key Performance Indicator Monitoring
     </div>
 
     <div class="title-line"></div>
+
 </div>
 
 <div class="card">
 
-<h2>SPI Objective</h2>
+<h2>KPI Objective</h2>
 
 <table>
 
 <tr>
     <th>Indicator</th>
-    <th>Customer Units Received Damaged By The Customer</th>
+    <th>Personal Training Compliance</th>
 </tr>
 
 <tr>
-    <td class="objective-label">Specific Objective</td>
+    <td class="objective-label">
+        Specific Objective
+    </td>
+
     <td>
-        <div id="objSpecific" class="editable-cell" contenteditable="true">
-            Minimize customer units received with pre-existing damage and monitor trends to identify recurring conditions.
+        <div
+            id="objSpecific"
+            class="editable-cell"
+            contenteditable="true">
+            Maintain 100% on-time training compliance for Repair Station personnel according to the approved training matrix.
         </div>
     </td>
 </tr>
 
 <tr>
-    <td class="objective-label">Formula for its Calculation</td>
+    <td class="objective-label">
+        Formula for its Calculation
+    </td>
+
     <td>
-        <div id="objFormula" class="editable-cell" contenteditable="true">
-            (Number of Customer Units Received Damaged / Total Customer Units Received) × 100
+        <div
+            id="objFormula"
+            class="editable-cell"
+            contenteditable="true">
+            (Number of Training Requirements Completed On Time / Total Training Requirements Due) × 100
         </div>
     </td>
 </tr>
 
 <tr>
-    <td class="objective-label">Data Sources</td>
+    <td class="objective-label">
+        Data Sources
+    </td>
+
     <td>
-        <div id="objSources" class="editable-cell" contenteditable="true">
-            Receiving Inspection Records / Quality Assurance
+        <div
+            id="objSources"
+            class="editable-cell"
+            contenteditable="true">
+            Training Matrix / Personnel Training Records
         </div>
     </td>
 </tr>
 
 <tr>
-    <td class="objective-label">Measurement Frequency</td>
+    <td class="objective-label">
+        Measurement Frequency
+    </td>
+
     <td>
-        <div id="objFrequency" class="editable-cell" contenteditable="true">
+        <div
+            id="objFrequency"
+            class="editable-cell"
+            contenteditable="true">
             Monthly
         </div>
     </td>
 </tr>
 
 <tr>
-    <td class="objective-label">Responsible Party for Monitoring</td>
+    <td class="objective-label">
+        Responsible Party for Monitoring
+    </td>
+
     <td>
-        <div id="objResponsible" class="editable-cell" contenteditable="true">
+        <div
+            id="objResponsible"
+            class="editable-cell"
+            contenteditable="true">
             Chief Inspector
         </div>
     </td>
@@ -365,27 +397,35 @@ canvas{
 </table>
 
 <div class="top-buttons">
-    <button class="year-save-btn" onclick="saveData()">
-        💾 Save Objective
-    </button>
+
+<button
+    class="year-save-btn"
+    onclick="saveData()">
+    💾 Save Objective
+</button>
+
 </div>
 
 </div>
 
 <div class="top-buttons">
 
-<button class="print-btn" onclick="window.print()">
+<button
+    class="print-btn"
+    onclick="window.print()">
     🖨️ Print
 </button>
 
-<button class="add-btn" onclick="addYear()">
+<button
+    class="add-btn"
+    onclick="addYear()">
     ➕ Add Year
 </button>
 
 <button
     class="back-btn"
     onclick="window.location.href='Safety-Performance-Indicators.html'">
-    📊 Back to SPI
+    📊 Back to SPI/KPI
 </button>
 
 <button
@@ -406,14 +446,20 @@ canvas{
 
 <canvas id="historicalChart"></canvas>
 
-<div class="trend-box" id="trendSummary">
+<div
+    class="trend-box"
+    id="trendSummary">
+
     Historical trend will be calculated automatically.
+
 </div>
 
 </div>
 
 <div class="footer">
-    371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+
+371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+
 </div>
 
 </div>
@@ -459,12 +505,18 @@ const firebaseConfig = {
 
     appId:
     "1:1051190584016:web:43da6a1b646834a21074d5"
+
 };
 
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const auth = getAuth(app);
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getDatabase(app);
+
+const auth =
+getAuth(app);
 
 
 const months = [
@@ -480,6 +532,10 @@ let years = [
 ];
 
 
+const target = 100;
+const tolerableMinimum = 95;
+
+
 let charts = {};
 let historicalChart;
 
@@ -487,13 +543,13 @@ let historicalChart;
 let objectiveData = {
 
     specific:
-    "Minimize customer units received with pre-existing damage and monitor trends to identify recurring conditions.",
+    "Maintain 100% on-time training compliance for Repair Station personnel according to the approved training matrix.",
 
     formula:
-    "(Number of Customer Units Received Damaged / Total Customer Units Received) × 100",
+    "(Number of Training Requirements Completed On Time / Total Training Requirements Due) × 100",
 
     sources:
-    "Receiving Inspection Records / Quality Assurance",
+    "Training Matrix / Personnel Training Records",
 
     frequency:
     "Monthly",
@@ -506,23 +562,27 @@ let objectiveData = {
 
 window.onload = () => {
 
-    onAuthStateChanged(auth,(user)=>{
+    onAuthStateChanged(
+        auth,
+        (user) => {
 
-        if(user){
+            if(user){
 
-            loadData();
+                loadData();
 
-        }else{
+            }else{
 
-            alert(
-                "Session expired. Please log in again."
-            );
+                alert(
+                    "Session expired. Please log in again."
+                );
 
-            location.href =
+                location.href =
                 "index.html";
-        }
 
-    });
+            }
+
+        }
+    );
 
 };
 
@@ -538,36 +598,45 @@ function defaultData(){
 
             month:month,
 
-            received:0,
+            due:0,
 
-            damaged:0
+            completed:0
 
         }));
 
     });
 
     return data;
+
 }
 
 
-let spiData =
+let kpiData =
 defaultData();
 
 
-function calculateRate(received,damaged){
+function calculateCompliance(
+    due,
+    completed
+){
 
-    received =
-    Number(received || 0);
+    due =
+    Number(due || 0);
 
-    damaged =
-    Number(damaged || 0);
+    completed =
+    Number(completed || 0);
 
-    if(received <= 0){
-        return 0;
+    if(due <= 0){
+
+        return 100;
+
     }
 
-    return
-    (damaged / received) * 100;
+    return Math.min(
+        (completed / due) * 100,
+        100
+    );
+
 }
 
 
@@ -599,44 +668,65 @@ function calculateTrendLine(values){
 
     });
 
+
     const slope =
-    (n * sumXY - sumX * sumY) /
-    (n * sumXX - sumX * sumX || 1);
+
+        (n * sumXY -
+        sumX * sumY) /
+
+        (n * sumXX -
+        sumX * sumX || 1);
+
 
     const intercept =
-    (sumY - slope * sumX) / n;
+
+        (sumY -
+        slope * sumX) / n;
+
 
     const trendValues =
-    values.map(
-        (_,x)=>
-        intercept + slope * x
-    );
+
+        values.map(
+            (_,x)=>
+            intercept +
+            slope * x
+        );
+
 
     return {
+
         slope,
         trendValues
+
     };
+
 }
 
 
 function renderAll(){
 
     const container =
-    document.getElementById(
-        "yearsContainer"
-    );
+
+        document.getElementById(
+            "yearsContainer"
+        );
+
 
     container.innerHTML = "";
+
 
     years.forEach(year=>{
 
         const section =
-        document.createElement(
-            "div"
-        );
+
+            document.createElement(
+                "div"
+            );
+
 
         section.className =
         "year-section";
+
 
         section.innerHTML = `
 
@@ -649,20 +739,21 @@ function renderAll(){
             <div class="right-buttons">
 
                 <button
-                class="year-save-btn"
-                onclick="saveData()">
+                    class="year-save-btn"
+                    onclick="saveData()">
                     💾 Save
                 </button>
 
                 <button
-                class="delete-year-btn"
-                onclick="deleteYear(${year})">
+                    class="delete-year-btn"
+                    onclick="deleteYear(${year})">
                     🗑
                 </button>
 
             </div>
 
         </div>
+
 
         <table>
 
@@ -675,15 +766,19 @@ function renderAll(){
                     </th>
 
                     <th style="width:25%;">
-                        Total Customer Units Received
+                        Training Due
                     </th>
 
                     <th style="width:25%;">
-                        Units Received Damaged
+                        Completed On Time
                     </th>
 
-                    <th style="width:30%;">
-                        Damage Rate
+                    <th style="width:15%;">
+                        Compliance
+                    </th>
+
+                    <th style="width:15%;">
+                        Status
                     </th>
 
                 </tr>
@@ -695,13 +790,18 @@ function renderAll(){
 
         </table>
 
-        <canvas id="chart-${year}"></canvas>
+
+        <canvas
+            id="chart-${year}">
+        </canvas>
 
         `;
+
 
         container.appendChild(
             section
         );
+
 
         renderTable(year);
 
@@ -709,75 +809,128 @@ function renderAll(){
 
     });
 
+
     renderHistoricalChart();
+
 }
 
 
 function renderTable(year){
 
     const tbody =
-    document.getElementById(
-        `table-${year}`
-    );
+
+        document.getElementById(
+            `table-${year}`
+        );
+
 
     tbody.innerHTML = "";
 
-    let totalReceived = 0;
-    let totalDamaged = 0;
 
-    spiData[year].forEach(
+    let totalDue = 0;
+    let totalCompleted = 0;
+
+
+    kpiData[year].forEach(
         (row,index)=>{
 
-        const received =
-        Number(row.received || 0);
 
-        const damaged =
-        Number(row.damaged || 0);
+        const due =
 
-        const rate =
-        calculateRate(
-            received,
-            damaged
-        );
+            Number(
+                row.due || 0
+            );
 
-        totalReceived +=
-        received;
 
-        totalDamaged +=
-        damaged;
+        const completed =
+
+            Number(
+                row.completed || 0
+            );
+
+
+        const compliance =
+
+            calculateCompliance(
+                due,
+                completed
+            );
+
+
+        totalDue += due;
+
+        totalCompleted += completed;
+
+
+        let status = "";
+
+
+        if(compliance >= target){
+
+            status =
+            "Acceptable";
+
+        }else if(
+            compliance >= tolerableMinimum
+        ){
+
+            status =
+            "Tolerable";
+
+        }else{
+
+            status =
+            "Below Target";
+
+        }
+
 
         tbody.innerHTML += `
 
         <tr>
 
             <td>
+
                 <strong>
                     ${row.month}
                 </strong>
+
             </td>
+
 
             <td>
 
                 <input
-                type="number"
-                min="0"
-                value="${received}"
-                onchange="updateReceived(${year},${index},this.value)">
+                    type="number"
+                    min="0"
+                    value="${due}"
+                    onchange="updateDue(${year},${index},this.value)">
 
             </td>
+
 
             <td>
 
                 <input
-                type="number"
-                min="0"
-                value="${damaged}"
-                onchange="updateDamaged(${year},${index},this.value)">
+                    type="number"
+                    min="0"
+                    value="${completed}"
+                    onchange="updateCompleted(${year},${index},this.value)">
 
             </td>
+
 
             <td class="rate">
-                ${rate.toFixed(2)}%
+
+                ${compliance.toFixed(2)}%
+
+            </td>
+
+
+            <td class="rate">
+
+                ${status}
+
             </td>
 
         </tr>
@@ -787,11 +940,12 @@ function renderTable(year){
     });
 
 
-    const annualRate =
-    calculateRate(
-        totalReceived,
-        totalDamaged
-    );
+    const annualCompliance =
+
+        calculateCompliance(
+            totalDue,
+            totalCompleted
+        );
 
 
     tbody.innerHTML += `
@@ -803,15 +957,19 @@ function renderTable(year){
         </td>
 
         <td>
-            ${totalReceived}
+            ${totalDue}
         </td>
 
         <td>
-            ${totalDamaged}
+            ${totalCompleted}
         </td>
 
         <td>
-            ${annualRate.toFixed(2)}%
+            ${annualCompliance.toFixed(2)}%
+        </td>
+
+        <td>
+            Annual
         </td>
 
     </tr>
@@ -819,18 +977,38 @@ function renderTable(year){
     `;
 
 
-    if(totalDamaged === 0){
+    if(annualCompliance >= target){
 
         tbody.innerHTML += `
 
         <tr class="acceptable-row">
 
-            <td colspan="3">
+            <td colspan="4">
                 Annual Performance
             </td>
 
             <td>
-                ZERO DAMAGED UNITS
+                ACCEPTABLE
+            </td>
+
+        </tr>
+
+        `;
+
+    }else if(
+        annualCompliance >= tolerableMinimum
+    ){
+
+        tbody.innerHTML += `
+
+        <tr class="tolerable-row">
+
+            <td colspan="4">
+                Annual Performance
+            </td>
+
+            <td>
+                TOLERABLE
             </td>
 
         </tr>
@@ -841,14 +1019,14 @@ function renderTable(year){
 
         tbody.innerHTML += `
 
-        <tr class="tolerable-row">
+        <tr class="notacceptable-row">
 
-            <td colspan="3">
+            <td colspan="4">
                 Annual Performance
             </td>
 
             <td>
-                ${annualRate.toFixed(2)}% DAMAGED
+                BELOW TARGET
             </td>
 
         </tr>
@@ -860,35 +1038,47 @@ function renderTable(year){
 }
 
 
-window.updateReceived =
-function(year,index,value){
+window.updateDue =
+function(
+    year,
+    index,
+    value
+){
 
-    spiData[year][index]
-    .received =
+    kpiData[year][index]
+    .due =
     Number(value);
 
+
     renderAll();
+
 };
 
 
-window.updateDamaged =
-function(year,index,value){
+window.updateCompleted =
+function(
+    year,
+    index,
+    value
+){
 
-    spiData[year][index]
-    .damaged =
+    kpiData[year][index]
+    .completed =
     Number(value);
 
+
     renderAll();
+
 };
 
 
-function getYearRates(year){
+function getYearValues(year){
 
-    return spiData[year].map(
+    return kpiData[year].map(
         row=>
-        calculateRate(
-            row.received,
-            row.damaged
+        calculateCompliance(
+            row.due,
+            row.completed
         )
     );
 
@@ -898,82 +1088,116 @@ function getYearRates(year){
 function renderYearChart(year){
 
     const ctx =
-    document.getElementById(
-        `chart-${year}`
-    );
+
+        document.getElementById(
+            `chart-${year}`
+        );
+
 
     if(charts[year]){
+
         charts[year].destroy();
+
     }
 
+
     const values =
-    getYearRates(year);
+    getYearValues(year);
+
 
     charts[year] =
-    new Chart(ctx,{
 
-        type:"line",
+        new Chart(ctx,{
 
-        data:{
+            type:"line",
 
-            labels:months,
+            data:{
 
-            datasets:[
+                labels:months,
 
-                {
+                datasets:[
 
-                    label:
-                    "Customer Units Received Damaged (%)",
+                    {
 
-                    data:
-                    values,
+                        label:
+                        "Training Compliance (%)",
 
-                    borderColor:
-                    "#00aeef",
+                        data:
+                        values,
 
-                    backgroundColor:
-                    "#00aeef",
+                        borderColor:
+                        "#00aeef",
 
-                    borderWidth:4,
+                        backgroundColor:
+                        "#00aeef",
 
-                    tension:.25,
+                        borderWidth:4,
 
-                    pointRadius:5
+                        tension:.25,
 
-                }
+                        pointRadius:5
 
-            ]
+                    },
 
-        },
+                    {
 
-        options:{
+                        label:
+                        "Target 100%",
 
-            responsive:true,
+                        data:
+                        months.map(
+                            ()=>target
+                        ),
 
-            plugins:{
+                        borderColor:
+                        "#22c55e",
 
-                title:{
+                        backgroundColor:
+                        "#22c55e",
 
-                    display:true,
+                        borderWidth:4,
 
-                    text:
-                    "Customer Units Received Damaged By The Customer"
+                        pointRadius:0
 
-                }
+                    }
+
+                ]
 
             },
 
-            scales:{
+            options:{
 
-                y:{
+                responsive:true,
 
-                    beginAtZero:true,
+                plugins:{
 
                     title:{
 
                         display:true,
 
-                        text:"Damage Rate (%)"
+                        text:
+                        "Personal Training Compliance"
+
+                    }
+
+                },
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true,
+
+                        max:100,
+
+                        title:{
+
+                            display:true,
+
+                            text:
+                            "Compliance (%)"
+
+                        }
 
                     }
 
@@ -981,9 +1205,7 @@ function renderYearChart(year){
 
             }
 
-        }
-
-    });
+        });
 
 }
 
@@ -991,33 +1213,45 @@ function renderYearChart(year){
 function renderHistoricalChart(){
 
     const ctx =
-    document.getElementById(
-        "historicalChart"
-    );
+
+        document.getElementById(
+            "historicalChart"
+        );
+
 
     if(historicalChart){
+
         historicalChart.destroy();
+
     }
 
+
     let labels = [];
+
     let values = [];
+
 
     years.forEach(year=>{
 
-        spiData[year].forEach(
+        kpiData[year].forEach(
             row=>{
 
             labels.push(
+
                 row.month +
                 "-" +
                 String(year).slice(2)
+
             );
 
+
             values.push(
-                calculateRate(
-                    row.received,
-                    row.damaged
+
+                calculateCompliance(
+                    row.due,
+                    row.completed
                 )
+
             );
 
         });
@@ -1031,22 +1265,23 @@ function renderHistoricalChart(){
 
     let trendText = "";
 
+
     if(trend.slope > 0.05){
 
         trendText =
-        "Increasing trend: the percentage of customer units received damaged is increasing over time.";
+        "Increasing trend: training compliance is improving over time.";
 
     }else if(
         trend.slope < -0.05
     ){
 
         trendText =
-        "Decreasing trend: the percentage of customer units received damaged is decreasing over time.";
+        "Decreasing trend: training compliance is declining over time.";
 
     }else{
 
         trendText =
-        "Stable trend: the percentage of customer units received damaged remains relatively unchanged over time.";
+        "Stable trend: training compliance remains relatively unchanged over time.";
 
     }
 
@@ -1055,102 +1290,130 @@ function renderHistoricalChart(){
         "trendSummary"
     ).innerHTML =
 
-    "Historical Slope: " +
+        "Historical Slope: " +
 
-    trend.slope.toFixed(2) +
+        trend.slope.toFixed(2) +
 
-    " | " +
+        " | " +
 
-    trendText;
+        trendText;
 
 
     historicalChart =
-    new Chart(ctx,{
 
-        type:"line",
+        new Chart(ctx,{
 
-        data:{
+            type:"line",
 
-            labels:labels,
+            data:{
 
-            datasets:[
+                labels:labels,
 
-                {
+                datasets:[
 
-                    label:
-                    "Historical Damage Rate (%)",
+                    {
 
-                    data:
-                    values,
+                        label:
+                        "Historical Training Compliance (%)",
 
-                    borderColor:
-                    "#00aeef",
+                        data:
+                        values,
 
-                    backgroundColor:
-                    "#00aeef",
+                        borderColor:
+                        "#00aeef",
 
-                    borderWidth:4,
+                        backgroundColor:
+                        "#00aeef",
 
-                    tension:.25,
+                        borderWidth:4,
 
-                    pointRadius:4
+                        tension:.25,
 
-                },
+                        pointRadius:4
 
-                {
+                    },
 
-                    label:
-                    "Trend Line / Slope",
+                    {
 
-                    data:
-                    trend.trendValues,
+                        label:
+                        "Target 100%",
 
-                    borderColor:
-                    "#003b66",
+                        data:
+                        values.map(
+                            ()=>target
+                        ),
 
-                    backgroundColor:
-                    "#003b66",
+                        borderColor:
+                        "#22c55e",
 
-                    borderWidth:4,
+                        backgroundColor:
+                        "#22c55e",
 
-                    pointRadius:0,
+                        borderWidth:4,
 
-                    tension:0
+                        pointRadius:0
 
-                }
+                    },
 
-            ]
+                    {
 
-        },
+                        label:
+                        "Trend Line / Slope",
 
-        options:{
+                        data:
+                        trend.trendValues,
 
-            responsive:true,
+                        borderColor:
+                        "#003b66",
 
-            plugins:{
+                        backgroundColor:
+                        "#003b66",
 
-                title:{
+                        borderWidth:4,
 
-                    display:true,
+                        pointRadius:0,
 
-                    text:
-                    "Historical Customer Units Received Damaged"
+                        tension:0
 
-                }
+                    }
+
+                ]
 
             },
 
-            scales:{
+            options:{
 
-                y:{
+                responsive:true,
 
-                    beginAtZero:true,
+                plugins:{
 
                     title:{
 
                         display:true,
 
-                        text:"Damage Rate (%)"
+                        text:
+                        "Historical Personal Training Compliance"
+
+                    }
+
+                },
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true,
+
+                        max:100,
+
+                        title:{
+
+                            display:true,
+
+                            text:
+                            "Compliance (%)"
+
+                        }
 
                     }
 
@@ -1158,9 +1421,7 @@ function renderHistoricalChart(){
 
             }
 
-        }
-
-    });
+        });
 
 }
 
@@ -1174,22 +1435,27 @@ function(){
     let newYear =
     lastYear + 1;
 
+
     years.push(
         newYear
     );
 
-    spiData[newYear] =
-    months.map(month=>({
 
-        month:month,
+    kpiData[newYear] =
 
-        received:0,
+        months.map(month=>({
 
-        damaged:0
+            month:month,
 
-    }));
+            due:0,
+
+            completed:0
+
+        }));
+
 
     renderAll();
+
 };
 
 
@@ -1197,25 +1463,38 @@ window.deleteYear =
 async function(year){
 
     if(
+
         !confirm(
+
             "Are you sure you want to delete year " +
+
             year +
+
             "?"
+
         )
+
     ){
+
         return;
+
     }
+
 
     years =
     years.filter(
         y=>y !== year
     );
 
-    delete spiData[year];
+
+    delete kpiData[year];
+
 
     await saveData();
 
+
     renderAll();
+
 };
 
 
@@ -1226,6 +1505,7 @@ async function(){
     objectiveData = {
 
         specific:
+
         document
         .getElementById(
             "objSpecific"
@@ -1233,7 +1513,9 @@ async function(){
         .innerText
         .trim(),
 
+
         formula:
+
         document
         .getElementById(
             "objFormula"
@@ -1241,7 +1523,9 @@ async function(){
         .innerText
         .trim(),
 
+
         sources:
+
         document
         .getElementById(
             "objSources"
@@ -1249,7 +1533,9 @@ async function(){
         .innerText
         .trim(),
 
+
         frequency:
+
         document
         .getElementById(
             "objFrequency"
@@ -1257,7 +1543,9 @@ async function(){
         .innerText
         .trim(),
 
+
         responsible:
+
         document
         .getElementById(
             "objResponsible"
@@ -1271,8 +1559,11 @@ async function(){
     await set(
 
         ref(
+
             db,
-            "SPI-Customer-Units-Received-Damaged-Customer"
+
+            "KPI-Personal-Training-Compliance"
+
         ),
 
         {
@@ -1284,7 +1575,13 @@ async function(){
             years,
 
             data:
-            spiData,
+            kpiData,
+
+            target:
+            target,
+
+            tolerableMinimum:
+            tolerableMinimum,
 
             updatedAt:
             new Date().toISOString()
@@ -1295,7 +1592,9 @@ async function(){
 
 
     alert(
-        "SPI Customer Units Received Damaged saved successfully."
+
+        "KPI Personal Training Compliance saved successfully."
+
     );
 
 };
@@ -1304,14 +1603,18 @@ async function(){
 async function loadData(){
 
     const snapshot =
-    await get(
 
-        ref(
-            db,
-            "SPI-Customer-Units-Received-Damaged-Customer"
-        )
+        await get(
 
-    );
+            ref(
+
+                db,
+
+                "KPI-Personal-Training-Compliance"
+
+            )
+
+        );
 
 
     years = [
@@ -1323,37 +1626,45 @@ async function loadData(){
 
     if(snapshot.exists()){
 
+
         const saved =
         snapshot.val();
+
 
         const savedData =
         saved.data || {};
 
-        spiData = {};
+
+        kpiData = {};
+
 
         years.forEach(year=>{
 
-            spiData[year] =
 
-            savedData[year] ||
+            kpiData[year] =
 
-            months.map(month=>({
+                savedData[year] ||
 
-                month:month,
+                months.map(month=>({
 
-                received:0,
+                    month:month,
 
-                damaged:0
+                    due:0,
 
-            }));
+                    completed:0
+
+                }));
+
 
         });
 
 
         if(saved.objective){
 
+
             objectiveData =
             saved.objective;
+
 
             document
             .getElementById(
@@ -1362,12 +1673,14 @@ async function loadData(){
             .innerText =
             objectiveData.specific || "";
 
+
             document
             .getElementById(
                 "objFormula"
             )
             .innerText =
             objectiveData.formula || "";
+
 
             document
             .getElementById(
@@ -1376,12 +1689,14 @@ async function loadData(){
             .innerText =
             objectiveData.sources || "";
 
+
             document
             .getElementById(
                 "objFrequency"
             )
             .innerText =
             objectiveData.frequency || "";
+
 
             document
             .getElementById(
@@ -1394,12 +1709,15 @@ async function loadData(){
 
     }else{
 
-        spiData =
+
+        kpiData =
         defaultData();
 
     }
 
+
     renderAll();
+
 }
 
 </script>
