@@ -771,8 +771,19 @@ async function loadData(){
   if(snapshot.exists()){
     const saved = snapshot.val();
 
-    years = saved.years || [2026,2027,2028];
-    spiData = saved.data || defaultData();
+    years = [2026,2027,2028];
+
+const savedData = saved.data || {};
+
+spiData = {};
+
+years.forEach(year => {
+  spiData[year] = savedData[year] || months.map(month => ({
+    month: month,
+    workhours: 0,
+    events: 0
+  }));
+});
 
     if(saved.objective){
       objectiveData = saved.objective;
