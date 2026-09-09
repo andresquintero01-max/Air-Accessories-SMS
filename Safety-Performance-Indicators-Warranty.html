@@ -364,7 +364,7 @@ const auth = getAuth(app);
 
 const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 
-let years = [2024,2025,2026];
+let years = [2026,2027,2028];
 
 let charts = {};
 let historicalChart;
@@ -771,7 +771,7 @@ async function loadData(){
   if(snapshot.exists()){
     const saved = snapshot.val();
 
-    years = saved.years || [2024,2025,2026];
+    years = saved.years || [2026,2026,2027];
     spiData = saved.data || defaultData();
 
     if(saved.objective){
