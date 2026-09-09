@@ -419,17 +419,22 @@ const auth = getAuth(app);
 const documentPath = "smsPolicyDocuments";
 
 const documents = [
-  ["📘","safetyManagementSystem","Safety Management System","Main SMS manual and system documentation."],
-  ["👤","smsDirectorAppendix1","Assignment of SMS Director, Appendix 1","SMS Director assignment and responsibility documentation."],
-  ["🛡️","safetyPolicyCultureAppendix2","Safety Policy and Safety Culture, Appendix 2","Safety policy and safety culture documentation."],
-  ["🚨","emergencyResponseAppendix4","Emergency Response Plan, Appendix 4","Emergency procedures and response guidance."],
-  ["🔎","systemAnalysisAppendix5","System Analysis, Appendix 5","System analysis documentation and process review."],
-  ["🔐","confidentialEmployeeReportAppendix6","Confidential Employee Report, Appendix 6","Confidential employee reporting documentation."],
-  ["📋","mandatoryOccurrenceReportAppendix7","Mandatory Occurrence Report (MOR), Appendix 7","Mandatory occurrence reporting documentation."],
-  ["🧩","investigationProcessAppendix8","Investigation Process, Appendix 8","Investigation process, methods, and guidance."],
-  ["📒","hazardLogChangeManagementAppendix9","Hazard Log and Change Management, Appendix 9","Hazard log and change management documentation."],
-  ["📊","operationalSafetyRiskMatrixAppendix11","Operational Safety Risk Matrix, Appendix 11","Operational safety risk matrix documentation."],
-  ];
+  ["📘","appendix1","APPENDIX 1 Documentation Nomenclature and Routing Structure","Documentation Nomenclature and Routing Structure."],
+  ["📋","appendix2","APPENDIX 2 Compliance Statement Job Aid","Compliance Statement Job Aid."],
+  ["🎯","appendix3","APPENDIX 3 Safety Objectives SPI/KPI","Safety Objectives SPI/KPI."],
+  ["🚨","appendix4","APPENDIX 4 Emergency Response Plan","Emergency Response Plan."],
+  ["🔎","appendix5","APPENDIX 5 System Analysis","System Analysis."],
+  ["🔐","appendix6","APPENDIX 6 Confidential Employee Report","Confidential Employee Report."],
+  ["📑","appendix7","APPENDIX 7 Mandatory Occurrence Report List","Mandatory Occurrence Report List."],
+  ["🧩","appendix8","APPENDIX 8 Event Investigation Process","Event Investigation Process."],
+  ["⚠️","appendix9","APPENDIX 9 Hazard Log & Change Management","Hazard Log & Change Management."],
+  ["📝","appendix10","APPENDIX 10 Safety Survey","Safety Survey."],
+  ["📊","appendix11","APPENDIX 11 Operational Safety Risk Matrix","Operational Safety Risk Matrix."],
+  ["✅","appendix12","APPENDIX 12 SMS Internal Audit Tool","SMS Internal Audit Tool."],
+  ["🎓","appendix13","APPENDIX 13 SMS Training Syllabus","SMS Training Syllabus."],
+  ["📢","appendix14","APPENDIX 14 Safety Bulletin Example","Safety Bulletin Example."],
+  ["🚩","appendix15","APPENDIX 15 Safety Alert Example","Safety Alert Example."]
+];
 
 let savedLinks = {};
 let userRole = (localStorage.getItem("userRole") || "tech").toLowerCase();
