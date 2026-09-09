@@ -771,7 +771,7 @@ async function loadData(){
   if(snapshot.exists()){
     const saved = snapshot.val();
 
-    years = saved.years || [2026,2026,2027];
+    years = saved.years || [2026,2027,2028];
     spiData = saved.data || defaultData();
 
     if(saved.objective){
