@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Risk Overview Report</title>
+<title>Risk Overview/New Capability Report</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -274,9 +274,9 @@ button:hover,a:hover{
 
 <div class="logo">⚠️</div>
 <div class="company">371Q Virtual Professional Safety Office</div>
-<div class="badge">RISK OVERVIEW REPORT</div>
+<div class="badge">RISK OVERVIEW/NEW CAPABILITY REPORT</div>
 
-<h1>Risk Overview Report</h1>
+<h1>Risk Overview/New Capability Report</h1>
 <p class="subtitle">Multi-Hazard Risk Panorama | Air Accessories SMS</p>
 <div class="title-line"></div>
 
@@ -286,7 +286,7 @@ button:hover,a:hover{
 <div class="grid">
   <div>
     <label>Report Title</label>
-    <input id="title" placeholder="Example: Ground Handling Risk Overview">
+    <input id="title" placeholder="Example: Ground Handling Risk Overview/New Capability">
   </div>
 
   <div>
@@ -674,11 +674,11 @@ window.showFiles = function(){
 
 window.sendEmail = function(){
   const to = document.getElementById("emailTo").value.trim();
-  const title = document.getElementById("title").value.trim() || "Risk Overview Report";
+  const title = document.getElementById("title").value.trim() || "Risk Overview/New Capability Report";
 
-  const subject = encodeURIComponent("Risk Overview Report - " + title);
+  const subject = encodeURIComponent("Risk Overview/New Capability Report - " + title);
   const body = encodeURIComponent(
-    "Hello,\n\nPlease review the Risk Overview Report.\n\n" +
+    "Hello,\n\nPlease review the Risk Overview/New Capability Report.\n\n" +
     "Title: " + title + "\n" +
     "Location: " + document.getElementById("location").value + "\n" +
     "Status: " + document.getElementById("status").value + "\n\n" +
@@ -750,7 +750,7 @@ window.saveReport = async function(){
     await set(newRef,data);
 
     document.getElementById("message").style.color = "green";
-    document.getElementById("message").innerText = "Risk Overview Report saved successfully.";
+    document.getElementById("message").innerText = "Risk Overview/New Capability Report saved successfully.";
 
     setTimeout(()=>{
       window.location.href = "Risk-Overview-Database.html";
