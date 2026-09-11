@@ -1292,6 +1292,7 @@ window.saveCPAEdit=function(id){
     });
   });
 };
+
 window.saveDocumentLink=async function(id,cpaNumber){
 
   const input =
@@ -1301,14 +1302,11 @@ window.saveDocumentLink=async function(id,cpaNumber){
   input ? input.value.trim() : "";
 
   if(!documentLink){
-
     alert("Please paste a document link.");
-
     return;
   }
 
-  const attachmentId =
-  Date.now();
+  const attachmentId = Date.now();
 
   try{
 
@@ -1325,22 +1323,55 @@ window.saveDocumentLink=async function(id,cpaNumber){
 
     alert("Document link saved successfully.");
 
-    get(
+    const s = await get(
       ref(db,"smsReports/"+key+"/CPA")
-    ).then(s=>{
+    );
 
-      if(s.exists()){
-
-        loadCPA(s.val());
-
-      }
-
-    });
+    if(s.exists()){
+      loadCPA(s.val());
+    }
 
   }catch(error){
 
     alert(
       "Error saving document link: " +
+      error.message
+    );
+
+  }
+
+};
+
+
+window.deleteDocumentLink=async function(id,cpaNumber){
+
+  if(!confirm("Are you sure you want to delete the document link?")){
+    return;
+  }
+
+  try{
+
+    await remove(
+      ref(
+        db,
+        "smsReports/"+key+"/CPA/"+id+"/attachments"
+      )
+    );
+
+    alert("Document link deleted successfully.");
+
+    const s = await get(
+      ref(db,"smsReports/"+key+"/CPA")
+    );
+
+    if(s.exists()){
+      loadCPA(s.val());
+    }
+
+  }catch(error){
+
+    alert(
+      "Error deleting document link: " +
       error.message
     );
 
@@ -1496,6 +1527,11 @@ Instruction: ${safeText(x.instruction)}<br><br>
     <button onclick="saveDocumentLink('${safeAttr(id)}','${i+1}')">
       💾 Save Link
     </button>
+    <button
+  onclick="deleteDocumentLink('${safeAttr(id)}','${i+1}')"
+  style="background:#dc2626;color:white;">
+  🗑️ Delete Link
+</button>
     <button
     class="send-btn ${x.status==='CLOSED'?'closed':''}"
     style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}"
