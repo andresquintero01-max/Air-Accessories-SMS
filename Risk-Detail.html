@@ -581,16 +581,7 @@ Press any cell in the matrix to see the severity and probability definitions.
 <div id="cpaContainer"></div>
 </div>
 
-<div class="attachment-box">
-<h3>CPA Attachments</h3>
 
-<p>
-Paste the document link below. Google Drive, OneDrive, SharePoint, or any other document link can be used.
-</p>
-
-<div id="attachmentContainer"></div>
-
-</div>
 
 <div class="box">
 <h3>Residual Risk Assessment</h3>
@@ -1460,10 +1451,7 @@ window.deleteCPA=async function(id,pdfPath){
 
 function loadCPA(data){
   const c=document.getElementById("cpaContainer");
-  const a=document.getElementById("attachmentContainer");
-
   c.innerHTML="";
-  a.innerHTML="";
 
   if(!data){
     cpaCounter=0;
@@ -1473,93 +1461,66 @@ function loadCPA(data){
   cpaCounter=Object.keys(data).length;
 
   Object.entries(data).forEach(([id,x],i)=>{
+    let attachmentUrl="";
+
+    if(x.attachments){
+      const docs=Object.values(x.attachments);
+      if(docs.length>0){
+        attachmentUrl=docs[docs.length-1].url||"";
+      }
+    }
+
     let div=document.createElement("div");
     div.className="cpa-item";
 
     div.innerHTML=`
     <button class="delete-btn" onclick="deleteCPA('${safeAttr(id)}','${safeAttr(x.pdfPath||"")}')">🗑️</button>
+
     <b>CPA ${i+1}</b><br>
     Type: ${safeText(x.controlType)}<br>
     Action: ${safeText(x.actionPlan)}<br>
     Date: ${safeText(x.actionDate)}<br>
     Email: ${safeText(x.emailTo)}<br>
-Instruction: ${safeText(x.instruction)}<br><br>
-    <button class="send-btn" onclick="showCPAEdit('${safeAttr(id)}')">Edit</button>
-<button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo || "")}','${safeAttr(x.controlType || "")}','${safeAttr(x.actionPlan || "")}','${safeAttr(x.actionDate || "")}','${safeAttr(x.instruction || "")}','${i+1}','${safeAttr(x.pdfUrl || "")}')">Send Email</button>
+    Instruction: ${safeText(x.instruction)}<br><br>
 
-<div id="editBox_${safeAttr(id)}" style="display:none;margin-top:18px;padding:18px;border-radius:16px;background:white;border:1px solid #dbe3ef;">
-<select id="editControlType_${safeAttr(id)}">
-<option ${selectedOption(x.controlType,"Elimination")}>Elimination</option>
-<option ${selectedOption(x.controlType,"Substitution")}>Substitution</option>
-<option ${selectedOption(x.controlType,"Engineering")}>Engineering</option>
-<option ${selectedOption(x.controlType,"Administration")}>Administration</option>
-<option ${selectedOption(x.controlType,"PPE")}>PPE</option>
-</select>
-<br><br>
-<input id="editActionPlan_${safeAttr(id)}" value="${safeAttr(x.actionPlan || "")}" placeholder="Action Plan">
-<br><br>
-<input type="date" id="editActionDate_${safeAttr(id)}" value="${safeAttr(x.actionDate || "")}">
-<br><br>
-<input id="editEmailTo_${safeAttr(id)}" value="${safeAttr(x.emailTo || "")}" placeholder="Email">
-<br><br>
-<input id="editInstruction_${safeAttr(id)}" value="${safeAttr(x.instruction || "")}" placeholder="Instruction">
-<br><br>
-<button class="send-btn" onclick="saveCPAEdit('${safeAttr(id)}')">Save Changes</button>
-</div>
-    ${x.pdfUrl ? `<button class="send-btn" onclick="window.open('${safeAttr(x.pdfUrl)}','_blank')">Open Document</button>` : ""}
+    <button class="send-btn" onclick="showCPAEdit('${safeAttr(id)}')">Edit</button>
+
+    <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo||"")}','${safeAttr(x.controlType||"")}','${safeAttr(x.actionPlan||"")}','${safeAttr(x.actionDate||"")}','${safeAttr(x.instruction||"")}','${i+1}','${safeAttr(attachmentUrl)}')">Send Email</button>
+
+    <button class="send-btn ${x.status==='CLOSED'?'closed':''}" style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}" onclick="toggleCPAStatus('${safeAttr(id)}',this)">${x.status||'OPEN'}</button>
+
+    <div id="editBox_${safeAttr(id)}" style="display:none;margin-top:18px;padding:18px;border-radius:16px;background:white;border:1px solid #dbe3ef;">
+      <select id="editControlType_${safeAttr(id)}">
+        <option ${selectedOption(x.controlType,"Elimination")}>Elimination</option>
+        <option ${selectedOption(x.controlType,"Substitution")}>Substitution</option>
+        <option ${selectedOption(x.controlType,"Engineering")}>Engineering</option>
+        <option ${selectedOption(x.controlType,"Administration")}>Administration</option>
+        <option ${selectedOption(x.controlType,"PPE")}>PPE</option>
+      </select><br><br>
+
+      <input id="editActionPlan_${safeAttr(id)}" value="${safeAttr(x.actionPlan||"")}" placeholder="Action Plan"><br><br>
+      <input type="date" id="editActionDate_${safeAttr(id)}" value="${safeAttr(x.actionDate||"")}"><br><br>
+      <input id="editEmailTo_${safeAttr(id)}" value="${safeAttr(x.emailTo||"")}" placeholder="Email"><br><br>
+      <input id="editInstruction_${safeAttr(id)}" value="${safeAttr(x.instruction||"")}" placeholder="Instruction"><br><br>
+      <button class="send-btn" onclick="saveCPAEdit('${safeAttr(id)}')">Save Changes</button>
+    </div>
+
+    <div style="margin-top:22px;padding:18px;border-radius:16px;background:white;border:1px solid #dbe3ef;">
+      <b>Evidence / Attachment ${i+1}</b><br><br>
+
+      <input id="documentLink_${safeAttr(id)}" type="text" placeholder="Paste document link here" value="${safeAttr(attachmentUrl)}">
+
+      <button onclick="saveDocumentLink('${safeAttr(id)}','${i+1}')">💾 Save Link</button>
+
+      <button onclick="deleteDocumentLink('${safeAttr(id)}','${i+1}')" style="background:#dc2626;color:white;">🗑️ Delete Link</button>
+
+      ${attachmentUrl?`<button onclick="window.open('${safeAttr(attachmentUrl)}','_blank')">Open Document</button>`:""}
+    </div>
     `;
 
     c.appendChild(div);
-
-    let att=document.createElement("div");
-    att.className="attachment-item";
-
-    let attachmentHtml = `
-    <b>CPA Attachment ${i+1}</b><br><br>
-
-    <input
-      id="documentLink_${safeAttr(id)}"
-      type="text"
-      placeholder="Paste document link here"
-      style="margin-bottom:10px;"
-    >
-
-    <button onclick="saveDocumentLink('${safeAttr(id)}','${i+1}')">
-      💾 Save Link
-    </button>
-    <button
-  onclick="deleteDocumentLink('${safeAttr(id)}','${i+1}')"
-  style="background:#dc2626;color:white;">
-  🗑️ Delete Link
-</button>
-    <button
-    class="send-btn ${x.status==='CLOSED'?'closed':''}"
-    style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}"
-    onclick="toggleCPAStatus('${safeAttr(id)}',this)">
-    ${x.status || 'OPEN'}
-    </button>
-    <br><br>
-    `;
-
-    if(x.attachments){
-      Object.values(x.attachments).forEach(attDoc=>{
-        attachmentHtml += `
-        <div style="margin-top:8px;">
-          <button onclick="window.open('${safeAttr(attDoc.url)}','_blank')">
-            Open Document
-          </button>
-        </div>
-        `;
-      });
-    }else{
-      attachmentHtml += "No document link added";
-    }
-
-    att.innerHTML = attachmentHtml;
-    a.appendChild(att);
   });
 }
-
 function cleanLabel(text){
   const labels = {
     fiveWhy1:"Why 1",
