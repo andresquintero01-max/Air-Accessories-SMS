@@ -686,10 +686,69 @@ async function loadDetails(){
           <input id="emailTo" disabled value="${safe(currentReport.emailTo)}">
         </div>
 
-        <div>
-          <label>Attachments</label>
-          <input disabled value="${currentReport.attachmentNames ? currentReport.attachmentNames.join(", ") : ""}">
-        </div>
+        <div class="full">
+  <label>CPA Documents / Attachments</label>
+
+  <div style="
+    background:white;
+    border:1px solid #cbd5e1;
+    border-radius:14px;
+    padding:15px;
+  ">
+
+    ${
+      currentReport.attachments &&
+      Array.isArray(currentReport.attachments) &&
+      currentReport.attachments.length > 0
+
+      ? currentReport.attachments.map((attachment,index) => `
+          
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:15px;
+            padding:12px;
+            margin-bottom:10px;
+            background:#f8fbff;
+            border:1px solid #dbeafe;
+            border-radius:12px;
+          ">
+
+            <span style="
+              color:#003b66;
+              font-weight:800;
+            ">
+              📄 ${attachment.name || "Document " + (index + 1)}
+            </span>
+
+            <a
+              href="${attachment.url || "#"}"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="
+                background:linear-gradient(135deg,#003b66,#00aeef);
+                color:white;
+                padding:10px 18px;
+                border-radius:10px;
+                text-decoration:none;
+                font-weight:900;
+                white-space:nowrap;
+              ">
+              🔗 Open Document
+            </a>
+
+          </div>
+
+        `).join("")
+
+      : `<span style="color:#64748b;font-weight:600;">
+           No documents attached.
+         </span>`
+    }
+
+  </div>
+</div>
       </div>
     </div>
   `;
