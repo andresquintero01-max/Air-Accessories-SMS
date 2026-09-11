@@ -583,7 +583,13 @@ Press any cell in the matrix to see the severity and probability definitions.
 
 <div class="attachment-box">
 <h3>CPA Attachments</h3>
+
+<p>
+Paste the document link below. Google Drive, OneDrive, SharePoint, or any other document link can be used.
+</p>
+
 <div id="attachmentContainer"></div>
+
 </div>
 
 <div class="box">
@@ -1286,27 +1292,60 @@ window.saveCPAEdit=function(id){
     });
   });
 };
-window.addDriveLink=async function(id,cpaNumber){
-  const driveLink = prompt("Paste Google Drive document link");
+window.saveDocumentLink=async function(id,cpaNumber){
 
-  if(!driveLink){
-    alert("No Drive link added.");
+  const input =
+  document.getElementById("documentLink_"+id);
+
+  const documentLink =
+  input ? input.value.trim() : "";
+
+  if(!documentLink){
+
+    alert("Please paste a document link.");
+
     return;
   }
 
-  const attachmentId = Date.now();
+  const attachmentId =
+  Date.now();
 
-  await update(
-    ref(db,"smsReports/"+key+"/CPA/"+id+"/attachments/"+attachmentId),
-    {
-      url:driveLink,
-      name:"Google Drive Document"
-    }
-  );
+  try{
 
-  get(ref(db,"smsReports/"+key+"/CPA")).then(s=>{
-    if(s.exists()) loadCPA(s.val());
-  });
+    await update(
+      ref(
+        db,
+        "smsReports/"+key+"/CPA/"+id+"/attachments/"+attachmentId
+      ),
+      {
+        url:documentLink,
+        name:"CPA Document"
+      }
+    );
+
+    alert("Document link saved successfully.");
+
+    get(
+      ref(db,"smsReports/"+key+"/CPA")
+    ).then(s=>{
+
+      if(s.exists()){
+
+        loadCPA(s.val());
+
+      }
+
+    });
+
+  }catch(error){
+
+    alert(
+      "Error saving document link: " +
+      error.message
+    );
+
+  }
+
 };
 
 window.sendCPAEmail=function(email,type,action,date,instruction,cpaNumber,pdfUrl){
@@ -1445,8 +1484,18 @@ Instruction: ${safeText(x.instruction)}<br><br>
     att.className="attachment-item";
 
     let attachmentHtml = `
-    <b>CPA Attachment ${i+1}</b><br>
-    <button onclick="addDriveLink('${safeAttr(id)}','${i+1}')">+ Add Attachment</button>
+    <b>CPA Attachment ${i+1}</b><br><br>
+
+    <input
+      id="documentLink_${safeAttr(id)}"
+      type="text"
+      placeholder="Paste document link here"
+      style="margin-bottom:10px;"
+    >
+
+    <button onclick="saveDocumentLink('${safeAttr(id)}','${i+1}')">
+      💾 Save Link
+    </button>
     <button
     class="send-btn ${x.status==='CLOSED'?'closed':''}"
     style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}"
