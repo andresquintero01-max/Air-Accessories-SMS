@@ -390,12 +390,26 @@ function today(){
   return new Date().toISOString().split("T")[0];
 }
 
+let savedMeetings = [];
+
 function getSavedMeetings(){
-  return JSON.parse(localStorage.getItem(storageKey)) || [];
+  return savedMeetings;
 }
 
-function saveMeetingsToStorage(meetings){
-  localStorage.setItem(storageKey, JSON.stringify(meetings));
+async function loadMeetingsFromFirebase(){
+  const snapshot = await get(ref(db, meetingsPath));
+
+  if(snapshot.exists()){
+    savedMeetings = Object.entries(snapshot.val()).map(([id, meeting]) => ({
+      id,
+      ...meeting
+    }));
+  }else{
+    savedMeetings = [];
+  }
+
+  renderSavedMeetings();
+  updateCounters();
 }
 
 function updateCounters(){
@@ -599,7 +613,7 @@ function collectFormData(){
   };
 }
 
-function saveMeeting(){
+async function saveMeeting(){
   const data = collectFormData();
 
   if(!data.meetingName){
@@ -607,26 +621,40 @@ function saveMeeting(){
     return;
   }
 
-  const saved = getSavedMeetings();
+  try{
 
-  if(currentEditIndex !== null){
-    data.createdAt = saved[currentEditIndex]?.createdAt || new Date().toLocaleString();
-    saved[currentEditIndex] = data;
-    saveMeetingsToStorage(saved);
-    renderSavedMeetings();
-    loadMeeting(currentEditIndex);
-    alert("Meeting updated successfully.");
-  }else{
-    data.createdAt = new Date().toLocaleString();
-    saved.push(data);
-    saveMeetingsToStorage(saved);
-    currentEditIndex = saved.length - 1;
-    renderSavedMeetings();
-    loadMeeting(currentEditIndex);
-    alert("New meeting saved successfully.");
+    if(currentEditIndex !== null){
+      const meeting = savedMeetings[currentEditIndex];
+
+      data.createdAt = meeting?.createdAt || new Date().toLocaleString();
+
+      await set(
+        ref(db, meetingsPath + "/" + meeting.id),
+        data
+      );
+
+      alert("Meeting updated successfully.");
+
+    }else{
+
+      data.createdAt = new Date().toLocaleString();
+
+      const newMeetingRef = push(ref(db, meetingsPath));
+
+      await set(newMeetingRef, data);
+
+      alert("New meeting saved successfully.");
+    }
+
+    currentEditIndex = null;
+    await loadMeetingsFromFirebase();
+    createBlankMeeting();
+
+  }catch(error){
+    console.error("MEETING SAVE ERROR:", error);
+    alert("Error saving meeting: " + error.message);
   }
 }
-
 function renderSavedMeetings(){
   const list = document.getElementById("savedMeetingsList");
   const saved = getSavedMeetings();
@@ -695,19 +723,23 @@ function loadMeeting(index){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function deleteMeeting(index){
-  const saved = getSavedMeetings();
-  const meetingName = saved[index]?.meetingName || "this meeting";
+async function deleteMeeting(index){
+  const meeting = savedMeetings[index];
+  if(!meeting) return;
+
+  const meetingName = meeting.meetingName || "this meeting";
 
   if(confirm("Do you want to delete " + meetingName + "?")){
-    saved.splice(index,1);
-    saveMeetingsToStorage(saved);
-
-    currentEditIndex = null;
-    createBlankMeeting();
-    renderSavedMeetings();
-
-    alert("Meeting deleted successfully.");
+    try{
+      await remove(ref(db, meetingsPath + "/" + meeting.id));
+      currentEditIndex = null;
+      await loadMeetingsFromFirebase();
+      createBlankMeeting();
+      alert("Meeting deleted successfully.");
+    }catch(error){
+      console.error("MEETING DELETE ERROR:", error);
+      alert("Error deleting meeting: " + error.message);
+    }
   }
 }
 
@@ -729,9 +761,24 @@ document.getElementById("meetingForm").addEventListener("submit", function(e){
   e.preventDefault();
   saveMeeting();
 });
-
-createBlankMeeting();
-renderSavedMeetings();
+window.saveMeeting=saveMeeting;
+window.newMeeting=newMeeting;
+window.clearCurrentForm=clearCurrentForm;
+window.addActivity=addActivity;
+window.removeActivity=removeActivity;
+window.addSignature=addSignature;
+window.removeSignature=removeSignature;
+window.loadMeeting=loadMeeting;
+window.deleteMeeting=deleteMeeting;
+onAuthStateChanged(auth,async(user)=>{
+  if(user){
+    createBlankMeeting();
+    await loadMeetingsFromFirebase();
+  }else{
+    alert("Session expired. Please log in again.");
+    window.location.href="index.html";
+  }
+});
 </script>
 
 </body>
