@@ -1334,9 +1334,9 @@ window.saveDocumentLink=async function(id,cpaNumber){
 };
 
 
-window.deleteDocumentLink=async function(id,cpaNumber){
+window.deleteDocumentLink=async function(id,attachmentId){
 
-  if(!confirm("Are you sure you want to delete the document link?")){
+  if(!confirm("Are you sure you want to delete this attachment?")){
     return;
   }
 
@@ -1345,11 +1345,11 @@ window.deleteDocumentLink=async function(id,cpaNumber){
     await remove(
       ref(
         db,
-        "smsReports/"+key+"/CPA/"+id+"/attachments"
+        "smsReports/"+key+"/CPA/"+id+"/attachments/"+attachmentId
       )
     );
 
-    alert("Document link deleted successfully.");
+    alert("Attachment deleted successfully.");
 
     const s = await get(
       ref(db,"smsReports/"+key+"/CPA")
@@ -1357,19 +1357,20 @@ window.deleteDocumentLink=async function(id,cpaNumber){
 
     if(s.exists()){
       loadCPA(s.val());
+    }else{
+      loadCPA(null);
     }
 
   }catch(error){
 
     alert(
-      "Error deleting document link: " +
+      "Error deleting attachment: " +
       error.message
     );
 
   }
 
 };
-
 window.sendCPAEmail=function(email,type,action,date,instruction,cpaNumber,pdfUrl){
   const reportBox = document.getElementById("reportBox");
 
@@ -1461,13 +1462,48 @@ function loadCPA(data){
   cpaCounter=Object.keys(data).length;
 
   Object.entries(data).forEach(([id,x],i)=>{
-    let attachmentUrl="";
 
-    if(x.attachments){
-      const docs=Object.values(x.attachments);
-      if(docs.length>0){
-        attachmentUrl=docs[docs.length-1].url||"";
-      }
+    const attachments = x.attachments
+      ? Object.entries(x.attachments)
+      : [];
+
+    const attachmentUrls = attachments
+      .map(([attachmentId,doc]) => doc.url || "")
+      .filter(url => url !== "");
+
+    let attachmentsHTML="";
+
+    attachments.forEach(([attachmentId,doc],attachmentIndex)=>{
+
+      const documentUrl = doc.url || "";
+      const documentName = doc.name || ("Attachment "+(attachmentIndex+1));
+
+      attachmentsHTML += `
+        <div style="margin-top:12px;padding:14px;border-radius:14px;background:#f8fafc;border:1px solid #dbe3ef;">
+          <b>Attachment ${attachmentIndex+1}</b><br>
+          <span>${safeText(documentName)}</span><br><br>
+
+          ${documentUrl ? `
+            <button onclick="window.open('${safeAttr(documentUrl)}','_blank')">
+              Open Document
+            </button>
+          ` : ""}
+
+          <button
+            onclick="deleteDocumentLink('${safeAttr(id)}','${safeAttr(attachmentId)}')"
+            style="background:#dc2626;color:white;">
+            🗑️ Delete
+          </button>
+        </div>
+      `;
+    });
+
+    if(attachments.length===0){
+      attachmentsHTML=`
+        <div style="margin-top:12px;color:#56657d;">
+          No attachments added yet.
+        </div>
+      `;
     }
 
     let div=document.createElement("div");
@@ -1485,7 +1521,7 @@ function loadCPA(data){
 
     <button class="send-btn" onclick="showCPAEdit('${safeAttr(id)}')">Edit</button>
 
-    <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo||"")}','${safeAttr(x.controlType||"")}','${safeAttr(x.actionPlan||"")}','${safeAttr(x.actionDate||"")}','${safeAttr(x.instruction||"")}','${i+1}','${safeAttr(attachmentUrl)}')">Send Email</button>
+    <button class="send-btn" onclick="sendCPAEmail('${safeAttr(x.emailTo||"")}','${safeAttr(x.controlType||"")}','${safeAttr(x.actionPlan||"")}','${safeAttr(x.actionDate||"")}','${safeAttr(x.instruction||"")}','${i+1}','${safeAttr(attachmentUrls.join(" | "))}')">Send Email</button>
 
     <button class="send-btn ${x.status==='CLOSED'?'closed':''}" style="background:${x.status==='CLOSED'?'linear-gradient(135deg,#15803d,#22c55e)':'linear-gradient(135deg,#dc2626,#ef4444)'}" onclick="toggleCPAStatus('${safeAttr(id)}',this)">${x.status||'OPEN'}</button>
 
@@ -1506,15 +1542,24 @@ function loadCPA(data){
     </div>
 
     <div style="margin-top:22px;padding:18px;border-radius:16px;background:white;border:1px solid #dbe3ef;">
-      <b>Evidence / Attachment ${i+1}</b><br><br>
 
-      <input id="documentLink_${safeAttr(id)}" type="text" placeholder="Paste document link here" value="${safeAttr(attachmentUrl)}">
+      <b>Evidence / Attachments</b><br><br>
 
-      <button onclick="saveDocumentLink('${safeAttr(id)}','${i+1}')">💾 Save Link</button>
+      <input
+        id="documentLink_${safeAttr(id)}"
+        type="text"
+        placeholder="Paste new document link here"
+        value=""
+      >
 
-      <button onclick="deleteDocumentLink('${safeAttr(id)}','${i+1}')" style="background:#dc2626;color:white;">🗑️ Delete Link</button>
+      <button onclick="saveDocumentLink('${safeAttr(id)}','${i+1}')">
+        ➕ Add Attachment
+      </button>
 
-      ${attachmentUrl?`<button onclick="window.open('${safeAttr(attachmentUrl)}','_blank')">Open Document</button>`:""}
+      <div style="margin-top:18px;">
+        ${attachmentsHTML}
+      </div>
+
     </div>
     `;
 
