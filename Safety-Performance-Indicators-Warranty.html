@@ -285,7 +285,7 @@ canvas{
 
       <tr>
         <td class="objective-label">Formula for its Calculation</td>
-        <td><div id="objFormula" class="editable-cell" contenteditable="true">(Number of Warranty Claims / Man-Hours per Month) * 1000 Man-Hours</div></td>
+        <td><div id="objFormula" class="editable-cell" contenteditable="true">(Accepted Warranty Claims / Total Jobs Processed per Month) * 100</div></td>
       </tr>
 
       <tr>
@@ -393,7 +393,7 @@ function defaultData(){
   years.forEach(year=>{
     data[year] = months.map(month=>({
       month:month,
-      workhours:0,
+      jobsProcessed:0,
       events:0
     }));
   });
@@ -402,14 +402,14 @@ function defaultData(){
 
 let spiData = defaultData();
 
-function calculateRate(events, workhours){
-  if(!workhours || workhours <= 0) return 0;
-  return (events / workhours) * 1000;
+function calculateRate(events, jobsProcessed){
+  if(!jobsProcessed || jobsProcessed <= 0) return 0;
+  return (events / jobsProcessed) * 100;
 }
 
 function getYearRates(year){
   if(!spiData[year]) return [];
-  return spiData[year].map(row=>calculateRate(row.events,row.workhours));
+  return spiData[year].map(row=>calculateRate(row.events,row.jobsProcessed));
 }
 
 function getAverage(rates){
@@ -478,16 +478,16 @@ function renderAll(){
       </div>
 
       <table>
-        <thead>
-          <tr>
-            <th style="width:18%;">Month</th>
-            <th style="width:18%;">Man-Hours</th>
-            <th style="width:15%;">Warranty Claims</th>
-            <th style="width:18%;">Claim Rate</th>
-          </tr>
-        </thead>
-        <tbody id="table-${year}"></tbody>
-      </table>
+  <thead>
+    <tr>
+      <th style="width:18%;">Month</th>
+      <th style="width:18%;">Total Jobs Processed</th>
+      <th style="width:15%;">Accepted Warranty Claims</th>
+      <th style="width:18%;">Warranty Claim Rate (%)</th>
+    </tr>
+  </thead>
+  <tbody id="table-${year}"></tbody>
+</table>
 
       <canvas id="chart-${year}"></canvas>
     `;
@@ -505,29 +505,29 @@ function renderTable(year){
   const tbody = document.getElementById(`table-${year}`);
   tbody.innerHTML = "";
 
-  let totalWorkHours = 0;
+  let totalJobsProcessed = 0;
   let totalEvents = 0;
   const rates = [];
 
   spiData[year].forEach((row,index)=>{
-    const rate = calculateRate(row.events,row.workhours);
+    const rate = calculateRate(row.events,row.jobsProcessed);
     rates.push(rate);
 
-    totalWorkHours += Number(row.workhours || 0);
+    totalJobsProcessed += Number(row.jobsProcessed || 0);
     totalEvents += Number(row.events || 0);
 
     tbody.innerHTML += `
       <tr>
         <td><strong>${row.month}</strong></td>
         <td>
-          <input type="number" value="${row.workhours}"
-          onchange="updateValue(${year},${index},'workhours',this.value)">
+          <input type="number" value="${row.jobsProcessed || 0}"
+          onchange="updateValue(${year},${index},'jobsProcessed',this.value)">
         </td>
         <td>
           <input type="number" value="${row.events}"
           onchange="updateValue(${year},${index},'events',this.value)">
         </td>
-        <td class="rate">${rate.toFixed(2)}</td>
+        <td class="rate">${rate.toFixed(2)}%</td>
       </tr>
     `;
   });
@@ -538,14 +538,14 @@ function renderTable(year){
   tbody.innerHTML += `
     <tr class="summary">
       <td>Total</td>
-      <td>${totalWorkHours.toFixed(2)}</td>
+      <td>${totalJobsProcessed}</td>
       <td>${totalEvents}</td>
       <td></td>
     </tr>
 
     <tr class="summary">
       <td colspan="3">Average</td>
-      <td>${average.toFixed(2)}</td>
+      <td>${average.toFixed(2)}%</td>
     </tr>
 
     <tr class="summary">
@@ -561,17 +561,17 @@ function renderTable(year){
       tbody.innerHTML += `
         <tr class="acceptable-row">
           <td colspan="3">Acceptable Limit - Based on ${thresholds.baseYear}</td>
-          <td>${thresholds.acceptable.toFixed(2)}</td>
+          <td>${thresholds.acceptable.toFixed(2)}%</td>
         </tr>
 
         <tr class="tolerable-row">
           <td colspan="3">Tolerable Limit - Based on ${thresholds.baseYear}</td>
-          <td>${thresholds.tolerable.toFixed(2)}</td>
+          <td>${thresholds.tolerable.toFixed(2)}%</td>
         </tr>
 
         <tr class="notacceptable-row">
           <td colspan="3">Not Acceptable Limit - Based on ${thresholds.baseYear}</td>
-          <td>${thresholds.notAcceptable.toFixed(2)}</td>
+          <td>${thresholds.notAcceptable.toFixed(2)}%</td>
         </tr>
       `;
     }
@@ -658,11 +658,11 @@ function renderHistoricalChart(){
   let rates = [];
 
   years.forEach(year=>{
-    spiData[year].forEach(row=>{
-      labels.push(row.month + "-" + String(year).slice(2));
-      rates.push(calculateRate(row.events,row.workhours));
-    });
+  spiData[year].forEach(row=>{
+    labels.push(row.month + "-" + String(year).slice(2));
+    rates.push(calculateRate(row.events,row.jobsProcessed));
   });
+});
 
   const trend = calculateTrendLine(rates);
 
@@ -725,7 +725,7 @@ window.addYear = function(){
 
   spiData[newYear] = months.map(month=>({
     month:month,
-    workhours:0,
+    jobsProcessed:0,
     events:0
   }));
 
@@ -778,11 +778,33 @@ const savedData = saved.data || {};
 spiData = {};
 
 years.forEach(year => {
-  spiData[year] = savedData[year] || months.map(month => ({
-    month: month,
-    workhours: 0,
-    events: 0
-  }));
+
+  const yearData = savedData[year];
+
+  if(yearData){
+
+    spiData[year] = months.map((month,index) => {
+
+      const savedRow = yearData[index] || {};
+
+      return {
+        month: month,
+        jobsProcessed: Number(savedRow.jobsProcessed || 0),
+        events: Number(savedRow.events || 0)
+      };
+
+    });
+
+  }else{
+
+    spiData[year] = months.map(month => ({
+      month: month,
+      jobsProcessed: 0,
+      events: 0
+    }));
+
+  }
+
 });
 
     if(saved.objective){
