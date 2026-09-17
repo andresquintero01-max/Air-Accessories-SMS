@@ -410,8 +410,8 @@ function getYearRates(year){
   if(!spiData[year]) return [];
 
   return spiData[year].map(
-    row=>calculateRate(row.events,row.workhours)
-  );
+  row=>calculateRate(row.events,row.workorders)
+);
 
 }
 
