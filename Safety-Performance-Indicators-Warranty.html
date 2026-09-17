@@ -838,15 +838,17 @@ years.forEach(year => {
 
 });
 
-    if(saved.objective){
-      objectiveData = saved.objective;
+   if(saved.objective){
+  objectiveData = saved.objective;
 
-      document.getElementById("objSpecific").innerText = objectiveData.specific || "";
-      document.getElementById("objFormula").innerText = objectiveData.formula || "";
-      document.getElementById("objSources").innerText = objectiveData.sources || "";
-      document.getElementById("objFrequency").innerText = objectiveData.frequency || "";
-      document.getElementById("objResponsible").innerText = objectiveData.responsible || "";
-    }
+  objectiveData.formula = "(Accepted Warranty Claims / Total Jobs Processed per Month) * 100";
+
+  document.getElementById("objSpecific").innerText = objectiveData.specific || "";
+  document.getElementById("objFormula").innerText = objectiveData.formula;
+  document.getElementById("objSources").innerText = objectiveData.sources || "";
+  document.getElementById("objFrequency").innerText = objectiveData.frequency || "";
+  document.getElementById("objResponsible").innerText = objectiveData.responsible || "";
+}
   }
 
   renderAll();
