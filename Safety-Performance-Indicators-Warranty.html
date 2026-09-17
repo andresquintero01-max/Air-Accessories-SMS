@@ -508,15 +508,18 @@ function renderTable(year){
   tbody.innerHTML = "";
 
   let totalJobsProcessed = 0;
-  let totalEvents = 0;
-  const rates = [];
+let totalEvents = 0;
+const rates = [];
 
-  spiData[year].forEach((row,index)=>{
-    const rate = calculateRate(row.events,row.jobsProcessed);
+spiData[year].forEach((row,index)=>{
+  const rate = calculateRate(row.events,row.jobsProcessed);
+
+  if(Number(row.jobsProcessed) > 0){
     rates.push(rate);
+  }
 
-    totalJobsProcessed += Number(row.jobsProcessed || 0);
-    totalEvents += Number(row.events || 0);
+  totalJobsProcessed += Number(row.jobsProcessed || 0);
+  totalEvents += Number(row.events || 0);
 
     tbody.innerHTML += `
       <tr>
@@ -591,8 +594,8 @@ function renderYearChart(year){
   if(charts[year]) charts[year].destroy();
 
   const activeRows = spiData[year].filter(row=>Number(row.jobsProcessed)>0);
-const rates = activeRows.map(row=>calculateRate(row.events,row.jobsProcessed));
-const activeMonths = activeRows.map(row=>row.month);
+  const rates = activeRows.map(row=>calculateRate(row.events,row.jobsProcessed));
+  const activeMonths = activeRows.map(row=>row.month);
 
   let datasets = [{
     label:String(year),
@@ -607,11 +610,11 @@ const activeMonths = activeRows.map(row=>row.month);
   if(year >= 2026){
     const thresholds = getThresholds(year);
 
-    if(thresholds){
+    if(thresholds && activeMonths.length > 0){
       datasets.push(
         {
           label:"Baseline Average",
-          data:months.map(()=>thresholds.acceptable),
+          data:activeMonths.map(()=>thresholds.acceptable),
           borderColor:"#22c55e",
           backgroundColor:"#22c55e",
           pointRadius:0,
@@ -619,7 +622,7 @@ const activeMonths = activeRows.map(row=>row.month);
         },
         {
           label:"Alert Level (+1 SD)",
-          data:months.map(()=>thresholds.tolerable),
+          data:activeMonths.map(()=>thresholds.tolerable),
           borderColor:"#f59e0b",
           backgroundColor:"#f59e0b",
           pointRadius:0,
@@ -627,7 +630,7 @@ const activeMonths = activeRows.map(row=>row.month);
         },
         {
           label:"Action Level (+2 SD)",
-          data:months.map(()=>thresholds.notAcceptable),
+          data:activeMonths.map(()=>thresholds.notAcceptable),
           borderColor:"#ef4444",
           backgroundColor:"#ef4444",
           pointRadius:0,
@@ -637,23 +640,26 @@ const activeMonths = activeRows.map(row=>row.month);
     }
   }
 
+  const chartValues = datasets.flatMap(d=>d.data).filter(value=>Number.isFinite(value));
+  const maxChartValue = chartValues.length > 0 ? Math.max(...chartValues) : 0;
+
   charts[year] = new Chart(ctx,{
     type:"line",
-    data:{ labels:months, datasets:datasets },
+    data:{ labels:activeMonths, datasets:datasets },
     options:{
       responsive:true,
       plugins:{
         title:{
           display:true,
-          text:"Warranty Claim Rate"
+          text:"Warranty Claim Rate (%)"
         }
       },
       scales:{
-  y:{
-    beginAtZero:true,
-    suggestedMax:Math.max(...rates,...datasets.flatMap(d=>d.data))*1.25
-  }
-}
+        y:{
+          beginAtZero:true,
+          suggestedMax:maxChartValue > 0 ? maxChartValue * 1.25 : 1
+        }
+      }
     }
   });
 }
