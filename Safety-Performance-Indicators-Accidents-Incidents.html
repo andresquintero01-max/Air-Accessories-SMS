@@ -133,8 +133,7 @@ td{
   color:#071f47;
 }
 
-.editable-cell:focus,
-input:focus{
+.editable-cell:focus,input:focus{
   border-color:#00aeef;
   box-shadow:0 0 0 4px rgba(0,174,239,.14);
 }
@@ -148,12 +147,7 @@ input:focus{
   gap:14px;
 }
 
-.year-title{
-  font-size:32px;
-  color:#003b66;
-  font-weight:900;
-}
-
+.year-title{font-size:32px;color:#003b66;font-weight:900;}
 .right-buttons{display:flex;gap:10px;flex-wrap:wrap;}
 
 input{
@@ -222,95 +216,102 @@ canvas{
 
 <div class="container">
 
-  <div class="header">
-    <div class="logo">🚨</div>
-    <div class="badge">371Q Virtual Professional Safety Office</div>
-    <h1>SPI - Accidents/Incidents</h1>
-    <div class="subtitle">Safety Performance Indicator Monitoring</div>
-    <div class="title-line"></div>
-  </div>
+<div class="header">
+  <div class="logo">🚨</div>
+  <div class="badge">371Q Virtual Professional Safety Office</div>
+  <h1>SPI - Accidents/Incidents</h1>
+  <div class="subtitle">Safety Performance Indicator Monitoring</div>
+  <div class="title-line"></div>
+</div>
 
-  <div class="card">
-    <h2>SPI Objective</h2>
+<div class="card">
 
-    <table>
-      <tr>
-        <th>Indicator</th>
-        <th>Accidents/Incidents</th>
-      </tr>
+<h2>SPI Objective</h2>
 
-      <tr>
-        <td class="objective-label">Specific Objective</td>
-        <td>
-          <div id="objSpecific" class="editable-cell" contenteditable="true">
-            Maintain zero accidents and incidents through effective hazard identification, risk management, safety reporting, and operational control.
-          </div>
-        </td>
-      </tr>
+<table>
 
-      <tr>
-        <td class="objective-label">Formula for its Calculation</td>
-        <td>
-          <div id="objFormula" class="editable-cell" contenteditable="true">
-            (Number of Accidents/Incidents / Number of Work Orders per Month) * 100 Work Orders
-          </div>
-        </td>
-      </tr>
+<tr>
+<th>Indicator</th>
+<th>Accidents/Incidents</th>
+</tr>
 
-      <tr>
-        <td class="objective-label">Data Sources</td>
-        <td>
-          <div id="objSources" class="editable-cell" contenteditable="true">
-            Quality Assurance
-          </div>
-        </td>
-      </tr>
+<tr>
+<td class="objective-label">Specific Objective</td>
+<td>
+<div id="objSpecific" class="editable-cell" contenteditable="true">
+Maintain zero accidents and incidents through effective hazard identification, risk management, safety reporting, and operational control.
+</div>
+</td>
+</tr>
 
-      <tr>
-        <td class="objective-label">Measurement Frequency</td>
-        <td>
-          <div id="objFrequency" class="editable-cell" contenteditable="true">
-            Monthly
-          </div>
-        </td>
-      </tr>
+<tr>
+<td class="objective-label">Formula for its Calculation</td>
+<td>
+<div id="objFormula" class="editable-cell" contenteditable="true">
+(Number of Accidents/Incidents / Number of Days Worked per Month) * 100 Days Worked
+</div>
+</td>
+</tr>
 
-      <tr>
-        <td class="objective-label">Responsible Party for Monitoring</td>
-        <td>
-          <div id="objResponsible" class="editable-cell" contenteditable="true">
-            Chief Inspector
-          </div>
-        </td>
-      </tr>
-    </table>
+<tr>
+<td class="objective-label">Data Sources</td>
+<td>
+<div id="objSources" class="editable-cell" contenteditable="true">
+Quality Assurance
+</div>
+</td>
+</tr>
 
-    <div class="top-buttons">
-      <button class="year-save-btn" onclick="saveData()">💾 Save Objective</button>
-    </div>
-  </div>
+<tr>
+<td class="objective-label">Measurement Frequency</td>
+<td>
+<div id="objFrequency" class="editable-cell" contenteditable="true">
+Monthly
+</div>
+</td>
+</tr>
 
-  <div class="top-buttons">
-    <button class="print-btn" onclick="window.print()">🖨️ Print</button>
-    <button class="add-btn" onclick="addYear()">➕ Add Year</button>
-    <button class="back-btn" onclick="window.location.href='Safety-Performance-Indicators.html'">📊 Back to SPI</button>
-    <button class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
-  </div>
+<tr>
+<td class="objective-label">Responsible Party for Monitoring</td>
+<td>
+<div id="objResponsible" class="editable-cell" contenteditable="true">
+Chief Inspector
+</div>
+</td>
+</tr>
 
-  <div id="yearsContainer"></div>
+</table>
 
-  <div class="historical">
-    <h2 style="text-align:center;color:#003b66;">Historical Trend</h2>
-    <canvas id="historicalChart"></canvas>
+<div class="top-buttons">
+<button class="year-save-btn" onclick="saveData()">💾 Save Objective</button>
+</div>
 
-    <div class="trend-box" id="trendSummary">
-      Historical trend will be calculated automatically.
-    </div>
-  </div>
+</div>
 
-  <div class="footer">
-    371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
-  </div>
+<div class="top-buttons">
+<button class="print-btn" onclick="window.print()">🖨️ Print</button>
+<button class="add-btn" onclick="addYear()">➕ Add Year</button>
+<button class="back-btn" onclick="window.location.href='Safety-Performance-Indicators.html'">📊 Back to SPI</button>
+<button class="home-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+</div>
+
+<div id="yearsContainer"></div>
+
+<div class="historical">
+
+<h2 style="text-align:center;color:#003b66;">Historical Trend</h2>
+
+<canvas id="historicalChart"></canvas>
+
+<div class="trend-box" id="trendSummary">
+Historical trend will be calculated automatically.
+</div>
+
+</div>
+
+<div class="footer">
+371Q SMS SOFTWARE — YOUR ACCIDENT PREVENTION TOOL
+</div>
 
 </div>
 
@@ -350,13 +351,12 @@ const months = [
 ];
 
 let years = [2026,2027,2028];
-
 let charts = {};
 let historicalChart;
 
 let objectiveData = {
   specific:"Maintain zero accidents and incidents through effective hazard identification, risk management, safety reporting, and operational control.",
-  formula:"(Number of Accidents/Incidents / Number of Work Orders per Month) * 100 Work Orders",
+  formula:"(Number of Accidents/Incidents / Number of Days Worked per Month) * 100 Days Worked",
   sources:"Quality Assurance",
   frequency:"Monthly",
   responsible:"Chief Inspector"
@@ -364,17 +364,13 @@ let objectiveData = {
 
 window.onload = () => {
 
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth,(user)=>{
 
     if(user){
-
       loadData();
-
     }else{
-
       alert("Session expired. Please log in again.");
-      location.href = "index.html";
-
+      location.href="index.html";
     }
 
   });
@@ -383,26 +379,28 @@ window.onload = () => {
 
 function defaultData(){
 
-  let data = {};
+  let data={};
 
   years.forEach(year=>{
 
-    data[year] = months.map(month=>({
-  month:month,
-  workorders:0,
-  events:0
-}));
+    data[year]=months.map(month=>({
+      month:month,
+      daysworked:0,
+      events:0
+    }));
 
   });
 
   return data;
 }
 
-let spiData = defaultData();
+let spiData=defaultData();
 
-function calculateRate(events, workorders){
-  if(!workorders || workorders <= 0) return 0;
-  return (events / workorders) * 100;
+function calculateRate(events,daysworked){
+
+  if(!daysworked || daysworked<=0) return 0;
+
+  return (events/daysworked)*100;
 }
 
 function getYearRates(year){
@@ -410,111 +408,101 @@ function getYearRates(year){
   if(!spiData[year]) return [];
 
   return spiData[year].map(
-  row=>calculateRate(row.events,row.workorders)
-);
-
+    row=>calculateRate(row.events,row.daysworked)
+  );
 }
 
 function getAverage(rates){
 
   if(!rates.length) return 0;
 
-  return rates.reduce((a,b)=>a+b,0) / rates.length;
-
+  return rates.reduce((a,b)=>a+b,0)/rates.length;
 }
 
 function getStandardDeviation(rates){
 
   if(!rates.length) return 0;
 
-  const average = getAverage(rates);
+  const average=getAverage(rates);
 
   return Math.sqrt(
     rates
       .map(x=>Math.pow(x-average,2))
-      .reduce((a,b)=>a+b,0) / rates.length
+      .reduce((a,b)=>a+b,0)/rates.length
   );
-
 }
 
 function getThresholds(year){
 
-  const previousYear = year - 1;
+  const previousYear=year-1;
 
   if(!spiData[previousYear]) return null;
 
-  const previousRates = getYearRates(previousYear);
+  const previousRates=getYearRates(previousYear);
 
-  const average = getAverage(previousRates);
+  const average=getAverage(previousRates);
+  const sd=getStandardDeviation(previousRates);
 
-  const sd = getStandardDeviation(previousRates);
-
-  return {
+  return{
     acceptable:average,
-    tolerable:average + sd,
-    notAcceptable:average + (sd * 2),
+    tolerable:average+sd,
+    notAcceptable:average+(sd*2),
     baseYear:previousYear
   };
-
 }
 
 function calculateTrendLine(values){
 
-  const n = values.length;
+  const n=values.length;
 
-  if(n === 0){
+  if(n===0){
     return{
       slope:0,
       trendValues:[]
     };
   }
 
-  let sumX = 0;
-  let sumY = 0;
-  let sumXY = 0;
-  let sumXX = 0;
+  let sumX=0;
+  let sumY=0;
+  let sumXY=0;
+  let sumXX=0;
 
   values.forEach((y,x)=>{
-
-    sumX += x;
-    sumY += y;
-    sumXY += x * y;
-    sumXX += x * x;
-
+    sumX+=x;
+    sumY+=y;
+    sumXY+=x*y;
+    sumXX+=x*x;
   });
 
-  const slope =
-    (n * sumXY - sumX * sumY) /
-    (n * sumXX - sumX * sumX || 1);
+  const slope=
+    (n*sumXY-sumX*sumY)/
+    (n*sumXX-sumX*sumX || 1);
 
-  const intercept =
-    (sumY - slope * sumX) / n;
+  const intercept=
+    (sumY-slope*sumX)/n;
 
-  const trendValues =
-    values.map((_,x)=>intercept + slope * x);
+  const trendValues=
+    values.map((_,x)=>intercept+slope*x);
 
   return{
     slope,
     trendValues
   };
-
 }
 
 function renderAll(){
 
-  const container =
-    document.getElementById("yearsContainer");
+  const container=document.getElementById("yearsContainer");
 
-  container.innerHTML = "";
+  container.innerHTML="";
 
   years.forEach(year=>{
 
-    const section =
-      document.createElement("div");
+    const section=document.createElement("div");
 
-    section.className = "year-section";
+    section.className="year-section";
 
-    section.innerHTML = `
+    section.innerHTML=`
 
       <div class="year-header">
 
@@ -524,15 +512,11 @@ function renderAll(){
 
         <div class="right-buttons">
 
-          <button
-            class="year-save-btn"
-            onclick="saveData()">
+          <button class="year-save-btn" onclick="saveData()">
             💾 Save
           </button>
 
-          <button
-            class="delete-year-btn"
-            onclick="deleteYear(${year})">
+          <button class="delete-year-btn" onclick="deleteYear(${year})">
             🗑
           </button>
 
@@ -551,7 +535,7 @@ function renderAll(){
             </th>
 
             <th style="width:18%;">
-              Work Orders
+              Days Worked
             </th>
 
             <th style="width:15%;">
@@ -577,42 +561,35 @@ function renderAll(){
     container.appendChild(section);
 
     renderTable(year);
-
     renderYearChart(year);
 
   });
 
   renderHistoricalChart();
-
 }
 
 function renderTable(year){
 
-  const tbody =
-    document.getElementById(`table-${year}`);
+  const tbody=document.getElementById(`table-${year}`);
 
-  tbody.innerHTML = "";
+  tbody.innerHTML="";
 
-  let totalWorkOrders = 0;
+  let totalDaysWorked=0;
+  let totalEvents=0;
 
-  let totalEvents = 0;
-
-  const rates = [];
+  const rates=[];
 
   spiData[year].forEach((row,index)=>{
 
-    const rate =
-  calculateRate(row.events,row.workorders);
+    const rate=
+      calculateRate(row.events,row.daysworked);
 
     rates.push(rate);
 
-    totalWorkOrders +=
-  Number(row.workorders || 0);;
+    totalDaysWorked+=Number(row.daysworked||0);
+    totalEvents+=Number(row.events||0);
 
-    totalEvents +=
-      Number(row.events || 0);
-
-    tbody.innerHTML += `
+    tbody.innerHTML+=`
 
       <tr>
 
@@ -623,9 +600,10 @@ function renderTable(year){
         <td>
 
           <input
-  type="number"
-  value="${row.workorders}"
-  onchange="updateValue(${year},${index},'workorders',this.value)">
+            type="number"
+            min="0"
+            value="${row.daysworked}"
+            onchange="updateValue(${year},${index},'daysworked',this.value)">
 
         </td>
 
@@ -633,6 +611,7 @@ function renderTable(year){
 
           <input
             type="number"
+            min="0"
             value="${row.events}"
             onchange="updateValue(${year},${index},'events',this.value)">
 
@@ -648,18 +627,17 @@ function renderTable(year){
 
   });
 
-  const average = getAverage(rates);
+  const average=getAverage(rates);
+  const sd=getStandardDeviation(rates);
 
-  const sd = getStandardDeviation(rates);
-
-  tbody.innerHTML += `
+  tbody.innerHTML+=`
 
     <tr class="summary">
 
       <td>Total</td>
 
       <td>
-        ${totalWorkOrders}
+        ${totalDaysWorked}
       </td>
 
       <td>
@@ -696,14 +674,13 @@ function renderTable(year){
 
   `;
 
-  if(year >= 2027){
+  if(year>=2027){
 
-    const thresholds =
-      getThresholds(year);
+    const thresholds=getThresholds(year);
 
     if(thresholds){
 
-      tbody.innerHTML += `
+      tbody.innerHTML+=`
 
         <tr class="acceptable-row">
 
@@ -746,32 +723,26 @@ function renderTable(year){
     }
 
   }
-
 }
 
-window.updateValue =
-function(year,index,field,value){
+window.updateValue=function(year,index,field,value){
 
-  spiData[year][index][field] =
-    Number(value);
+  spiData[year][index][field]=Number(value);
 
   renderAll();
-
 };
 
 function renderYearChart(year){
 
-  const ctx =
-    document.getElementById(`chart-${year}`);
+  const ctx=document.getElementById(`chart-${year}`);
 
   if(charts[year]){
     charts[year].destroy();
   }
 
-  const rates =
-    getYearRates(year);
+  const rates=getYearRates(year);
 
-  let datasets = [{
+  let datasets=[{
 
     label:String(year),
 
@@ -789,70 +760,39 @@ function renderYearChart(year){
 
   }];
 
-  if(year >= 2027){
+  if(year>=2027){
 
-    const thresholds =
-      getThresholds(year);
+    const thresholds=getThresholds(year);
 
     if(thresholds){
 
       datasets.push(
 
         {
-
           label:"Acceptable Limit",
-
-          data:
-            months.map(
-              ()=>thresholds.acceptable
-            ),
-
+          data:months.map(()=>thresholds.acceptable),
           borderColor:"#22c55e",
-
           backgroundColor:"#22c55e",
-
           pointRadius:0,
-
           borderWidth:4
-
         },
 
         {
-
           label:"Tolerable Limit",
-
-          data:
-            months.map(
-              ()=>thresholds.tolerable
-            ),
-
+          data:months.map(()=>thresholds.tolerable),
           borderColor:"#f59e0b",
-
           backgroundColor:"#f59e0b",
-
           pointRadius:0,
-
           borderWidth:4
-
         },
 
         {
-
           label:"Not Acceptable Limit",
-
-          data:
-            months.map(
-              ()=>thresholds.notAcceptable
-            ),
-
+          data:months.map(()=>thresholds.notAcceptable),
           borderColor:"#ef4444",
-
           backgroundColor:"#ef4444",
-
           pointRadius:0,
-
           borderWidth:4
-
         }
 
       );
@@ -861,69 +801,64 @@ function renderYearChart(year){
 
   }
 
-  charts[year] =
-    new Chart(ctx,{
+  charts[year]=new Chart(ctx,{
 
-      type:"line",
+    type:"line",
 
-      data:{
-        labels:months,
-        datasets:datasets
+    data:{
+      labels:months,
+      datasets:datasets
+    },
+
+    options:{
+
+      responsive:true,
+
+      plugins:{
+
+        title:{
+          display:true,
+          text:"Accidents/Incidents Event Rate"
+        }
+
       },
 
-      options:{
+      scales:{
 
-        responsive:true,
-
-        plugins:{
-
-          title:{
-            display:true,
-            text:"Accidents/Incidents Event Rate"
-          }
-
-        },
-
-        scales:{
-          y:{
-            beginAtZero:true
-          }
+        y:{
+          beginAtZero:true
         }
 
       }
 
-    });
+    }
 
+  });
 }
 
 function renderHistoricalChart(){
 
-  const ctx =
-    document.getElementById(
-      "historicalChart"
-    );
+  const ctx=document.getElementById("historicalChart");
 
   if(historicalChart){
     historicalChart.destroy();
   }
 
-  let labels = [];
-
-  let rates = [];
+  let labels=[];
+  let rates=[];
 
   years.forEach(year=>{
 
     spiData[year].forEach(row=>{
 
       labels.push(
-        row.month + "-" +
-        String(year).slice(2)
+        row.month+"-"+String(year).slice(2)
       );
 
       rates.push(
         calculateRate(
           row.events,
-          row.workorders
+          row.daysworked
         )
       );
 
@@ -931,214 +866,159 @@ function renderHistoricalChart(){
 
   });
 
-  const trend =
-    calculateTrendLine(rates);
+  const trend=calculateTrendLine(rates);
 
-  let trendText = "";
+  let trendText="";
 
-  if(trend.slope > 0.05){
+  if(trend.slope>0.05){
 
-    trendText =
+    trendText=
       "Increasing trend: the accident/incident rate is rising over time.";
 
-  }else if(trend.slope < -0.05){
+  }else if(trend.slope<-0.05){
 
-    trendText =
+    trendText=
       "Decreasing trend: the accident/incident rate is improving over time.";
 
   }else{
 
-    trendText =
+    trendText=
       "Stable trend: the accident/incident rate remains relatively unchanged over time.";
 
   }
 
-  document.getElementById(
-    "trendSummary"
-  ).innerHTML =
-
-    "Historical Slope: " +
-    trend.slope.toFixed(2) +
-    " | " +
+  document.getElementById("trendSummary").innerHTML=
+    "Historical Slope: "+
+    trend.slope.toFixed(2)+
+    " | "+
     trendText;
 
-  historicalChart =
-    new Chart(ctx,{
+  historicalChart=new Chart(ctx,{
 
-      type:"line",
+    type:"line",
 
-      data:{
+    data:{
 
-        labels:labels,
+      labels:labels,
 
-        datasets:[
+      datasets:[
 
-          {
+        {
 
-            label:
-              "Historical Accidents/Incidents Event Rate",
+          label:"Historical Accidents/Incidents Event Rate",
 
-            data:rates,
+          data:rates,
 
-            borderColor:"#00aeef",
+          borderColor:"#00aeef",
 
-            backgroundColor:"#00aeef",
+          backgroundColor:"#00aeef",
 
-            borderWidth:4,
+          borderWidth:4,
 
-            tension:0.25,
+          tension:0.25,
 
-            pointRadius:4
-
-          },
-
-          {
-
-            label:
-              "Trend Line / Slope",
-
-            data:
-              trend.trendValues,
-
-            borderColor:"#003b66",
-
-            backgroundColor:"#003b66",
-
-            borderWidth:4,
-
-            pointRadius:0,
-
-            tension:0
-
-          }
-
-        ]
-
-      },
-
-      options:{
-
-        responsive:true,
-
-        plugins:{
-
-          title:{
-
-            display:true,
-
-            text:
-              "Historical Accidents/Incidents Event Rate"
-
-          }
+          pointRadius:4
 
         },
 
-        scales:{
+        {
 
-          y:{
-            beginAtZero:true
-          }
+          label:"Trend Line / Slope",
 
+          data:trend.trendValues,
+
+          borderColor:"#003b66",
+
+          backgroundColor:"#003b66",
+
+          borderWidth:4,
+
+          pointRadius:0,
+
+          tension:0
+
+        }
+
+      ]
+
+    },
+
+    options:{
+
+      responsive:true,
+
+      plugins:{
+
+        title:{
+          display:true,
+          text:"Historical Accidents/Incidents Event Rate"
+        }
+
+      },
+
+      scales:{
+
+        y:{
+          beginAtZero:true
         }
 
       }
 
-    });
+    }
 
+  });
 }
 
-window.addYear =
-function(){
+window.addYear=function(){
 
-  let lastYear =
-    Math.max(...years);
+  let lastYear=Math.max(...years);
 
-  let newYear =
-    lastYear + 1;
+  let newYear=lastYear+1;
 
   years.push(newYear);
 
-  spiData[newYear] =
-  months.map(month=>({
+  spiData[newYear]=months.map(month=>({
     month:month,
-    workorders:0,
+    daysworked:0,
     events:0
   }));
 
   renderAll();
-
 };
 
-window.deleteYear =
-async function(year){
+window.deleteYear=async function(year){
 
-  if(
-    !confirm(
-      "Are you sure you want to delete year " +
-      year +
-      "?"
-    )
-  ){
+  if(!confirm("Are you sure you want to delete year "+year+"?")){
     return;
   }
 
-  years =
-    years.filter(
-      y=>y !== year
-    );
+  years=years.filter(y=>y!==year);
 
   delete spiData[year];
 
   await saveData();
 
   renderAll();
-
 };
 
-window.saveData =
-async function(){
+window.saveData=async function(){
 
-  objectiveData = {
+  objectiveData={
 
     specific:
-      document
-      .getElementById(
-        "objSpecific"
-      )
-      .innerText
-      .trim(),
+      document.getElementById("objSpecific").innerText.trim(),
 
     formula:
-      document
-      .getElementById(
-        "objFormula"
-      )
-      .innerText
-      .trim(),
+      document.getElementById("objFormula").innerText.trim(),
 
     sources:
-      document
-      .getElementById(
-        "objSources"
-      )
-      .innerText
-      .trim(),
+      document.getElementById("objSources").innerText.trim(),
 
     frequency:
-      document
-      .getElementById(
-        "objFrequency"
-      )
-      .innerText
-      .trim(),
+      document.getElementById("objFrequency").innerText.trim(),
 
     responsible:
-      document
-      .getElementById(
-        "objResponsible"
-      )
-      .innerText
-      .trim()
+      document.getElementById("objResponsible").innerText.trim()
 
   };
 
@@ -1151,125 +1031,103 @@ async function(){
 
     {
 
-      objective:
-        objectiveData,
+      objective:objectiveData,
 
-      years:
-        years,
+      years:years,
 
-      data:
-        spiData,
+      data:spiData,
 
-      updatedAt:
-        new Date().toISOString()
+      updatedAt:new Date().toISOString()
 
     }
 
   );
 
-  alert(
-    "SPI Accidents/Incidents saved successfully."
-  );
-
+  alert("SPI Accidents/Incidents saved successfully.");
 };
 
 async function loadData(){
 
-  const snapshot =
-    await get(
+  const snapshot=await get(
+    ref(
+      db,
+      "SPI-Accidents-Incidents"
+    )
+  );
 
-      ref(
-        db,
-        "SPI-Accidents-Incidents"
-      )
+  years=[2026,2027,2028];
 
-    );
+  if(snapshot.exists()){
 
- years = [2026,2027,2028];
+    const saved=snapshot.val();
 
-if(snapshot.exists()){
+    if(saved.years && Array.isArray(saved.years)){
+      years=saved.years.map(Number);
+    }
 
-  const saved =
-    snapshot.val();
+    const savedData=saved.data||{};
 
-  if(saved.years && Array.isArray(saved.years)){
-    years = saved.years.map(Number);
-  }
-
-  const savedData =
-    saved.data || {};
-
-    spiData = {};
+    spiData={};
 
     years.forEach(year=>{
 
-      spiData[year] = savedData[year]
-  ? savedData[year].map(row=>({
-      month:row.month,
-      workorders:Number(row.workorders || 0),
-      events:Number(row.events || 0)
-    }))
-  : months.map(month=>({
-      month:month,
-      workorders:0,
-      events:0
-    }));
+      spiData[year]=savedData[year]
+
+        ? savedData[year].map(row=>({
+
+            month:row.month,
+
+            /* New field. If the old Firebase record still
+               contains workorders, preserve that value. */
+            daysworked:Number(
+              row.daysworked ?? row.workorders ?? 0
+            ),
+
+            events:Number(row.events||0)
+
+          }))
+
+        : months.map(month=>({
+
+            month:month,
+            daysworked:0,
+            events:0
+
+          }));
 
     });
 
     if(saved.objective){
 
-      objectiveData = {
-  ...saved.objective,
-  formula:"(Number of Accidents/Incidents / Number of Work Orders per Month) * 100 Work Orders"
-};
+      objectiveData={
+        ...saved.objective,
+        formula:"(Number of Accidents/Incidents / Number of Days Worked per Month) * 100 Days Worked"
+      };
 
-      document
-      .getElementById(
-        "objSpecific"
-      )
-      .innerText =
-        objectiveData.specific || "";
+      document.getElementById("objSpecific").innerText=
+        objectiveData.specific||"";
 
-      document
-      .getElementById(
-        "objFormula"
-      )
-      .innerText =
-        objectiveData.formula || "";
+      document.getElementById("objFormula").innerText=
+        objectiveData.formula||"";
 
-      document
-      .getElementById(
-        "objSources"
-      )
-      .innerText =
-        objectiveData.sources || "";
+      document.getElementById("objSources").innerText=
+        objectiveData.sources||"";
 
-      document
-      .getElementById(
-        "objFrequency"
-      )
-      .innerText =
-        objectiveData.frequency || "";
+      document.getElementById("objFrequency").innerText=
+        objectiveData.frequency||"";
 
-      document
-      .getElementById(
-        "objResponsible"
-      )
-      .innerText =
-        objectiveData.responsible || "";
+      document.getElementById("objResponsible").innerText=
+        objectiveData.responsible||"";
 
     }
 
   }else{
 
-    spiData =
-      defaultData();
+    spiData=defaultData();
 
   }
 
   renderAll();
-
 }
 
 </script>
