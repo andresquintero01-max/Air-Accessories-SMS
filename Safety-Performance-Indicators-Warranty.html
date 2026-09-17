@@ -409,7 +409,9 @@ function calculateRate(events, jobsProcessed){
 
 function getYearRates(year){
   if(!spiData[year]) return [];
-  return spiData[year].map(row=>calculateRate(row.events,row.jobsProcessed));
+  return spiData[year]
+    .filter(row=>Number(row.jobsProcessed)>0)
+    .map(row=>calculateRate(row.events,row.jobsProcessed));
 }
 
 function getAverage(rates){
@@ -560,17 +562,17 @@ function renderTable(year){
     if(thresholds){
       tbody.innerHTML += `
         <tr class="acceptable-row">
-          <td colspan="3">Acceptable Limit - Based on ${thresholds.baseYear}</td>
+          <td colspan="3">Baseline Average - Based on ${thresholds.baseYear}</td>
           <td>${thresholds.acceptable.toFixed(2)}%</td>
         </tr>
 
         <tr class="tolerable-row">
-          <td colspan="3">Tolerable Limit - Based on ${thresholds.baseYear}</td>
+          <td colspan="3">Alert Level (+1 SD) - Based on ${thresholds.baseYear}</td>
           <td>${thresholds.tolerable.toFixed(2)}%</td>
         </tr>
 
         <tr class="notacceptable-row">
-          <td colspan="3">Not Acceptable Limit - Based on ${thresholds.baseYear}</td>
+          <td colspan="3">Action Level (+2 SD) - Based on ${thresholds.baseYear}</td>
           <td>${thresholds.notAcceptable.toFixed(2)}%</td>
         </tr>
       `;
@@ -588,7 +590,9 @@ function renderYearChart(year){
 
   if(charts[year]) charts[year].destroy();
 
-  const rates = getYearRates(year);
+  const activeRows = spiData[year].filter(row=>Number(row.jobsProcessed)>0);
+const rates = activeRows.map(row=>calculateRate(row.events,row.jobsProcessed));
+const activeMonths = activeRows.map(row=>row.month);
 
   let datasets = [{
     label:String(year),
@@ -606,7 +610,7 @@ function renderYearChart(year){
     if(thresholds){
       datasets.push(
         {
-          label:"Acceptable Limit",
+          label:"Baseline Average",
           data:months.map(()=>thresholds.acceptable),
           borderColor:"#22c55e",
           backgroundColor:"#22c55e",
@@ -614,7 +618,7 @@ function renderYearChart(year){
           borderWidth:4
         },
         {
-          label:"Tolerable Limit",
+          label:"Alert Level (+1 SD)",
           data:months.map(()=>thresholds.tolerable),
           borderColor:"#f59e0b",
           backgroundColor:"#f59e0b",
@@ -622,7 +626,7 @@ function renderYearChart(year){
           borderWidth:4
         },
         {
-          label:"Not Acceptable Limit",
+          label:"Action Level (+2 SD)",
           data:months.map(()=>thresholds.notAcceptable),
           borderColor:"#ef4444",
           backgroundColor:"#ef4444",
@@ -644,7 +648,12 @@ function renderYearChart(year){
           text:"Warranty Claim Rate"
         }
       },
-      scales:{ y:{ beginAtZero:true } }
+      scales:{
+  y:{
+    beginAtZero:true,
+    suggestedMax:Math.max(...rates,...datasets.flatMap(d=>d.data))*1.25
+  }
+}
     }
   });
 }
@@ -658,11 +667,13 @@ function renderHistoricalChart(){
   let rates = [];
 
   years.forEach(year=>{
-  spiData[year].forEach(row=>{
-    labels.push(row.month + "-" + String(year).slice(2));
-    rates.push(calculateRate(row.events,row.jobsProcessed));
+    spiData[year].forEach(row=>{
+      if(Number(row.jobsProcessed) > 0){
+        labels.push(row.month + "-" + String(year).slice(2));
+        rates.push(calculateRate(row.events,row.jobsProcessed));
+      }
+    });
   });
-});
 
   const trend = calculateTrendLine(rates);
 
@@ -678,6 +689,11 @@ function renderHistoricalChart(){
 
   document.getElementById("trendSummary").innerHTML =
   "Historical Slope: " + trend.slope.toFixed(2) + " | " + trendText;
+
+  const maxHistoricalValue =
+    rates.length > 0
+      ? Math.max(...rates,...trend.trendValues)
+      : 0;
 
   historicalChart = new Chart(ctx,{
     type:"line",
@@ -712,7 +728,12 @@ function renderHistoricalChart(){
           text:"Historical Warranty Claim Rate"
         }
       },
-      scales:{ y:{ beginAtZero:true } }
+      scales:{
+        y:{
+          beginAtZero:true,
+          suggestedMax:maxHistoricalValue > 0 ? maxHistoricalValue * 1.25 : 1
+        }
+      }
     }
   });
 }
@@ -772,6 +793,10 @@ async function loadData(){
     const saved = snapshot.val();
 
     years = [2026,2027,2028];
+
+if(saved.years && Array.isArray(saved.years)){
+  years = saved.years.map(Number);
+}
 
 const savedData = saved.data || {};
 
