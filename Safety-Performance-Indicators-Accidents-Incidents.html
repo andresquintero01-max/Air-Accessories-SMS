@@ -252,7 +252,7 @@ canvas{
         <td class="objective-label">Formula for its Calculation</td>
         <td>
           <div id="objFormula" class="editable-cell" contenteditable="true">
-            (Number of Accidents/Incidents / Man-Hours per Month) * 1000 Man-Hours
+            (Number of Accidents/Incidents / Number of Work Orders per Month) * 100 Work Orders
           </div>
         </td>
       </tr>
@@ -356,7 +356,7 @@ let historicalChart;
 
 let objectiveData = {
   specific:"Maintain zero accidents and incidents through effective hazard identification, risk management, safety reporting, and operational control.",
-  formula:"(Number of Accidents/Incidents / Man-Hours per Month) * 1000 Man-Hours",
+  formula:"(Number of Accidents/Incidents / Number of Work Orders per Month) * 100 Work Orders",
   sources:"Quality Assurance",
   frequency:"Monthly",
   responsible:"Chief Inspector"
@@ -388,10 +388,10 @@ function defaultData(){
   years.forEach(year=>{
 
     data[year] = months.map(month=>({
-      month:month,
-      workhours:0,
-      events:0
-    }));
+  month:month,
+  workorders:0,
+  events:0
+}));
 
   });
 
@@ -400,12 +400,9 @@ function defaultData(){
 
 let spiData = defaultData();
 
-function calculateRate(events, workhours){
-
-  if(!workhours || workhours <= 0) return 0;
-
-  return (events / workhours) * 1000;
-
+function calculateRate(events, workorders){
+  if(!workorders || workorders <= 0) return 0;
+  return (events / workorders) * 100;
 }
 
 function getYearRates(year){
@@ -554,7 +551,7 @@ function renderAll(){
             </th>
 
             <th style="width:18%;">
-              Man-Hours
+              Work Orders
             </th>
 
             <th style="width:15%;">
@@ -596,7 +593,7 @@ function renderTable(year){
 
   tbody.innerHTML = "";
 
-  let totalWorkHours = 0;
+  let totalWorkOrders = 0;
 
   let totalEvents = 0;
 
@@ -605,12 +602,12 @@ function renderTable(year){
   spiData[year].forEach((row,index)=>{
 
     const rate =
-      calculateRate(row.events,row.workhours);
+  calculateRate(row.events,row.workorders);
 
     rates.push(rate);
 
-    totalWorkHours +=
-      Number(row.workhours || 0);
+    totalWorkOrders +=
+  Number(row.workorders || 0);;
 
     totalEvents +=
       Number(row.events || 0);
@@ -626,9 +623,9 @@ function renderTable(year){
         <td>
 
           <input
-            type="number"
-            value="${row.workhours}"
-            onchange="updateValue(${year},${index},'workhours',this.value)">
+  type="number"
+  value="${row.workorders}"
+  onchange="updateValue(${year},${index},'workorders',this.value)">
 
         </td>
 
@@ -662,7 +659,7 @@ function renderTable(year){
       <td>Total</td>
 
       <td>
-        ${totalWorkHours.toFixed(2)}
+        ${totalWorkOrders}
       </td>
 
       <td>
@@ -926,7 +923,7 @@ function renderHistoricalChart(){
       rates.push(
         calculateRate(
           row.events,
-          row.workhours
+          row.workorders
         )
       );
 
@@ -1062,13 +1059,11 @@ function(){
   years.push(newYear);
 
   spiData[newYear] =
-    months.map(month=>({
-
-      month:month,
-      workhours:0,
-      events:0
-
-    }));
+  months.map(month=>({
+    month:month,
+    workorders:0,
+    events:0
+  }));
 
   renderAll();
 
@@ -1190,36 +1185,44 @@ async function loadData(){
 
     );
 
-  years = [2026,2027,2028];
+ years = [2026,2027,2028];
 
-  if(snapshot.exists()){
+if(snapshot.exists()){
 
-    const saved =
-      snapshot.val();
+  const saved =
+    snapshot.val();
 
-    const savedData =
-      saved.data || {};
+  if(saved.years && Array.isArray(saved.years)){
+    years = saved.years.map(Number);
+  }
+
+  const savedData =
+    saved.data || {};
 
     spiData = {};
 
     years.forEach(year=>{
 
-      spiData[year] =
-        savedData[year] ||
-        months.map(month=>({
-
-          month:month,
-          workhours:0,
-          events:0
-
-        }));
+      spiData[year] = savedData[year]
+  ? savedData[year].map(row=>({
+      month:row.month,
+      workorders:Number(row.workorders || 0),
+      events:Number(row.events || 0)
+    }))
+  : months.map(month=>({
+      month:month,
+      workorders:0,
+      events:0
+    }));
 
     });
 
     if(saved.objective){
 
-      objectiveData =
-        saved.objective;
+      objectiveData = {
+  ...saved.objective,
+  formula:"(Number of Accidents/Incidents / Number of Work Orders per Month) * 100 Work Orders"
+};
 
       document
       .getElementById(
